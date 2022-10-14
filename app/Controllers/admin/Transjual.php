@@ -253,8 +253,7 @@ class Transjual extends BaseController
     {
         $this->_cart->destroy();
         $json = [
-            'status' => true,
-            'msg' => 'Transaksi Baru!'
+            'status' => true
         ];
         echo json_encode($json);
     }

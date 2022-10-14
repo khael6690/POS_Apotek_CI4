@@ -140,6 +140,7 @@
             // card maximaize
             $('.card').CardWidget('maximize')
 
+
             // numeric input
             nominal = new AutoNumeric('#nominal', {
                 digitGroupSeparator: '.',
@@ -149,7 +150,8 @@
             });
 
             // input kembalian
-            $('#nominal').change(function() {
+            $('#nominal').change(function(e) {
+                e.preventDefault()
                 const nominalx = nominal.get();
                 $.ajax({
                     type: "post",
@@ -203,6 +205,7 @@
             });
         });
 
+        // membuat tanggal dan waktu
         function date_time(id) {
 
             date = new Date;
@@ -234,9 +237,10 @@
             return true;
         }
 
-        // function load() {
-        //     $('#detail_cart').load('load-cart-transjual')
-        //     $('#total').load('load-total-transjual')
+        //Membuat Sale_id otomatis
+        // function sale_id(params) {
+        //     date = new Date;
+
         // }
 
         // konfirmasi transaksi baru
@@ -265,6 +269,13 @@
                             $('#kdproduk').val(' ');
                             $('#nama-customer').val(' ');
                             $('#id-customer').val(' ');
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            Swal.fire({
+                                title: xhr.status,
+                                text: thrownError,
+                                icon: 'error'
+                            });
                         }
                     });
                 }
@@ -352,7 +363,13 @@
                             const result = JSON.parse(response);
 
                             if (result.status) {
-                                $('#kembalian').val(result.kembalian);
+                                Swal.fire({
+                                    title: 'Pembayaran',
+                                    text: 'Pembayaran Success',
+                                    icon: 'success',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
                             } else {
                                 Swal.fire({
                                     title: result.title,

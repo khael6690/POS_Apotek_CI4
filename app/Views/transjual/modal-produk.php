@@ -79,6 +79,7 @@
             },
             success: function(response) {
                 let itemx = $.parseJSON(response)
+                $('#modal-produk').modal('hide')
                 if (itemx.data) {
                     const item = itemx.data
                     tampil_data(item)
