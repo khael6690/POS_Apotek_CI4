@@ -87,7 +87,9 @@
                     Swal.fire({
                         title: 'Data',
                         text: 'Data tidak ditemukan!',
-                        icon: 'error'
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 1500
                     });
                 }
             },
@@ -95,7 +97,9 @@
                 Swal.fire({
                     title: xhr.status,
                     text: thrownError,
-                    icon: 'error'
+                    icon: 'error',
+                    showConfirmButton: false,
+                    timer: 1500
                 });
             }
         })

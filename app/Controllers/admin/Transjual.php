@@ -210,7 +210,7 @@ class Transjual extends BaseController
                 echo json_encode($response);
             } else {
                 //nominal cukup
-                $saleid = "TRX" . time();
+                $saleid = $this->request->getVar('sale_id');
                 $this->_m_sale->save([
                     'sale_id' => $saleid,
                     'userid' => user_id(),
@@ -227,22 +227,12 @@ class Transjual extends BaseController
                         'discount' => $discount,
                         'total_price' => $items['subtotal'] - $discount
                     ]);
-
-                    //update stok
-                    // $data_produk = $this->_m_obat->where(['id_obat' => $items['id']])->first();
-                    // $this->_m_obat->save([
-                    //     'id_obat' => $items['id'],
-                    //     'stok' => $data_produk['stok'] - $items['qty']
-                    // ]);
                 }
-
-                $kembalian = $nominal - $total;
 
                 $response = [
                     'status' => true,
                     'title' => 'Transaksi',
-                    'msg' => 'Pembayaran Berhasil disimpan!',
-                    'kembalian' => number_to_currency($kembalian, 'IDR', 'id_ID', 2)
+                    'msg' => 'Pembayaran Berhasil disimpan!'
                 ];
                 echo json_encode($response);
             }

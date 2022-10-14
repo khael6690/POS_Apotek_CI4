@@ -142,9 +142,34 @@
                 <li class="nav-item">
                     <a href="<?= base_url('/setuser') ?>" class="nav-link">
                         <i class="nav-icon fas fa-user-cog"></i>
-                        <p>Setting</p>
+                        <p>Setting Profile</p>
                     </a>
                 </li>
+                <?php if (in_groups('Admin')) : ?>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-cogs"></i>
+                            <p>
+                                Setting
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="<?= base_url('laporan-jual') ?>" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Transaksi Penjualan</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?= base_url('laporan-beli') ?>" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Transaksi Pembelian</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                <?php endif; ?>
                 <li class="nav-item">
                     <a href="<?= base_url('/logout') ?>" class="nav-link">
                         <i class="nav-icon fas fa-sign-out-alt"></i>

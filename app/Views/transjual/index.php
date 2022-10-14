@@ -40,7 +40,7 @@
                             <label for="tgl" class="col-form-label">Tangggal :</label>
                         </div>
                         <div class="col-sm-2">
-                            <input type="date" value="<?= date('Y-m-d') ?>" class="form-control" disabled>
+                            <input type="text" id="saleId" class="form-control" disabled>
                         </div>
                         <div class="col-sm-1">
                             <label for="user" class="col-form-label">User :</label>
@@ -135,6 +135,8 @@
     <script>
         $(document).ready(function() {
 
+            window.onload = sale_id();
+
             window.onload = date_time('date_time');
 
             // card maximaize
@@ -189,7 +191,9 @@
                                 Swal.fire({
                                     title: items.data,
                                     text: items.msg,
-                                    icon: 'error'
+                                    icon: 'error',
+                                    showConfirmButton: false,
+                                    timer: 1500
                                 });
                             }
                         },
@@ -197,7 +201,9 @@
                             Swal.fire({
                                 title: xhr.status,
                                 text: thrownError,
-                                icon: 'error'
+                                icon: 'error',
+                                showConfirmButton: false,
+                                timer: 1500
                             });
                         }
                     });
@@ -238,10 +244,11 @@
         }
 
         //Membuat Sale_id otomatis
-        // function sale_id(params) {
-        //     date = new Date;
-
-        // }
+        function sale_id() {
+            d = new Date()
+            let sale_id = "TRX-" + d.getTime()
+            $('#saleId').val(sale_id);
+        }
 
         // konfirmasi transaksi baru
         $('#transbaru').on('click', function(e) {
@@ -262,19 +269,33 @@
                         type: "get",
                         url: "<?= base_url('reset-cart-transjual') ?>",
                         success: function(response) {
-                            $('#detail_cart').html(`<tr><td colspan="7">Belum ada transaksi!</td></tr>`)
-                            $('#total').load('load-total-transjual')
-                            nominal.clear();
-                            $('#kembalian').val(' ');
-                            $('#kdproduk').val(' ');
-                            $('#nama-customer').val(' ');
-                            $('#id-customer').val(' ');
+                            const result = JSON.parse(response);
+                            if (result.status) {
+                                $('#detail_cart').html(`<tr><td colspan="7">Belum ada transaksi!</td></tr>`)
+                                $('#total').load('load-total-transjual')
+                                nominal.clear();
+                                $('#kembalian').val(' ');
+                                $('#kdproduk').val(' ');
+                                $('#nama-customer').val(' ');
+                                $('#id-customer').val(' ');
+                                sale_id()
+                            } else {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Perintah gagal!',
+                                    icon: 'error',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            }
                         },
                         error: function(xhr, ajaxOptions, thrownError) {
                             Swal.fire({
                                 title: xhr.status,
                                 text: thrownError,
-                                icon: 'error'
+                                icon: 'error',
+                                showConfirmButton: false,
+                                timer: 1500
                             });
                         }
                     });
@@ -303,7 +324,9 @@
                     Swal.fire({
                         title: xhr.status,
                         text: thrownError,
-                        icon: 'error'
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 1500
                     });
                 }
             })
@@ -329,7 +352,9 @@
                         Swal.fire({
                             title: 'Data',
                             text: 'Data tidak ditemukan!',
-                            icon: 'error'
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 1500
                         });
                     }
                 }
@@ -352,10 +377,12 @@
                 if (result.isConfirmed) {
                     const nominalx = nominal.get();
                     const customer = $('#id-customer').val();
+                    const sale_id = $('#saleId').val();
                     $.ajax({
                         type: "post",
                         url: "<?= base_url('pembayaran') ?>",
                         data: {
+                            'sale_id': sale_id,
                             'nominal': nominalx,
                             'customer': customer
                         },
@@ -364,9 +391,9 @@
 
                             if (result.status) {
                                 Swal.fire({
-                                    title: 'Pembayaran',
-                                    text: 'Pembayaran Success',
-                                    icon: 'success',
+                                    title: result.title,
+                                    text: result.msg,
+                                    icon: result.status == true ? 'success' : 'error',
                                     showConfirmButton: false,
                                     timer: 1500
                                 })
@@ -374,7 +401,9 @@
                                 Swal.fire({
                                     title: result.title,
                                     text: result.msg,
-                                    icon: result.status == true ? 'success' : 'error'
+                                    icon: result.status == true ? 'success' : 'error',
+                                    showConfirmButton: false,
+                                    timer: 1500
                                 })
                             }
                         },
@@ -382,7 +411,9 @@
                             Swal.fire({
                                 title: xhr.status,
                                 text: thrownError,
-                                icon: 'error'
+                                icon: 'error',
+                                showConfirmButton: false,
+                                timer: 1500
                             });
                         }
                     });
