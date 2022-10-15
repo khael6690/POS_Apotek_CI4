@@ -28,7 +28,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <form action="<?= base_url('changepass/' . user_id()) ?>" method="POST" enctype="multipart/form-data" class="form-horizontal">
+                    <form action="<?= base_url('changepass/' . user_id()) ?>" method="POST" class="form-horizontal">
                         <?= csrf_field() ?>
                         <div class="card-body">
                             <div class="form-group row">

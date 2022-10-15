@@ -28,13 +28,13 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <form action="<?= base_url() ?>/user-update/<?= $data_user['userid'] ?>" method="POST" enctype="multipart/form-data" class="form-horizontal">
+                    <form action="<?= base_url('/user-update/' . $data_user['userid']) ?>" method="POST" class="form-horizontal">
                         <?= csrf_field() ?>
                         <div class="card-body">
                             <div class="form-group row">
                                 <label for="username" class="col-sm-2 col-form-label">Username</label>
                                 <div class="col-sm-10">
-                                    <input type="text" disabled class="form-control <?= $validation->hasError('username') ? 'is-invalid' : '' ?> " name="username" value="<?= old('username'), $data_user['username'] ?>" placeholder="<?= lang('Auth.username') ?>">
+                                    <input type="text" disabled class="form-control <?= $validation->hasError('username') ? 'is-invalid' : '' ?> " name="username" value="<?= old('username', $data_user['username']) ?>" placeholder="<?= lang('Auth.username') ?>">
                                     <div class="invalid-feedback">
                                         <span><?= $validation->getError('username'); ?></span>
                                     </div>
@@ -43,7 +43,7 @@
                             <div class="form-group row">
                                 <label for="email" class="col-sm-2 col-form-label">Email</label>
                                 <div class="col-sm-10">
-                                    <input type="email" disabled class="form-control <?= $validation->hasError('email') ? 'is-invalid' : '' ?> " name="email" value="<?= old('email'), $data_user['email'] ?>" placeholder="<?= lang('Auth.email') ?>">
+                                    <input type="email" disabled class="form-control <?= $validation->hasError('email') ? 'is-invalid' : '' ?> " name="email" value="<?= old('email', $data_user['email'])  ?>" placeholder="<?= lang('Auth.email') ?>">
                                     <div class="invalid-feedback">
                                         <span><?= $validation->getError('email'); ?></span>
                                     </div>
@@ -54,7 +54,7 @@
                                 <div class="col-sm-10">
                                     <select class="form-control select" id="select1" name="group">
                                         <?php foreach ($data_group as $value) : ?>
-                                            <option value="<?= $value->id ?>" <?= old('group'), $data_user['id'] == $value->id ? 'selected' : '' ?>><?= $value->name ?></option>
+                                            <option value="<?= $value->id ?>" <?= old('group', $data_user['id'])  == $value->id ? 'selected' : '' ?>><?= $value->name ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                     <div class="invalid-feedback">
@@ -66,7 +66,7 @@
                         <!-- /.card-body -->
                         <div class="card-footer">
                             <button type="submit" class="btn btn-primary">Simpan</button>
-                            <a href="<?= base_url() ?>/user" class="btn btn-danger float-right">Cancel</a>
+                            <a href="<?= base_url('user') ?>" class="btn btn-danger float-right">Cancel</a>
                         </div>
                         <!-- /.card-footer -->
                     </form>

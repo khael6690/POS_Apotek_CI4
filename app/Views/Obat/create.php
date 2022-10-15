@@ -28,7 +28,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <form action="<?= base_url() ?>/obat-create" method="POST" enctype="multipart/form-data" class="form-horizontal">
+                    <form action="<?= base_url('obat-create') ?>" method="POST" enctype="multipart/form-data" class="form-horizontal">
                         <?= csrf_field() ?>
                         <div class="card-body">
                             <div class="form-group row">
@@ -117,7 +117,7 @@
                         <!-- /.card-body -->
                         <div class="card-footer">
                             <button type="submit" class="btn btn-primary">Simpan</button>
-                            <a href="<?= base_url() ?>/obat" class="btn btn-danger float-right">Cancel</a>
+                            <a href="<?= base_url('obat') ?>" class="btn btn-danger float-right">Cancel</a>
                         </div>
                         <!-- /.card-footer -->
                     </form>

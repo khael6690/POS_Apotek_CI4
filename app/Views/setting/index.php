@@ -28,13 +28,13 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <form action="<?= base_url('/setuser/' . $data_profile['id']) ?>" method="POST" enctype="multipart/form-data" class="form-horizontal">
+                    <form action="<?= base_url('setting/' . $data_profile['id']) ?>" method="POST" enctype="multipart/form-data" class="form-horizontal">
                         <?= csrf_field() ?>
                         <div class="card-body">
                             <div class="form-group row">
                                 <label for="nama" class="col-sm-2 col-form-label">Nama</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control <?= $validation->hasError('nama') ? 'is-invalid' : '' ?> " name="nama" value="<?= old('nama'), $data_profile['nama'] ?>" placeholder="Nama">
+                                    <input type="text" class="form-control <?= $validation->hasError('nama') ? 'is-invalid' : '' ?> " name="nama" value="<?= old('nama', $data_profile['nama']) ?>" placeholder="Nama">
                                     <div class="invalid-feedback">
                                         <span><?= $validation->getError('nama'); ?></span>
                                     </div>
@@ -43,7 +43,7 @@
                             <div class="form-group row">
                                 <label for="email" class="col-sm-2 col-form-label">Email</label>
                                 <div class="col-sm-10">
-                                    <input type="email" class="form-control <?= $validation->hasError('email') ? 'is-invalid' : '' ?> " name="email" value="<?= old('email'), $data_profile['email'] ?>" placeholder="<?= lang('Auth.email') ?>">
+                                    <input type="email" class="form-control <?= $validation->hasError('email') ? 'is-invalid' : '' ?> " name="email" value="<?= old('email', $data_profile['email'])  ?>" placeholder="<?= lang('Auth.email') ?>">
                                     <div class="invalid-feedback">
                                         <span><?= $validation->getError('email'); ?></span>
                                     </div>
@@ -52,7 +52,7 @@
                             <div class="form-group row">
                                 <label for="kota" class="col-sm-2 col-form-label">Kota</label>
                                 <div class="col-sm-10">
-                                    <input type="kota" class="form-control <?= $validation->hasError('kota') ? 'is-invalid' : '' ?> " name="kota" value="<?= old('kota'), $data_profile['kota'] ?>" placeholder="Kota">
+                                    <input type="kota" class="form-control <?= $validation->hasError('kota') ? 'is-invalid' : '' ?> " name="kota" value="<?= old('kota', $data_profile['kota']) ?>" placeholder="Kota">
                                     <div class="invalid-feedback">
                                         <span><?= $validation->getError('kota'); ?></span>
                                     </div>
@@ -61,16 +61,16 @@
                             <div class="form-group row">
                                 <label for="alamat" class="col-sm-2 col-form-label">Alamat</label>
                                 <div class="col-sm-10">
-                                    <textarea class="form-control <?= $validation->hasError('alamat') ? 'is-invalid' : '' ?>" rows="2" name="alamat" placeholder="Alamat...."><?= old('alamat'), $data_profile['alamat'] ?></textarea>
+                                    <textarea class="form-control <?= $validation->hasError('alamat') ? 'is-invalid' : '' ?>" rows="2" name="alamat" placeholder="Alamat...."><?= old('alamat', $data_profile['alamat']) ?></textarea>
                                     <div class="invalid-feedback">
-                                        <span><?= $validation->getError('fullname'); ?></span>
+                                        <span><?= $validation->getError('alamat'); ?></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="telp" class="col-sm-2 col-form-label">Telfon</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control <?= $validation->hasError('telp') ? 'is-invalid' : '' ?> " name="telp" value="<?= old('telp'), $data_profile['telp'] ?>" placeholder="(021)-....">
+                                    <input type="text" class="form-control <?= $validation->hasError('telp') ? 'is-invalid' : '' ?> " name="telp" value="<?= old('telp', $data_profile['telp']) ?>" placeholder="(021)-....">
                                     <div class="invalid-feedback">
                                         <span><?= $validation->getError('telp'); ?></span>
                                     </div>

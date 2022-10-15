@@ -28,13 +28,13 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <form action="<?= base_url() ?>/satuan-update/<?= $data_satuan['id'] ?>" method="POST" class="form-horizontal">
+                    <form action="<?= base_url('/satuan-update/' . $data_satuan['id']) ?>" method="POST" class="form-horizontal">
                         <?= csrf_field() ?>
                         <div class="card-body">
                             <div class="form-group row">
                                 <label for="satuan" class="col-sm-2 col-form-label">Jenis Satuan</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control <?= $validation->hasError('satuan') ? 'is-invalid' : '' ?> >" name="satuan" value="<?= old('satuan'), $data_satuan['satuan'] ?>" placeholder="">
+                                    <input type="text" class="form-control <?= $validation->hasError('satuan') ? 'is-invalid' : '' ?> >" name="satuan" value="<?= old('satuan', $data_satuan['satuan']) ?>" placeholder="">
                                     <div class="invalid-feedback">
                                         <span><?= $validation->getError('satuan'); ?></span>
                                     </div>

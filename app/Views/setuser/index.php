@@ -34,7 +34,7 @@
                             <div class="form-group row">
                                 <label for="username" class="col-sm-2 col-form-label">Username</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control <?= $validation->hasError('username') ? 'is-invalid' : '' ?> " name="username" value="<?= old('username'), $data_user->username ?>" placeholder="<?= lang('Auth.username') ?>">
+                                    <input type="text" class="form-control <?= $validation->hasError('username') ? 'is-invalid' : '' ?> " name="username" value="<?= old('username', $data_user->username) ?>" placeholder="<?= lang('Auth.username') ?>">
                                     <div class="invalid-feedback">
                                         <span><?= $validation->getError('username'); ?></span>
                                     </div>
@@ -43,7 +43,7 @@
                             <div class="form-group row">
                                 <label for="email" class="col-sm-2 col-form-label">Email</label>
                                 <div class="col-sm-10">
-                                    <input type="email" class="form-control <?= $validation->hasError('email') ? 'is-invalid' : '' ?> " name="email" value="<?= old('email'), $data_user->email ?>" placeholder="<?= lang('Auth.email') ?>">
+                                    <input type="email" class="form-control <?= $validation->hasError('email') ? 'is-invalid' : '' ?> " name="email" value="<?= old('email', $data_user->email)  ?>" placeholder="<?= lang('Auth.email') ?>">
                                     <div class="invalid-feedback">
                                         <span><?= $validation->getError('email'); ?></span>
                                     </div>
@@ -52,7 +52,7 @@
                             <div class="form-group row">
                                 <label for="fullname" class="col-sm-2 col-form-label">Nama Lengkap</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control <?= $validation->hasError('fullname') ? 'is-invalid' : '' ?> " name="fullname" value="<?= old('fullname'), $data_user->fullname ?>" placeholder="Full Name">
+                                    <input type="text" class="form-control <?= $validation->hasError('fullname') ? 'is-invalid' : '' ?> " name="fullname" value="<?= old('fullname', $data_user->fullname)  ?>" placeholder="Full Name">
                                     <div class="invalid-feedback">
                                         <span><?= $validation->getError('fullname'); ?></span>
                                     </div>
@@ -62,7 +62,7 @@
                                 <label for="user_image" class="col-sm-2 col-form-label">Upload Profil</label>
                                 <div class="col-sm-10">
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input <?= $validation->hasError('user_image') ? 'is-invalid' : '' ?>" name="user_image" value="<?= old('user_image'), $data_user->user_image ?>" id="img" onchange="previewImage()" accept="image/*">
+                                        <input type="file" class="custom-file-input <?= $validation->hasError('user_image') ? 'is-invalid' : '' ?>" name="user_image" value="<?= old('user_image', $data_user->user_image) ?>" id="img" onchange="previewImage()" accept="image/*">
                                         <label class="custom-file-label" for="user_image">Choose file</label>
                                         <div class="invalid-feedback">
                                             <span><?= $validation->getError('user_image'); ?></span>

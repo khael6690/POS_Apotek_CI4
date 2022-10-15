@@ -90,25 +90,31 @@ class Transjual extends BaseController
     {
         $data = $this->_cart->contents();
         if ($data != null) {
-            $isi = [];
-            foreach ($data as $value) {
-                $discount = ($value['options']['discount'] / 100)  * $value['subtotal'];
-                $values = [];
-                $values['rowid'] = $value['rowid'];
-                $values['id'] = $value['id'];
-                $values['name'] = $value['name'];
-                $values['qty'] = $value['qty'];
-                $values['price'] = number_to_currency($value['price'], 'IDR', 'id_ID', 2);
-                $values['subtotal'] = number_to_currency(($value['subtotal'] - $discount), 'IDR', 'id_ID', 2);
-                $values['discount'] =  number_to_currency($discount, 'IDR', 'id_ID', 2);
+            // $isi = [];
+            // foreach ($data as $value) {
+            //     $discount = ($value['options']['discount'] / 100)  * $value['subtotal'];
+            //     $values = [];
+            //     $values['rowid'] = $value['rowid'];
+            //     $values['id'] = $value['id'];
+            //     $values['name'] = $value['name'];
+            //     $values['qty'] = $value['qty'];
+            //     $values['price'] = number_to_currency($value['price'], 'IDR', 'id_ID', 2);
+            //     $values['subtotal'] = number_to_currency(($value['subtotal'] - $discount), 'IDR', 'id_ID', 2);
+            //     $values['discount'] =  number_to_currency($discount, 'IDR', 'id_ID', 2);
 
-                $isi[] = $values;
-                $json = [
-                    'status' => true,
-                    'data' =>  $isi,
-                    'msg' => 'Success'
-                ];
-            }
+            //     $isi[] = $values;
+            $item = [
+                'data' => $data
+            ];
+
+            $isi = view('transjual/items', $item);
+
+            $json = [
+                'status' => true,
+                'data' =>  $isi,
+                'msg' => 'Success'
+            ];
+            // }
         } else {
             $json = [
                 'status' => false,
@@ -118,26 +124,6 @@ class Transjual extends BaseController
         }
 
         echo json_encode($json);
-
-        // $output = "";
-        // $no = 1;
-        // foreach ($this->_cart->contents() as $items) {
-        //     $discount = ($items['options']['discount'] / 100)  * $items['subtotal'];
-        //     $output .= '
-        //     <tr>
-        //     <td>' . $no++ . '</td>
-        //     <td>' . $items['name'] . '</td>
-        //     <td>' . $items['qty'] . '</td>
-        //     <td>' . number_to_currency($items['price'], 'IDR', 'id_ID', 2) . '</td>
-        //     <td>' . $items['options']['discount'] . '</td>
-        //     <td>' . number_to_currency(($items['subtotal'] - $discount), 'IDR', 'id_ID', 2) . '</td>
-        //     <td>
-        //     <button type="button" class="btn btn-warning edit-cart" data-toggle="modal" data-target="#modal-stok" id="' . $items['rowid'] . '" qty="' . $items['qty'] . '">Ubah</button>
-        //     <button class="btn btn-danger hapus-cart" id="' . $items['rowid'] . '">Hapus</button>
-        //     </td>
-        //     </tr>';
-        // }
-        // return $output;
     }
 
     public function delete_cart($rowid)

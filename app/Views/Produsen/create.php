@@ -28,7 +28,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <form action="<?= base_url() ?>/produsen-create" method="POST" class="form-horizontal">
+                    <form action="<?= base_url('produsen-create') ?>" method="POST" class="form-horizontal">
                         <?= csrf_field() ?>
                         <div class="card-body">
                             <div class="form-group row">
@@ -47,7 +47,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="satuan" class="col-sm-2 col-form-label">Nomor Telfon</label>
+                                <label for="telp" class="col-sm-2 col-form-label">Nomor Telfon</label>
                                 <div class="col-sm-10">
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">

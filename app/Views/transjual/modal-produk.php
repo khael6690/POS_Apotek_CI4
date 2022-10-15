@@ -47,24 +47,24 @@
 <?= $this->section('script'); ?>
 <script>
     // tampil data transaksi
-    function tampil_data(item) {
-        let text = "";
-        for (var i = 0; i < item.length; i++) {
-            $('#detail_cart').html(text +=
-                `<tr><td>` + (i + 1) + `</td>
-                    <td>` + item[i].name + `</td>
-                    <td style="width: 10%;"><input type="number" min="1" class="form-control" value="` + item[i].qty + `" rowid="` + item[i].rowid + `" id="jumqty"></td>
-                    <td>` + item[i].price + `</td>
-                    <td>` + item[i].discount + `</td>
-                    <td>` + item[i].subtotal + `</td>
-                    <td>
-                        <button class="btn btn-danger hapus-cart" id="` + item[i].rowid + `">Hapus</button>
-                    </td>
-                    </tr>`);
-        }
-        $('#total').load('load-total-transjual')
-        $('#nominal').focus();
-    }
+    // function tampil_data(item) {
+    //     let text = "";
+    //     for (var i = 0; i < item.length; i++) {
+    //         $('#detail_cart').html(text +=
+    //             `<tr><td>` + (i + 1) + `</td>
+    //                 <td>` + item[i].name + `</td>
+    //                 <td style="width: 10%;"><input type="number" min="1" class="form-control" value="` + item[i].qty + `" rowid="` + item[i].rowid + `" id="jumqty"></td>
+    //                 <td>` + item[i].price + `</td>
+    //                 <td>` + item[i].discount + `</td>
+    //                 <td>` + item[i].subtotal + `</td>
+    //                 <td>
+    //                     <button class="btn btn-danger hapus-cart" id="` + item[i].rowid + `">Hapus</button>
+    //                 </td>
+    //                 </tr>`);
+    //     }
+    //     $('#total').load('load-total-transjual')
+    //     $('#nominal').focus();
+    // }
 
     // menambahkan produk
     function add_to_cart(id, nama, harga, discount) {
@@ -82,7 +82,7 @@
                 $('#modal-produk').modal('hide')
                 if (itemx.data) {
                     const item = itemx.data
-                    tampil_data(item)
+                    tampilItems(item)
                 } else {
                     Swal.fire({
                         title: 'Data',

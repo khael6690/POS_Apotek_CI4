@@ -50,11 +50,13 @@
                                     <td><?= $value->username; ?></td>
                                     <td><?= $value->email; ?></td>
                                     <td>
-                                        <form action="user-aktif/<?= $value->id; ?>" method="post" class="d-inline form-aktif">
-                                            <?= csrf_field() ?>
-                                            <input type="hidden" name="_method" value="POST">
-                                            <button class="btn btn-sm text-white tombol-aktif <?= $value->active == 1 ? 'btn-success' : 'btn-danger' ?>"><?= $value->active == 1 ? 'Aktif' : 'Tidak Aktif' ?></button>
-                                        </form>
+                                        <?php if ($value->id !== user_id()) : ?>
+                                            <form action="<?= base_url('user-aktif/' . $value->id) ?>" method="post" class="d-inline form-aktif">
+                                                <?= csrf_field() ?>
+                                                <input type="hidden" name="_method" value="POST">
+                                                <button class="btn btn-sm text-white tombol-aktif <?= $value->active == 1 ? 'btn-success' : 'btn-danger' ?>"><?= $value->active == 1 ? 'Aktif' : 'Tidak Aktif' ?></button>
+                                            </form>
+                                        <?php endif; ?>
                                         <form action="user-reset/<?= $value->id; ?>" method="post" class="d-inline form-reset">
                                             <?= csrf_field() ?>
                                             <input type="hidden" name="_method" value="POST">
@@ -64,12 +66,14 @@
 
                                     <td>
                                         <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-sm" onclick="detail(<?= $value->id ?>)"><i class="fas fa-eye"></i> Detail</button>
-                                        <a href="user-update/<?= $value->id; ?>" class="btn btn-warning btn-sm text-white"><i class="fas fa-edit"></i> Edit</a>
-                                        <form action="user-delete/<?= $value->id; ?>" method="post" class="d-inline form-hapus" id="form-hapus">
-                                            <?= csrf_field() ?>
-                                            <input type="hidden" name="_method" value="DELETE">
-                                            <button class="btn btn-danger btn-sm text-white tombol-hapus"><i class="fas fa-trash"></i> Hapus</button>
-                                        </form>
+                                        <?php if ($value->id !== user_id()) : ?>
+                                            <a href="user-update/<?= $value->id; ?>" class="btn btn-warning btn-sm text-white"><i class="fas fa-edit"></i> Edit</a>
+                                            <form action="user-delete/<?= $value->id; ?>" method="post" class="d-inline form-hapus" id="form-hapus">
+                                                <?= csrf_field() ?>
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <button class="btn btn-danger btn-sm text-white tombol-hapus"><i class="fas fa-trash"></i> Hapus</button>
+                                            </form>
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

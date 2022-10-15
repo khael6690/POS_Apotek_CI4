@@ -32,18 +32,13 @@ class Setting extends BaseController
     public function save($id = null)
     {
         if ($id !== null) {
-            if (user()->username === $this->request->getVar('username')) {
-                $rule = 'required';
-            } else {
-                $rule = 'required|is_unique[users.username]';
-            }
+            $data_profile = $this->_profile->find($id);
             if (!$this->validate([
-                'username' => [
-                    'rules' => $rule,
-                    'label' => 'Username',
+                'nama' => [
+                    'rules' => 'required',
+                    'label' => 'Nama',
                     'errors' => [
-                        'required' => '{field} Harus diisi!',
-                        'is_unique' => '{field} Sudah digunakan!'
+                        'required' => '{field} Harus diisi!'
                     ]
                 ],
                 'email' => [
@@ -53,19 +48,44 @@ class Setting extends BaseController
                         'required' => '{field} Harus diisi!'
                     ]
                 ],
-                'user_image' => [
-                    'rules' => 'max_size[user_image,1024]|is_image[user_image]|mime_in[user_image,image/jpg,image/jpeg,image/png]',
-                    'label' => 'gambar',
+                'kota' => [
+                    'rules' => 'required',
+                    'label' => 'Kota',
                     'errors' => [
-                        'max_size' => '{field} ukuran gambar tidak boleh lebih 1mb!',
-                        'is_image' => 'File yang dipilih bukan gambar!',
-                        'mime_in' => 'File yang dipilih bukan gambar!'
+                        'required' => '{field} Harus diisi!'
+                    ]
+                ], 'alamat' => [
+                    'rules' => 'required',
+                    'label' => 'Alamat',
+                    'errors' => [
+                        'required' => '{field} Harus diisi!'
+                    ]
+                ], 'telp' => [
+                    'rules' => 'required',
+                    'label' => 'Nomor Telfon',
+                    'errors' => [
+                        'required' => '{field} Harus diisi!'
                     ]
                 ]
             ])) {
                 // dd(\config\Services::validation()->getErrors());
-                return redirect()->to('setuser')->withInput();
+                return redirect()->to('setting')->withInput();
             }
-        }
+            if ($this->_profile->save(
+                [
+                    'id' => $id,
+                    'nama' => $this->request->getVar('nama'),
+                    'email' => $this->request->getVar('email'),
+                    'kota' => $this->request->getVar('kota'),
+                    'alamat' => $this->request->getVar('alamat'),
+                    'telp' => $this->request->getVar('telp')
+                ]
+            )) {
+                session()->setFlashdata('sukses', 'Data berhasil diubah!');
+                return redirect()->to('setting');
+            }
+        } else
+            session()->setFlashdata('warning', 'Data gagal diubah!');
+        return redirect()->to('setting');
     }
 }

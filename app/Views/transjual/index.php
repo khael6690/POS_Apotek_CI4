@@ -184,9 +184,7 @@
                             // console.log(result)
                             if (items.status === true) {
                                 const item = items.data
-                                tampil_data(item)
-                                $('#total').load('load-total-transjual')
-
+                                tampilItems(item)
                             } else {
                                 Swal.fire({
                                     title: items.data,
@@ -210,6 +208,13 @@
                 }
             });
         });
+
+        // tampil data transaksi
+        function tampilItems(item) {
+            $('#detail_cart').html(item)
+            $('#total').load('load-total-transjual')
+            $('#nominal').focus();
+        }
 
         // membuat tanggal dan waktu
         function date_time(id) {
@@ -313,8 +318,7 @@
                     let itemx = $.parseJSON(response)
                     if (itemx.status == true) {
                         const item = itemx.data
-                        tampil_data(item)
-                        $('#total').load('load-total-transjual')
+                        tampilItems(item)
                     } else {
                         $('#detail_cart').html(`<tr><td colspan="7">Belum ada transaksi!</td></tr>`)
                         $('#total').load('load-total-transjual')
@@ -346,8 +350,7 @@
                     let items = $.parseJSON(result)
                     if (items.data) {
                         const item = items.data
-                        tampil_data(item)
-                        $('#total').load('load-total-transjual')
+                        tampilItems(item)
                     } else {
                         Swal.fire({
                             title: 'Data',

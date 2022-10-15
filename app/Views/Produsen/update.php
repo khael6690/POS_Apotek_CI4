@@ -28,13 +28,13 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <form action="<?= base_url() ?>/produsen-update/<?= $data_produsen['id_produsen'] ?>" method="POST" class="form-horizontal">
+                    <form action="<?= base_url('produsen-update/' . $data_produsen['id_produsen']) ?>" method="POST" class="form-horizontal">
                         <?= csrf_field() ?>
                         <div class="card-body">
                             <div class="form-group row">
                                 <label for="nama" class="col-sm-2 col-form-label">Nama Produsen</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control <?= $validation->hasError('nama') ? 'is-invalid' : '' ?> >" name="nama" value="<?= old('nama'), $data_produsen['nama'] ?>" placeholder="">
+                                    <input type="text" class="form-control <?= $validation->hasError('nama') ? 'is-invalid' : '' ?> >" name="nama" value="<?= old('nama', $data_produsen['nama']) ?>" placeholder="">
                                     <div class="invalid-feedback">
                                         <span><?= $validation->getError('nama'); ?></span>
                                     </div>
@@ -43,17 +43,17 @@
                             <div class="form-group row">
                                 <label for="alamat" class="col-sm-2 col-form-label">Alamat</label>
                                 <div class="col-sm-10">
-                                    <textarea class="form-control" name="alamat" rows="2"><?= old('alamat'), $data_produsen['alamat'] ?></textarea>
+                                    <textarea class="form-control" name="alamat" rows="2"><?= old('alamat', $data_produsen['alamat']) ?></textarea>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="satuan" class="col-sm-2 col-form-label">Nomor Telfon</label>
+                                <label for="telp" class="col-sm-2 col-form-label">Nomor Telfon</label>
                                 <div class="col-sm-10">
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" name="telp" value="<?= old('telp'), $data_produsen['telp'] ?>" placeholder="">
+                                        <input type="text" class="form-control" name="telp" value="<?= old('telp', $data_produsen['telp']) ?>" placeholder="">
                                     </div>
                                 </div>
                             </div>

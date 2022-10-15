@@ -7,6 +7,6 @@ use CodeIgniter\Model;
 class ProfileModel extends Model
 {
     protected $table            = 'profile';
-    protected $primaryKey       = 'id';
     protected $allowedFields    = ['nama', 'alamat', 'kota', 'telp', 'email'];
+    protected $useTimestamps = true;
 }
