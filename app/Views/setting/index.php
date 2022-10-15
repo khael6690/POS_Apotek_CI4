@@ -28,61 +28,61 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <form action="<?= base_url('/setuser/' . user_id()) ?>" method="POST" enctype="multipart/form-data" class="form-horizontal">
+                    <form action="<?= base_url('/setuser/' . $data_profile['id']) ?>" method="POST" enctype="multipart/form-data" class="form-horizontal">
                         <?= csrf_field() ?>
                         <div class="card-body">
                             <div class="form-group row">
-                                <label for="username" class="col-sm-2 col-form-label">Username</label>
+                                <label for="nama" class="col-sm-2 col-form-label">Nama</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control <?= $validation->hasError('username') ? 'is-invalid' : '' ?> " name="username" value="<?= old('username'), $data_user->username ?>" placeholder="<?= lang('Auth.username') ?>">
+                                    <input type="text" class="form-control <?= $validation->hasError('nama') ? 'is-invalid' : '' ?> " name="nama" value="<?= old('nama'), $data_profile['nama'] ?>" placeholder="Nama">
                                     <div class="invalid-feedback">
-                                        <span><?= $validation->getError('username'); ?></span>
+                                        <span><?= $validation->getError('nama'); ?></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="email" class="col-sm-2 col-form-label">Email</label>
                                 <div class="col-sm-10">
-                                    <input type="email" class="form-control <?= $validation->hasError('email') ? 'is-invalid' : '' ?> " name="email" value="<?= old('email'), $data_user->email ?>" placeholder="<?= lang('Auth.email') ?>">
+                                    <input type="email" class="form-control <?= $validation->hasError('email') ? 'is-invalid' : '' ?> " name="email" value="<?= old('email'), $data_profile['email'] ?>" placeholder="<?= lang('Auth.email') ?>">
                                     <div class="invalid-feedback">
                                         <span><?= $validation->getError('email'); ?></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="fullname" class="col-sm-2 col-form-label">Nama Lengkap</label>
+                                <label for="kota" class="col-sm-2 col-form-label">Kota</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control <?= $validation->hasError('fullname') ? 'is-invalid' : '' ?> " name="fullname" value="<?= old('fullname'), $data_user->fullname ?>" placeholder="Full Name">
+                                    <input type="kota" class="form-control <?= $validation->hasError('kota') ? 'is-invalid' : '' ?> " name="kota" value="<?= old('kota'), $data_profile['kota'] ?>" placeholder="Kota">
+                                    <div class="invalid-feedback">
+                                        <span><?= $validation->getError('kota'); ?></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="alamat" class="col-sm-2 col-form-label">Alamat</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control <?= $validation->hasError('alamat') ? 'is-invalid' : '' ?>" rows="2" name="alamat" placeholder="Alamat...."><?= old('alamat'), $data_profile['alamat'] ?></textarea>
                                     <div class="invalid-feedback">
                                         <span><?= $validation->getError('fullname'); ?></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="user_image" class="col-sm-2 col-form-label">Upload Profil</label>
+                                <label for="telp" class="col-sm-2 col-form-label">Telfon</label>
                                 <div class="col-sm-10">
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input <?= $validation->hasError('user_image') ? 'is-invalid' : '' ?>" name="user_image" value="<?= old('user_image'), $data_user->user_image ?>" id="img" onchange="previewImage()" accept="image/*">
-                                        <label class="custom-file-label" for="user_image">Choose file</label>
-                                        <div class="invalid-feedback">
-                                            <span><?= $validation->getError('user_image'); ?></span>
-                                        </div>
+                                    <input type="text" class="form-control <?= $validation->hasError('telp') ? 'is-invalid' : '' ?> " name="telp" value="<?= old('telp'), $data_profile['telp'] ?>" placeholder="(021)-....">
+                                    <div class="invalid-feedback">
+                                        <span><?= $validation->getError('telp'); ?></span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label for="preview" class="col-sm-2 col-form-label">Preview Image</label>
-                                <div class="col-sm-10">
-                                    <img src="<?= base_url('/assets/upload/user/' . $data_user->user_image) ?>" alt="$data_user->username" class="img_preview img-thumbnail" style="width: 150px;">
-                                </div>
+
+                            <!-- /.card-body -->
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                <a href="<?= base_url() ?>" class="btn btn-dark text-white">Back</a>
                             </div>
-                        </div>
-                        <!-- /.card-body -->
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Simpan</button>
-                            <a href="<?= base_url('changepass') ?>" class="btn btn-warning text-white">Ganti Password</a>
-                        </div>
-                        <!-- /.card-footer -->
+                            <!-- /.card-footer -->
                     </form>
 
                 </div>

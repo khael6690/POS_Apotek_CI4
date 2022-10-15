@@ -2,7 +2,7 @@
 <div class="card card-primary card-outline">
     <div class="card-body box-profile">
         <div class="text-center">
-            <img class="profile-user-img img-fluid img-circle" src="<?= base_url('assets/upload/user') ?>/<?= $data_users['user_image']; ?>" alt="<?= $data_users['username']; ?>">
+            <img class="profile-user-img img-fluid img-circle" src="<?= base_url('assets/upload/user/thumbs/') ?>/<?= $data_users['user_image']; ?>" alt="<?= $data_users['username']; ?>">
         </div>
 
         <h3 class="profile-username text-center"><?= strtoupper($data_users['username']); ?></h3>

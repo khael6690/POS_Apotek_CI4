@@ -64,6 +64,12 @@ $routes->group('', ['filter' => 'permission:management-user'], function ($routes
     $routes->post('group-update/(:num)', 'admin\Group::update/$1');
 });
 
+$routes->group('', ['filter' => 'role:Admin'], function ($routes) {
+
+    $routes->get('setting', 'admin\Setting::index');
+    $routes->post('setting/(:num)', 'admin\Setting::save');
+});
+
 // route akses obat
 $routes->group('', ['filter' => 'permission:management-obat'], function ($routes) {
     $routes->get('obat', 'admin\Obat::index');
@@ -103,11 +109,16 @@ $routes->group('', ['filter' => 'permission:management-transaksi'], function ($r
     $routes->get('load-total-transjual', 'admin\Transjual::getTotal');
     $routes->post('load-kembalian-transjual', 'admin\Transjual::getKembalian');
     $routes->post('pembayaran', 'admin\Transjual::pembayaran');
+    // $routes->get('laporan-jual', 'admin\Transjual::laporan');
+    // $routes->post('laporan-jual-detail', 'admin\Transjual::lapdetail');
+    // $routes->get('print-laporan-jual-detail/(:any)', 'admin\Transjual::printdetail/$1');
+});
+
+$routes->group('', ['filter' => 'permission:management-laporan'], function ($routes) {
     $routes->get('laporan-jual', 'admin\Transjual::laporan');
     $routes->post('laporan-jual-detail', 'admin\Transjual::lapdetail');
     $routes->get('print-laporan-jual-detail/(:any)', 'admin\Transjual::printdetail/$1');
 });
-
 /*
  * --------------------------------------------------------------------
  * Additional Routing
