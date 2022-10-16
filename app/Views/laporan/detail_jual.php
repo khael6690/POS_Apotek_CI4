@@ -52,7 +52,7 @@
                         <th>Product</th>
                         <th>Harga</th>
                         <th>Discount</th>
-                        <th>Subtotal</th>
+                        <th>Total</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -64,7 +64,7 @@
                             <td><?= $value['amount']; ?></td>
                             <td><?= $value['nama']; ?></td>
                             <td><?= number_to_currency($value['price'], 'IDR', 'id_ID', 2); ?></td>
-                            <td><?= $value['discount']; ?>%</td>
+                            <td><?= number_to_currency($value['discount'], 'IDR', 'id_ID', 2); ?></td>
                             <td><?= number_to_currency($value['total_price'], 'IDR', 'id_ID', 2); ?></td>
                         </tr>
                     <?php $total += $value['total_price'];
@@ -89,10 +89,6 @@
         <div class="col-6">
             <div class="table-responsive">
                 <table class="table">
-                    <tr>
-                        <th style="width:50%">Total Item:</th>
-                        <td><?= $qty; ?></td>
-                    </tr>
                     <tr>
                         <th style="width:50%">Subtotal:</th>
                         <td><?= number_to_currency($total, 'IDR', 'id_ID', 2); ?></td>

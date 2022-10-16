@@ -75,15 +75,6 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="stok" class="col-sm-2 col-form-label">Stok Obat</label>
-                                <div class="col-sm-10">
-                                    <input type="number" class="form-control <?= $validation->hasError('stok') ? 'is-invalid' : '' ?>  ?>" id="stok" name="stok" value="<?= old('stok', $data_obat['stok']) ?>" placeholder="Stok Obat">
-                                    <div class="invalid-feedback">
-                                        <span><?= $validation->getError('stok'); ?></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group row">
                                 <label for="stok" class="col-sm-2 col-form-label">Produsen</label>
                                 <div class="col-sm-10">
                                     <select class="form-control" name="produsen" id="select2">

@@ -23,11 +23,11 @@
                         foreach ($produk as $value) : ?>
                             <tr>
                                 <td><?= $no++; ?> </td>
-                                <td><?= $value['nama']; ?></td>
-                                <td><?= $value['stok']; ?></td>
+                                <td><?= $value['nama_obat']; ?></td>
+                                <td><?= $value['jumlah']; ?></td>
                                 <td><?= number_to_currency($value['harga'], 'IDR', 'id_ID', 2) ?></td>
                                 <td>
-                                    <button type="button" class="btn btn-primary" onclick="add_to_cart('<?= $value['id_obat']; ?>','<?= $value['nama']; ?>','<?= $value['harga']; ?>','<?= $value['discount']; ?>')"><i class="fas fa-plus-circle"></i> Pilih</button>
+                                    <button type="button" class="btn btn-primary" onclick="add_to_cart('<?= $value['id_obat']; ?>','<?= $value['nama_obat']; ?>','<?= $value['harga']; ?>','<?= $value['discount']; ?>')"><i class="fas fa-plus-circle"></i> Pilih</button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

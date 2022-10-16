@@ -67,13 +67,6 @@ class Obat extends BaseController
                     'is_unique' => '{field} Sudah digunakan!'
                 ]
             ],
-            'stok' => [
-                'rules' => 'required',
-                'label' => 'Stok',
-                'errors' => [
-                    'required' => '{field} Harus diisi!'
-                ]
-            ],
             'harga' => [
                 'rules' => 'required',
                 'label' => 'Harga',
@@ -92,7 +85,7 @@ class Obat extends BaseController
             ]
         ])) {
             // dd(\config\Services::validation()->getErrors());
-            return redirect()->to('/obat-create')->withInput();
+            return redirect()->to('obat-create')->withInput();
         }
         // proses upload gambar
         // dd($this->request->getFile('img'));
@@ -117,13 +110,12 @@ class Obat extends BaseController
                 'deskripsi' => $this->request->getVar('deskripsi'),
                 'img' => $namafile,
                 'satuan' => $this->request->getVar('satuan'),
-                'stok' => $this->request->getVar('stok'),
                 'produsen' => $this->request->getVar('produsen'),
                 'harga' => $this->request->getVar('harga'),
             ]
         )) {
             session()->setFlashdata('sukses', 'Data berhasil ditambahkan!');
-            return redirect()->to('/obat');
+            return redirect()->to('obat');
         } else
             session()->setFlashdata('warning', 'Data gagal ditambahkan!');
     }
@@ -161,13 +153,6 @@ class Obat extends BaseController
                     'is_unique' => '{field} Sudah digunakan!'
                 ]
             ],
-            'stok' => [
-                'rules' => 'required',
-                'label' => 'Stok',
-                'errors' => [
-                    'required' => '{field} Harus diisi!'
-                ]
-            ],
             'harga' => [
                 'rules' => 'required',
                 'label' => 'Harga',
@@ -186,7 +171,7 @@ class Obat extends BaseController
             ]
         ])) {
             // dd(\config\Services::validation()->getErrors());
-            return redirect()->to('/obat-update/' . $id)->withInput();
+            return redirect()->to('obat-update/' . $id)->withInput();
         }
         // proses upload gambar
         // dd($this->request->getFile('img'));
@@ -216,14 +201,13 @@ class Obat extends BaseController
                 'deskripsi' => $this->request->getVar('deskripsi'),
                 'img' => $namafile,
                 'satuan' => $this->request->getVar('satuan'),
-                'stok' => $this->request->getVar('stok'),
                 'produsen' => $this->request->getVar('produsen'),
                 'harga' => $this->request->getVar('harga'),
             ]
         )) {
             session()->setFlashdata('sukses', 'Data berhasil diperbaharui!');
         } else session()->setFlashdata('warning', 'Data gagal diperbaharui!');
-        return redirect()->to('/obat');
+        return redirect()->to('obat');
     }
 
     public function delete($id)
@@ -238,6 +222,6 @@ class Obat extends BaseController
         if ($this->_m_obat->delete($id)) {
             session()->setFlashdata('sukses', 'Data berhasil dihapus!');
         } else session()->setFlashdata('warning', 'Data gagal dihapus!');
-        return redirect()->to('/obat');
+        return redirect()->to('obat');
     }
 }

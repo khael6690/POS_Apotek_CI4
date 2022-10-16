@@ -11,7 +11,7 @@
         <p class="text-muted"><?= $data_obat['satuan_obat']; ?></p>
         <hr>
         <strong><i class="fas fa-archive mr-1"></i> Stok</strong>
-        <p class="text-muted"><?= $data_obat['stok']; ?> </p>
+        <p class="text-muted"><?= $data_obat['jumlah']; ?> </p>
         <hr>
         <strong><i class="fas fa-money-bill-wave mr-1"></i> Harga</strong>
         <p class="text-muted">Rp. <?= $data_obat['harga']; ?></p>

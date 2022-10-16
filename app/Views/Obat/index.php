@@ -30,7 +30,7 @@
                 <!-- /.card-header -->
                 <div class="card-body">
                     <div class="col-md-2">
-                        <a href="<?= base_url() ?>/obat-create" class="btn btn-block bg-gradient-primary btn-sm mb-3"><i class="fas fa-plus-circle"></i> Tambah <?= $title; ?></a>
+                        <a href="<?= base_url('obat-create') ?>" class="btn btn-block bg-gradient-primary btn-sm mb-3"><i class="fas fa-plus-circle"></i> Tambah <?= $title; ?></a>
                     </div>
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
@@ -49,7 +49,7 @@
                                 <tr>
                                     <td><?= $no++; ?> </td>
                                     <td><?= $obat['nama_obat']; ?></td>
-                                    <td><?= $obat['stok']; ?></td>
+                                    <td><?= $obat['jumlah']; ?></td>
                                     <td><?= $obat['nama']; ?></td>
                                     <td>Rp. <?= $obat['harga']; ?></td>
                                     <td>

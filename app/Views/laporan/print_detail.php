@@ -33,7 +33,7 @@
                 <div class="col-sm-4 invoice-col">
                     Kasir
                     <address>
-                        <strong><?= $sale[0]['username']; ?></strong><br>
+                        <strong><?= $sale[0]['fullname']; ?></strong><br>
                         <?= $profile['0']['alamat']; ?><br>
                         <?= $profile['0']['kota']; ?><br>
                         Phone: <?= $profile['0']['telp']; ?><br>
@@ -45,9 +45,11 @@
                     Customer
                     <address>
                         <strong><?= ($sale[0]['nama_customer'] == null) ? 'Guest' : $sale[0]['nama_customer']; ?></strong><br>
-                        <?= ($sale[0]['alamat'] == null) ? '----------' : $sale[0]['alamat']; ?><br>
-                        Phone: <?= ($sale[0]['telp'] == null) ? '----------' : $sale[0]['telp']; ?><br>
-                        Email: <?= ($sale[0]['email'] == null) ? '----------' : $sale[0]['email']; ?>
+                        <?php if ($sale[0]['nama_customer'] !== null) : ?>
+                            <?= $sale[0]['alamat']; ?><br>
+                            Phone: <?= $sale[0]['telp']; ?><br>
+                            Email: <?= $sale[0]['email']; ?>
+                        <?php endif; ?>
                     </address>
                 </div>
                 <!-- /.col -->
@@ -66,25 +68,29 @@
                             <tr>
                                 <th>Qty</th>
                                 <th>Product</th>
-                                <th>Subtotal</th>
+                                <th>Harga</th>
+                                <th>Discount</th>
+                                <th>Total</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php $total = 0;
                             $discount = 0;
                             $qty = 0;
-                            $subtotal = 0;
                             foreach ($detail as $value) : ?>
                                 <tr>
                                     <td><?= $value['amount']; ?></td>
                                     <td><?= $value['nama']; ?></td>
+                                    <td><?= number_to_currency($value['price'], 'IDR', 'id_ID', 2); ?></td>
+                                    <td><?= number_to_currency($value['discount'], 'IDR', 'id_ID', 2); ?></td>
                                     <td><?= number_to_currency($value['total_price'], 'IDR', 'id_ID', 2); ?></td>
                                 </tr>
                             <?php $total += $value['total_price'];
-                                $subtotal += $value['price'];
-                                $discount += $value['discount'];
                                 $qty += $value['amount'];
-                            endforeach; ?>
+                            endforeach;
+                            $hasil = ($sale[0]['discount'] / 100) * $total;
+                            $totbayar = $total - $hasil;
+                            ?>
                         </tbody>
                     </table>
                 </div>
@@ -102,20 +108,16 @@
                     <div class="table-responsive">
                         <table class="table">
                             <tr>
-                                <th style="width:50%">Total Item:</th>
-                                <td><?= $qty; ?></td>
-                            </tr>
-                            <tr>
                                 <th style="width:50%">Subtotal:</th>
-                                <td><?= number_to_currency($subtotal, 'IDR', 'id_ID', 2); ?></td>
+                                <td><?= number_to_currency($total, 'IDR', 'id_ID', 2); ?></td>
                             </tr>
                             <tr>
                                 <th>Discount:</th>
-                                <td><?= number_to_currency($discount, 'IDR', 'id_ID', 2); ?></td>
+                                <td><?= $sale[0]['discount']; ?>%</td>
                             </tr>
                             <tr>
-                                <th>Total:</th>
-                                <td><?= number_to_currency($total, 'IDR', 'id_ID', 2); ?></td>
+                                <th>Total Bayar:</th>
+                                <td><?= number_to_currency($totbayar, 'IDR', 'id_ID', 2); ?></td>
                             </tr>
                         </table>
                     </div>
@@ -123,6 +125,7 @@
                 <!-- /.col -->
             </div>
             <!-- /.row -->
+
         </div>
         <!-- /.invoice -->
     </div>

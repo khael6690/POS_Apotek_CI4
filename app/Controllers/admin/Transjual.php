@@ -28,7 +28,7 @@ class Transjual extends BaseController
     {
         // dd($this->_cart->contents());
         $this->_cart->destroy();
-        $produk = $this->_m_obat->where('stok >', '0')->findAll();
+        $produk = $this->_m_obat->getStok();
         $customer = $this->_m_customer->findAll();
         $data = [
             'title' => _TITLE,
