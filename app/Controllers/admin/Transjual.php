@@ -157,17 +157,39 @@ class Transjual extends BaseController
         echo number_to_currency($this->total(), 'IDR', 'id_ID', 2);
     }
 
-    public function getKembalian()
+    public function getDiskon()
     {
         if ($this->request->isAJAX() && $this->_cart->contents()) {
             $total = $this->total();
-            $kembalian = ($this->request->getPost('nominal') - $total);
+            $diskon = ($this->request->getPost('diskon') / 100) * $total;
+            $totbayar = $total - $diskon;
             $json = [
-                'data' => number_to_currency($kembalian, 'IDR', 'id_ID', 2)
+                'totbayar' => $totbayar
+            ];
+        } else {
+            $totbayar = 0;
+            $json = [
+                'totbayar' => $totbayar
+            ];
+        }
+        echo json_encode($json);
+    }
+
+    public function getKembalian()
+    {
+        if ($this->request->isAJAX() && $this->_cart->contents()) {
+
+            $nominal = $this->request->getPost('nominal');
+            $totbayar = $this->request->getPost('totbayar');
+            $kembalian = ($nominal - $totbayar);
+            $json = [
+                'totbayar' => $totbayar,
+                'kembalian' => number_to_currency($kembalian, 'IDR', 'id_ID', 2)
             ];
         } else {
             $json = [
-                'data' => null
+                'totbayar' => null,
+                'kembalian' => null,
             ];
         }
         echo json_encode($json);
@@ -185,8 +207,10 @@ class Transjual extends BaseController
         } else {
             //ada transaksi
             $total = $this->total();
+            $totbayar = $this->request->getVar('totbayar');
             $nominal = $this->request->getVar('nominal');
-            if ($nominal < $total) {
+
+            if ($nominal < $totbayar) {
                 //nominal tidak cukup
                 $response = [
                     'status' => false,
@@ -200,7 +224,8 @@ class Transjual extends BaseController
                 $this->_m_sale->save([
                     'sale_id' => $saleid,
                     'userid' => user_id(),
-                    'customerid' => $this->request->getVar('customer')
+                    'customerid' => $this->request->getVar('customer'),
+                    'discount' => $this->request->getVar('diskon')
                 ]);
 
                 foreach ($this->_cart->contents() as $items) {

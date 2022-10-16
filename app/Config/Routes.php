@@ -107,6 +107,8 @@ $routes->group('', ['filter' => 'permission:management-transaksi'], function ($r
     $routes->delete('delete-cart-transjual/(:any)', 'admin\Transjual::delete_cart/$1');
     $routes->get('reset-cart-transjual', 'admin\Transjual::resettrans');
     $routes->get('load-total-transjual', 'admin\Transjual::getTotal');
+    $routes->get('load-totbayar-transjual', 'admin\Transjual::totbayar');
+    $routes->post('load-totbayar-transjual', 'admin\Transjual::getDiskon');
     $routes->post('load-kembalian-transjual', 'admin\Transjual::getKembalian');
     $routes->post('pembayaran', 'admin\Transjual::pembayaran');
 });

@@ -23,7 +23,7 @@
                                 <td><?= $no++; ?> </td>
                                 <td><?= $value['nama']; ?></td>
                                 <td>
-                                    <button type="button" class="btn btn-primary" onclick="getCustomer('<?= $value['id']; ?>','<?= $value['nama']; ?>')"><i class="fas fa-plus-circle"></i> Pilih</button>
+                                    <button type="button" class="btn btn-primary" onclick="getCustomer('<?= $value['id']; ?>','<?= $value['nama']; ?>','<?= $value['diskon']; ?>')"><i class="fas fa-plus-circle"></i> Pilih</button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -41,9 +41,10 @@
 
 <?= $this->section('script'); ?>
 <script>
-    function getCustomer(id, nama) {
+    function getCustomer(id, nama, diskon) {
         $('#id-customer').val(id)
         $('#nama-customer').val(nama)
+        $('#diskon').val(diskon)
         $('#modal-customer').modal('hide')
     }
 </script>

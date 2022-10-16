@@ -37,7 +37,7 @@
 
                     <div class="form-group row">
                         <div class="col-sm-1">
-                            <label for="tgl" class="col-form-label">Tangggal :</label>
+                            <label for="tgl" class="col-form-label">No Faktur :</label>
                         </div>
                         <div class="col-sm-2">
                             <input type="text" id="saleId" class="form-control" disabled>
@@ -89,7 +89,7 @@
                     </table>
                     <div class="row mt-4">
                         <div class="col-sm-5">
-                            <label class="form-label">Total Bayar</label>
+                            <label class="form-label">Subtotal</label>
                             <h1><span id="total">Rp 0,00</span></h1>
                         </div>
                         <div class="col-sm-7">
@@ -99,6 +99,27 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <input type="text" class="form-control" id="nominal" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="form-group row justify-content-end">
+                                <div class="col-sm-2">
+                                    <label class="form-label">Discount</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="input-group">
+                                        <input type="number" min="0" max="100" class="form-control" id="diskon" value="0">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row justify-content-end">
+                                <div class="col-sm-2">
+                                    <label class="form-label">Total Bayar</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="totbayar" disabled>
                                 </div>
                             </div>
                             <div class="form-group row justify-content-end">
@@ -135,9 +156,7 @@
     <script>
         $(document).ready(function() {
 
-            window.onload = sale_id();
-
-            window.onload = date_time('date_time');
+            window.onload = date_time('date_time'), sale_id();
 
             // card maximaize
             $('.card').CardWidget('maximize')
@@ -150,22 +169,52 @@
                 decimalCharacterAlternative: '.',
                 currencySymbol: 'Rp '
             });
+            totbayar = new AutoNumeric('#totbayar', {
+                digitGroupSeparator: '.',
+                decimalCharacter: ',',
+                decimalCharacterAlternative: '.',
+                currencySymbol: 'Rp '
+            });
 
-            // input kembalian
-            $('#nominal').change(function(e) {
-                e.preventDefault()
-                const nominalx = nominal.get();
+            // input diskon
+            $('#diskon').click(function(e) {
+
+                e.preventDefault();
+                const diskon = $(this).val();
                 $.ajax({
                     type: "post",
-                    url: "<?= base_url('load-kembalian-transjual') ?>",
+                    url: "<?= base_url('load-totbayar-transjual') ?>",
                     data: {
-                        nominal: nominalx
+                        diskon: diskon
                     },
                     success: function(response) {
                         let items = $.parseJSON(response)
-                        $('#kembalian').val(items.data);
+                        totbayar.set(items.totbayar);
                     }
                 });
+
+            });
+
+            // input kembalian
+            $('#nominal').keydown(function(e) {
+                if (e.keyCode == 13) {
+                    e.preventDefault()
+                    const nominalx = nominal.get();
+                    $.ajax({
+                        type: "post",
+                        url: "<?= base_url('load-kembalian-transjual') ?>",
+                        data: {
+                            nominal: nominalx,
+                            totbayar: totbayar.get()
+                        },
+                        success: function(response) {
+                            let items = $.parseJSON(response)
+                            // console.log(items.totbayar)
+                            totbayar.set(items.totbayar);
+                            $('#kembalian').val(items.kembalian);
+                        }
+                    });
+                }
             });
 
             // cari barang
@@ -213,7 +262,7 @@
         function tampilItems(item) {
             $('#detail_cart').html(item)
             $('#total').load('load-total-transjual')
-            $('#nominal').focus();
+            $('#diskon').focus();
         }
 
         // membuat tanggal dan waktu
@@ -283,6 +332,8 @@
                                 $('#kdproduk').val(' ');
                                 $('#nama-customer').val(' ');
                                 $('#id-customer').val(' ');
+                                $('#totbayar').val('');
+                                $('#diskon').val('0');
                                 sale_id()
                             } else {
                                 Swal.fire({
@@ -381,13 +432,16 @@
                     const nominalx = nominal.get();
                     const customer = $('#id-customer').val();
                     const sale_id = $('#saleId').val();
+                    const diskon = $('#diskon').val();
                     $.ajax({
                         type: "post",
                         url: "<?= base_url('pembayaran') ?>",
                         data: {
                             'sale_id': sale_id,
                             'nominal': nominalx,
-                            'customer': customer
+                            'customer': customer,
+                            'diskon': diskon,
+                            'totbayar': totbayar.get()
                         },
                         success: function(response) {
                             const result = JSON.parse(response);
