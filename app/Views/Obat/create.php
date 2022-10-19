@@ -7,7 +7,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" id="create">
+            <div class="modal-body">
                 <form action="<?= base_url('obat-create') ?>" method="POST" enctype="multipart/form-data" class="form-horizontal form-create">
                     <?= csrf_field() ?>
                     <div class="form-group row">

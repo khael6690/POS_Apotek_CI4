@@ -93,7 +93,36 @@
                 });
 
             });
+
         });
+
+
+        function edit(id) {
+            $.ajax({
+                type: "get",
+                url: "/obat-update/" + id,
+                data: {
+                    id: id
+                },
+                dataType: "json",
+                success: function(response) {
+                    if (response.data) {
+                        $('#viewmodal').html(response.data).show();
+                        $('#modal-update').modal('show');
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    Swal.fire({
+                        title: xhr.status,
+                        text: thrownError,
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            });
+        }
+
 
         function getData() {
             $.ajax({
