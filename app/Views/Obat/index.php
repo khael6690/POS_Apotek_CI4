@@ -30,44 +30,15 @@
                 <!-- /.card-header -->
                 <div class="card-body">
                     <div class="col-md-2">
-                        <a href="<?= base_url('obat-create') ?>" class="btn btn-block bg-gradient-primary btn-sm mb-3"><i class="fas fa-plus-circle"></i> Tambah <?= $title; ?></a>
+                        <button type="button" class="btn bg-gradient-primary btn-sm mb-3" id="btn-create"><i class="fas fa-plus-circle"></i></button>
                     </div>
-                    <table id="example1" class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama Obat</th>
-                                <th>Stok</th>
-                                <th>Produsen</th>
-                                <th>Harga</th>
-                                <th style="width: 25%;">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php $no = 1;
-                            foreach ($data_obat as $obat) : ?>
-                                <tr>
-                                    <td><?= $no++; ?> </td>
-                                    <td><?= $obat['nama_obat']; ?></td>
-                                    <td><?= $obat['jumlah']; ?></td>
-                                    <td><?= $obat['nama']; ?></td>
-                                    <td>Rp. <?= $obat['harga']; ?></td>
-                                    <td>
-                                        <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-sm" onclick="detail(<?= $obat['id_obat'] ?>)"><i class="fas fa-eye"></i> Detail</button>
-                                        <a href="obat-update/<?= $obat['id_obat']; ?>" class="btn btn-warning btn-sm text-white"><i class="fas fa-edit"></i> Edit</a>
-                                        <form action="obat-delete/<?= $obat['id_obat']; ?>" method="post" class="d-inline form-hapus">
-                                            <?= csrf_field() ?>
-                                            <input type="hidden" name="_method" value="DELETE">
-                                            <button class="btn btn-danger btn-sm text-white tombol-hapus"><i class="fas fa-trash"></i> Hapus</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
+                    <div class="viewdata">
+                    </div>
                 </div>
                 <!-- /.card-body -->
             </div>
+
+            <div id="viewmodal" style="display: none;"></div>
 
             <!-- Modals detail -->
             <div class="modal fade" id="modal-sm">
@@ -93,4 +64,53 @@
         </div>
         <!--/. container-fluid -->
     </section>
+    <?= $this->endSection(); ?>
+
+    <?= $this->section('script'); ?>
+    <script>
+        $(document).ready(function() {
+            getData()
+
+            $('#btn-create').click(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: "<?= site_url('obat-create') ?>",
+                    dataType: "json",
+                    success: function(response) {
+                        $('#viewmodal').html(response.data).show();
+                        $('#modal-create').modal('show');
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        Swal.fire({
+                            title: xhr.status,
+                            text: thrownError,
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                });
+
+            });
+        });
+
+        function getData() {
+            $.ajax({
+                url: "<?= site_url('obat/viewdata') ?>",
+                dataType: "json",
+                success: function(response) {
+                    $('.viewdata').html(response.data);
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    Swal.fire({
+                        title: xhr.status,
+                        text: thrownError,
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            });
+        }
+    </script>
     <?= $this->endSection(); ?>

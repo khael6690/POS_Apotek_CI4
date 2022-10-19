@@ -73,6 +73,7 @@ $routes->group('', ['filter' => 'role:Admin'], function ($routes) {
 // route akses obat
 $routes->group('', ['filter' => 'permission:management-obat'], function ($routes) {
     $routes->get('obat', 'admin\Obat::index');
+    $routes->get('obat/viewdata', 'admin\Obat::viewdata');
     $routes->post('obat-detail', 'admin\Obat::detail');
     $routes->get('obat-create', 'admin\Obat::create');
     $routes->post('obat-create', 'admin\Obat::save');

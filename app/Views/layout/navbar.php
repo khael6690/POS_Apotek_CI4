@@ -18,7 +18,12 @@
              </a>
          </li>
          <li class="nav-item">
-             <a class="nav-link" href="<?= base_url('/logout') ?>">
+             <a href="<?= base_url('setuser') ?>" class="nav-link">
+                 <i class="nav-icon fas fa-user-cog"></i>
+             </a>
+         </li>
+         <li class="nav-item">
+             <a class="nav-link" href="<?= base_url('logout') ?>">
                  <i class="fas fa-sign-out-alt"></i>
              </a>
          </li>

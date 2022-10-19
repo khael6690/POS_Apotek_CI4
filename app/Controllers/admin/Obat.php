@@ -31,9 +31,27 @@ class Obat extends BaseController
         return view('Obat/index', $data);
     }
 
+    public function viewdata()
+    {
+        if ($this->request->isAJAX()) {
+            $data_obat = $this->_m_obat->getObat();
+
+            $data = [
+                'data_obat' => $data_obat
+            ];
+
+            $msg = [
+                'data' => view('obat/data', $data)
+            ];
+            return $this->response->setJSON($msg);
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+    }
+
     public function detail()
     {
-        $id = $this->request->getGetPost('id');
+        $id = $this->request->getPost('id');
         $data_obat = $this->_m_obat->getObat($id);
         $data = [
             'title' => _TITLE,
@@ -44,80 +62,104 @@ class Obat extends BaseController
 
     public function create()
     {
-        $data_satuan = $this->_m_satuan->orderBy('satuan')->findAll();
-        $data_produsen = $this->_m_produsen->orderBy('nama')->findAll();
-        $data = [
-            'title' => _TITLE,
-            'data_produsen' => $data_produsen,
-            'data_satuan' => $data_satuan,
-            'validation' => \config\Services::validation()
-        ];
-        return view('Obat/create', $data);
+        if ($this->request->isAJAX()) {
+            $data_satuan = $this->_m_satuan->orderBy('satuan')->findAll();
+            $data_produsen = $this->_m_produsen->orderBy('nama')->findAll();
+            $data = [
+                'title' => _TITLE,
+                'data_produsen' => $data_produsen,
+                'data_satuan' => $data_satuan,
+                'validation' => \config\Services::validation()
+            ];
+            // return view('Obat/create', $data);
+            $msg = [
+                'data' => view('Obat/create', $data)
+            ];
+            return $this->response->setJSON($msg);
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
     }
 
     public function save()
     {
-        // validasi data
-        if (!$this->validate([
-            'nama' => [
-                'rules' => 'required|is_unique[obat.nama]',
-                'label' => 'Nama Obat',
-                'errors' => [
-                    'required' => '{field} Harus diisi!',
-                    'is_unique' => '{field} Sudah digunakan!'
+        if ($this->request->isAJAX()) {
+
+            // validasi data
+            $validation = \config\Services::validation();
+            if (!$this->validate([
+                'nama' => [
+                    'rules' => 'required|is_unique[obat.nama]',
+                    'label' => 'Nama Obat',
+                    'errors' => [
+                        'required' => '{field} Harus diisi!',
+                        'is_unique' => '{field} Sudah digunakan!'
+                    ]
+                ],
+                'harga' => [
+                    'rules' => 'required',
+                    'label' => 'Harga',
+                    'errors' => [
+                        'required' => '{field} Harus diisi!'
+                    ]
+                ],
+                'img' => [
+                    'rules' => 'max_size[img,1024]|is_image[img]|mime_in[img,image/jpg,image/jpeg,image/png]',
+                    'label' => 'gambar',
+                    'errors' => [
+                        'max_size' => 'Ukuran {field} tidak boleh lebih 1mb!',
+                        'is_image' => 'File yang dipilih bukan gambar!',
+                        'mime_in' => 'File yang dipilih bukan gambar!'
+                    ]
                 ]
-            ],
-            'harga' => [
-                'rules' => 'required',
-                'label' => 'Harga',
-                'errors' => [
-                    'required' => '{field} Harus diisi!'
+            ])) {
+                $msg = [
+                    'error' => [
+                        'nama' => $validation->getError('nama'),
+                        'harga' => $validation->getError('harga'),
+                        'img' => $validation->getError('img')
+                    ]
+                ];
+                return $this->response->setJSON($msg);
+                // return redirect()->to('obat-create')->withInput();
+            }
+            // proses upload gambar
+            // dd($this->request->getFile('img'));
+            $gambar = $this->request->getFile('img');
+            if ($gambar->getError() === 4) //tidak ada file yg diupload
+            {
+                $namafile = 'default.png';
+            } else {
+                $gambar   = $this->request->getFile('img');
+                $namafile = $gambar->getRandomName();
+                $gambar->move(WRITEPATH . '../public/assets/upload/obat/', $namafile);
+                // Create thumb
+                $image = \Config\Services::image()
+                    ->withFile(WRITEPATH . '../public/assets/upload/obat/' . $namafile)
+                    ->fit(100, 100, 'center')
+                    ->save(WRITEPATH . '../public/assets/upload/obat/thumbs/' . $namafile);
+            }
+            // masuk ke database
+            if ($this->_m_obat->save(
+                [
+                    'nama' => $this->request->getVar('nama'),
+                    'deskripsi' => $this->request->getVar('deskripsi'),
+                    'img' => $namafile,
+                    'satuan' => $this->request->getVar('satuan'),
+                    'produsen' => $this->request->getVar('produsen'),
+                    'harga' => $this->request->getVar('harga'),
                 ]
-            ],
-            'img' => [
-                'rules' => 'max_size[img,1024]|is_image[img]|mime_in[img,image/jpg,image/jpeg,image/png]',
-                'label' => 'gambar',
-                'errors' => [
-                    'max_size' => '{field} ukuran gambar tidak boleh lebih 1mb!',
-                    'is_image' => 'File yang dipilih bukan gambar!',
-                    'mime_in' => 'File yang dipilih bukan gambar!'
-                ]
-            ]
-        ])) {
-            // dd(\config\Services::validation()->getErrors());
-            return redirect()->to('obat-create')->withInput();
-        }
-        // proses upload gambar
-        // dd($this->request->getFile('img'));
-        $gambar = $this->request->getFile('img');
-        if ($gambar->getError() === 4) //tidak ada file yg diupload
-        {
-            $namafile = 'default.png';
+            )) {
+                $sukses = session()->setFlashdata('sukses', 'Data berhasil ditambahkan!');
+                $msg = [
+                    'success' =>  $sukses
+                ];
+
+                return $this->response->setJSON($msg);
+            }
         } else {
-            $gambar   = $this->request->getFile('img');
-            $namafile = $gambar->getRandomName();
-            $gambar->move(WRITEPATH . '../assets/upload/obat/', $namafile);
-            // Create thumb
-            $image = \Config\Services::image()
-                ->withFile(WRITEPATH . '../assets/upload/obat/' . $namafile)
-                ->fit(100, 100, 'center')
-                ->save(WRITEPATH . '../assets/upload/obat/thumbs/' . $namafile);
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
-        // masuk ke database
-        if ($this->_m_obat->save(
-            [
-                'nama' => $this->request->getVar('nama'),
-                'deskripsi' => $this->request->getVar('deskripsi'),
-                'img' => $namafile,
-                'satuan' => $this->request->getVar('satuan'),
-                'produsen' => $this->request->getVar('produsen'),
-                'harga' => $this->request->getVar('harga'),
-            ]
-        )) {
-            session()->setFlashdata('sukses', 'Data berhasil ditambahkan!');
-            return redirect()->to('obat');
-        } else
-            session()->setFlashdata('warning', 'Data gagal ditambahkan!');
     }
 
     public function edit($id = null)
@@ -184,15 +226,15 @@ class Obat extends BaseController
             $namafile = $gambar->getRandomName();
             $gambar_lama = $data_obat['img'];
             if ($gambar_lama != 'default.png') {
-                unlink(WRITEPATH . '../assets/upload/obat/' . $gambar_lama);
-                unlink(WRITEPATH . '../assets/upload/obat/thumbs/' . $gambar_lama);
+                unlink(WRITEPATH . '../public/assets/upload/obat/' . $gambar_lama);
+                unlink(WRITEPATH . '../public/assets/upload/obat/thumbs/' . $gambar_lama);
             }
-            $gambar->move(WRITEPATH . '../assets/upload/obat/', $namafile);
+            $gambar->move(WRITEPATH . '../public/assets/upload/obat/', $namafile);
             // Create thumb
             $image = \Config\Services::image()
-                ->withFile(WRITEPATH . '../assets/upload/obat/' . $namafile)
+                ->withFile(WRITEPATH . '../public/assets/upload/obat/' . $namafile)
                 ->fit(100, 100, 'center')
-                ->save(WRITEPATH . '../assets/upload/obat/thumbs/' . $namafile);
+                ->save(WRITEPATH . '../public/assets/upload/obat/thumbs/' . $namafile);
         }
         if ($this->_m_obat->save(
             [
@@ -216,8 +258,8 @@ class Obat extends BaseController
         $data_obat = $this->_m_obat->where(['id_obat' => $id])->first();
         $gambar_lama = $data_obat['img'];
         if ($gambar_lama != 'default.png') {
-            unlink(WRITEPATH . '../assets/upload/obat/' . $gambar_lama);
-            unlink(WRITEPATH . '../assets/upload/obat/thumbs/' . $gambar_lama);
+            unlink(WRITEPATH . '../public/assets/upload/obat/' . $gambar_lama);
+            unlink(WRITEPATH . '../public/assets/upload/obat/thumbs/' . $gambar_lama);
         }
         if ($this->_m_obat->delete($id)) {
             session()->setFlashdata('sukses', 'Data berhasil dihapus!');

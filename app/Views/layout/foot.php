@@ -74,6 +74,7 @@
         //Initialize Select2 Elements
         $('#select2').select2()
         $('#select1').select2()
+
         //Initialize fileinput Elements
         bsCustomFileInput.init();
     });
@@ -95,25 +96,6 @@
             img_preview.src = e.target.result
         }
     }
-
-    // tombol hapus
-    $('.tombol-hapus').on('click', function(e) {
-        e.preventDefault();
-        swal.fire({
-            title: 'Apakah anda yakin?',
-            text: "Hapus data",
-            icon: 'warning',
-            showCancelButton: true,
-            showCloseButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Hapus!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $(this).parent('.form-hapus').submit();
-            }
-        })
-    })
 
 
     //function detail 

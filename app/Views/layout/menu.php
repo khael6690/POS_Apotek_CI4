@@ -2,7 +2,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="<?= base_url() ?>" class="brand-link">
-        <img src="<?= base_url() ?>/assets/upload/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <img src="<?= base_url('assets/upload/img') ?>/AdminLTELogo.png" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">AdminLTE 3</span>
     </a>
 
@@ -11,10 +11,10 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="<?= base_url() ?>/assets/upload/user/thumbs/<?= User()->user_image; ?>" class="img-circle elevation-2" alt="User Image">
+                <img src="<?= base_url('assets/upload/user/thumbs/' . User()->user_image) ?>" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block"><?= User()->username; ?></a>
+                <a href="<?= base_url() ?>" class="d-block"><?= User()->fullname; ?></a>
             </div>
         </div>
 
@@ -44,21 +44,52 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="<?= base_url('/obat') ?>" class="nav-link">
+                                <a href="<?= base_url('obat') ?>" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Master Obat</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="<?= base_url('/produsen') ?>" class="nav-link">
+                                <a href="<?= base_url('produsen') ?>" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Produsen</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="<?= base_url('/satuan') ?>" class="nav-link">
+                                <a href="<?= base_url('satuan') ?>" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Satuan</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                <?php endif; ?>
+                <?php if (has_permission('management-obat')) : ?>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-box"></i>
+                            <p>
+                                Management Stok
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="<?= base_url('stok') ?>" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Stok Barang</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?= base_url('stok_masuk') ?>" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Stok Masuk</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?= base_url('stok_opname') ?>" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Stok Opname</p>
                                 </a>
                             </li>
                         </ul>
@@ -139,12 +170,6 @@
                         </ul>
                     </li>
                 <?php endif; ?>
-                <li class="nav-item">
-                    <a href="<?= base_url('/setuser') ?>" class="nav-link">
-                        <i class="nav-icon fas fa-user-cog"></i>
-                        <p>Setting Profile</p>
-                    </a>
-                </li>
                 <?php if (in_groups('Admin')) : ?>
                     <li class="nav-item">
                         <a href="<?= base_url('setting') ?>" class="nav-link">
@@ -153,14 +178,6 @@
                         </a>
                     </li>
                 <?php endif; ?>
-                <li class="nav-item">
-                    <a href="<?= base_url('/logout') ?>" class="nav-link">
-                        <i class="nav-icon fas fa-sign-out-alt"></i>
-                        <p>
-                            Logout
-                        </p>
-                    </a>
-                </li>
         </nav>
         <!-- /.sidebar-menu -->
     </div>
