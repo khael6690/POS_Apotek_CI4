@@ -247,15 +247,15 @@ class User extends BaseController
             $gambar_lama = user()->user_image;
             $namafile = $gambar->getRandomName();
             if ($gambar_lama != 'default.png') {
-                unlink(WRITEPATH . '../assets/upload/user/' . $gambar_lama);
-                unlink(WRITEPATH . '../assets/upload/user/thumbs/' . $gambar_lama);
+                unlink(WRITEPATH . '../public/assets/upload/user/' . $gambar_lama);
+                unlink(WRITEPATH . '../public/assets/upload/user/thumbs/' . $gambar_lama);
             }
-            $gambar->move(WRITEPATH . '../assets/upload/user/', $namafile);
+            $gambar->move(WRITEPATH . '../public/assets/upload/user/', $namafile);
             // Create thumb
             $image = \Config\Services::image()
-                ->withFile(WRITEPATH . '../assets/upload/user/' . $namafile)
+                ->withFile(WRITEPATH . '../public/assets/upload/user/' . $namafile)
                 ->fit(100, 100, 'center')
-                ->save(WRITEPATH . '../assets/upload/user/thumbs/' . $namafile);
+                ->save(WRITEPATH . '../public/assets/upload/user/thumbs/' . $namafile);
         }
         // masuk ke database
         if ($this->_m_users->save(

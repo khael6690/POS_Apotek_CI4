@@ -69,6 +69,7 @@
     <?= $this->section('script'); ?>
     <script>
         $(document).ready(function() {
+
             getData()
 
             $('#btn-create').click(function(e) {

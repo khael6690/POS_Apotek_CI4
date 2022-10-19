@@ -15,7 +15,7 @@
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="nama" name="nama" value="<?= old('nama') ?>" placeholder="Nama Obat">
                             <div class="invalid-feedback errornama">
-                                <!-- <span></span> -->
+
                             </div>
                         </div>
                     </div>
@@ -150,6 +150,10 @@
                             $('.errorimg').html(' ');
                         }
                     } else {
+                        Toast.fire({
+                            icon: 'success',
+                            title: response.success
+                        })
                         $('#modal-create').modal('hide');
                         getData()
                     }

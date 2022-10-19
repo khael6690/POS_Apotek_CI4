@@ -150,9 +150,8 @@ class Obat extends BaseController
                     'harga' => $this->request->getVar('harga'),
                 ]
             )) {
-                $sukses = session()->setFlashdata('sukses', 'Data berhasil ditambahkan!');
                 $msg = [
-                    'success' =>  $sukses
+                    'success' =>  'Data berhasil ditambahkan!'
                 ];
 
                 return $this->response->setJSON($msg);
