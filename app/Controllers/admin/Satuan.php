@@ -20,107 +20,173 @@ class Satuan extends BaseController
     {
         $data_satuan = $this->_m_satuan->findAll();
         $data = [
-            'title' => _TITLE,
-            'data_satuan' => $data_satuan
+            'title' => _TITLE
         ];
         return view('Satuan/index', $data);
     }
 
+    public function viewdata()
+    {
+        if ($this->request->isAJAX()) {
+            $data_satuan = $this->_m_satuan->findAll();
+            $data = [
+                'title' => _TITLE,
+                'data_satuan' => $data_satuan
+            ];
+
+            $msg = [
+                'data' => view('Satuan/data', $data)
+            ];
+            return $this->response->setJSON($msg);
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+    }
+
     public function create()
     {
-        $data_satuan = $this->_m_satuan->findAll();
-        $data = [
-            'title' => _TITLE,
-            'data_satuan' => $data_satuan,
-            'validation' => \config\Services::validation()
-        ];
-        return view('Satuan/create', $data);
+        if ($this->request->isAJAX()) {
+            $data = [
+                'title' => _TITLE
+            ];
+
+            $msg = [
+                'data' => view('Satuan/create', $data)
+            ];
+
+            return $this->response->setJSON($msg);
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
     }
 
     public function save()
     {
-        // validasi data
-        if (!$this->validate([
-            'satuan' => [
-                'rules' => 'required|is_unique[satuan.satuan]',
-                'label' => 'Satuan',
-                'errors' => [
-                    'required' => '{field} Harus diisi!',
-                    'is_unique' => '{field} Sudah ada!'
-                ]
-            ]
-        ])) {
-            // dd(\config\Services::validation()->getErrors());
-            return redirect()->to('/satuan-create')->withInput();
-        }
+        if ($this->request->isAJAX()) {
 
-        // masuk ke database
-        if ($this->_m_satuan->save(
-            [
-                'satuan' => $this->request->getVar('satuan'),
-            ]
-        )) {
-            session()->setFlashdata('sukses', 'Data berhasil ditambahkan!');
-        } else
-            session()->setFlashdata('warning', 'Data gagal ditambahkan!');
-        return redirect()->to('/satuan');
+            // validasi data
+            $validation = \config\Services::validation();
+            if (!$this->validate([
+                'satuan' => [
+                    'rules' => 'required|is_unique[satuan]',
+                    'label' => 'Satuan',
+                    'errors' => [
+                        'required' => '{field} Harus diisi!',
+                        'is_unique' => '{field} Sudah ada!'
+                    ]
+                ]
+            ])) {
+                $msg = [
+                    'error' => [
+                        'satuan' => $validation->getError('satuan')
+                    ]
+                ];
+                return $this->response->setJSON($msg);
+            }
+
+            if ($this->_m_satuan->save(
+                [
+                    'satuan' => $this->request->getVar('satuan')
+                ]
+            )) {
+                $msg = [
+                    'success' =>  'Data berhasil ditambahkan!'
+                ];
+
+                return $this->response->setJSON($msg);
+            }
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
     }
 
     public function edit($id)
     {
-        $data_satuan = $this->_m_satuan->find($id);
-        $data = [
-            'title' => _TITLE,
-            'data_satuan' => $data_satuan,
-            'validation' => \config\Services::validation()
-        ];
-        return view('Satuan/update', $data);
+        if ($this->request->isAJAX()) {
+            $data_satuan = $this->_m_satuan->find($id);
+            $data = [
+                'title' => _TITLE,
+                'data_satuan' => $data_satuan
+            ];
+
+            $msg = [
+                'data' => view('Satuan/update', $data)
+            ];
+
+            return $this->response->setJSON($msg);
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
     }
 
     public function update($id)
     {
-        $data_satuan = $this->_m_satuan->find($id);
-        if ($data_satuan['satuan'] === $this->request->getVar('satuan')) {
-            $rule = 'required';
-        } else {
-            $rule = 'required|is_unique[satuan.satuan]';
-        }
+        if ($this->request->isAJAX()) {
+            $data_satuan = $this->_m_satuan->find($id);
+            if ($data_satuan['satuan'] === $this->request->getVar('satuan')) {
+                $rule = 'required';
+            } else {
+                $rule = 'required|is_unique[satuan]';
+            }
 
-        // validasi data
-        if (!$this->validate([
-            'satuan' => [
-                'rules' => $rule,
-                'label' => 'Satuan',
-                'errors' => [
-                    'required' => '{field} Harus diisi!',
-                    'is_unique' => '{field} Sudah ada!'
+            // validasi data
+            $validation = \config\Services::validation();
+            if (!$this->validate([
+                'satuan' => [
+                    'rules' => $rule,
+                    'label' => 'Satuan',
+                    'errors' => [
+                        'required' => '{field} Harus diisi!',
+                        'is_unique' => '{field} Sudah ada!'
+                    ]
                 ]
-            ]
-        ])) {
-            // dd(\config\Services::validation()->getErrors());
-            return redirect()->to('/satuan-update/' . $id)->withInput();
-        }
+            ])) {
+                $msg = [
+                    'error' => [
+                        'satuan' => $validation->getError('satuan')
+                    ]
+                ];
+                return $this->response->setJSON($msg);
+            }
 
-        // masuk ke database
-        if ($this->_m_satuan->save(
-            [
-                'id' => $id,
-                'satuan' => $this->request->getVar('satuan')
-            ]
-        )) {
-            session()->setFlashdata('sukses', 'Data berhasil diupdate!');
-        } else
-            session()->setFlashdata('warning', 'Data gagal diupdate!');
-        return redirect()->to('/satuan');
+            // masuk ke database
+            if ($this->_m_satuan->save(
+                [
+                    'id' => $id,
+                    'satuan' => $this->request->getVar('satuan')
+                ]
+            )) {
+                $msg = [
+                    'success' =>  'Data berhasil diupdate!'
+                ];
+
+                return $this->response->setJSON($msg);
+            }
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
     }
 
     public function delete($id)
     {
-        if ($this->_m_satuan->delete($id)) {
+        if ($this->request->isAJAX()) {
+            if ($this->_m_satuan->delete($id)) {
 
-            session()->setFlashdata('sukses', 'Data berhasil dihapus!');
-        } else
-            session()->setFlashdata('warning', 'Data gagal dihapus!');
-        return redirect()->to('/satuan');
+                $msg = [
+                    'success' =>  'Data berhasil dihapus!'
+                ];
+
+                return $this->response->setJSON($msg);
+            } else {
+
+                $msg = [
+                    'error' =>  'Data gagal dihapus!'
+                ];
+
+                return $this->response->setJSON($msg);
+            }
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
     }
 }

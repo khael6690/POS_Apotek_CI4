@@ -1,39 +1,36 @@
-<table id="tb-obat" class="table table-bordered table-striped">
+<table id="tb-produsen" class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th>No</th>
-            <th>Nama Obat</th>
-            <th>Stok</th>
-            <th>Produsen</th>
-            <th>Harga</th>
+            <th style="width: 5%;">No</th>
+            <th>Nama</th>
+            <th>Alamat</th>
             <th style="width: 25%;">Action</th>
         </tr>
     </thead>
     <tbody>
         <?php $no = 1;
-        foreach ($data_obat as $value) : ?>
+        foreach ($data_produsen as $value) : ?>
             <tr>
                 <td><?= $no++; ?> </td>
-                <td><?= $value['nama_obat']; ?></td>
-                <td><?= $value['jumlah']; ?></td>
                 <td><?= $value['nama']; ?></td>
-                <td>Rp. <?= $value['harga']; ?></td>
+                <td><?= $value['alamat']; ?></td>
                 <td>
-                    <button class="btn btn-info btn-md" data-toggle="modal" data-target="#modal-sm" onclick="detail(<?= $value['id_obat'] ?>)"><i class="fas fa-eye"></i></button>
-                    <button class="btn btn-warning text-white" onclick="edit('<?= $value['id_obat']; ?>')"><i class="fas fa-edit"></i></button>
-                    <form action="obat-delete/<?= $value['id_obat']; ?>" method="post" class="d-inline form-hapus">
+                    <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-sm" onclick="detail(<?= $value['id_produsen'] ?>)"><i class="fas fa-eye"></i></button>
+                    <button class="btn btn-warning btn-sm text-white" onclick="edit('<?= $value['id_produsen']; ?>')"><i class="fas fa-edit"></i></button>
+                    <form action="produsen-delete/<?= $value['id_produsen']; ?>" method="post" class="d-inline form-hapus" id="form-hapus">
                         <?= csrf_field() ?>
                         <input type="hidden" name="_method" value="DELETE">
-                        <button type="submit" class="btn btn-danger btn-md text-white tombol-hapus" id="<?= $value['id_obat']; ?>"><i class="fas fa-trash"></i></button>
+                        <button class="btn btn-danger btn-sm text-white tombol-hapus"><i class="fas fa-trash"></i></button>
                     </form>
                 </td>
             </tr>
         <?php endforeach; ?>
     </tbody>
 </table>
+
 <script>
     $(document).ready(function() {
-        $("#tb-obat").DataTable({
+        $("#tb-produsen").DataTable({
             "responsive": true,
             "lengthChange": true,
             "autoWidth": false

@@ -27,6 +27,24 @@ class Produsen extends BaseController
         return view('Produsen/index', $data);
     }
 
+    public function viewdata()
+    {
+        if ($this->request->isAJAX()) {
+            $data_produsen = $this->_m_produsen->findAll();
+            $data = [
+                'title' => _TITLE,
+                'data_produsen' => $data_produsen
+            ];
+
+            $msg = [
+                'data' => view('Produsen/data', $data)
+            ];
+            return $this->response->setJSON($msg);
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+    }
+
     public function detail()
     {
         $id = $this->request->getGetPost('id');

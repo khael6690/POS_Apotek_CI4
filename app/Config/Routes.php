@@ -83,6 +83,7 @@ $routes->group('', ['filter' => 'permission:management-obat'], function ($routes
 
     // route akses satuan
     $routes->get('satuan', 'admin\satuan::index');
+    $routes->get('satuan/viewdata', 'admin\satuan::viewdata');
     $routes->get('satuan-create', 'admin\Satuan::create');
     $routes->post('satuan-create', 'admin\Satuan::save');
     $routes->get('satuan-update/(:num)', 'admin\Satuan::edit/$1');
@@ -91,6 +92,7 @@ $routes->group('', ['filter' => 'permission:management-obat'], function ($routes
 
     // route akses produsen
     $routes->get('produsen', 'admin\Produsen::index');
+    $routes->get('produsen/viewdata', 'admin\Produsen::viewdata');
     $routes->post('produsen-detail', 'admin\Produsen::detail');
     $routes->get('produsen-create', 'admin\Produsen::create');
     $routes->post('produsen-create', 'admin\Produsen::save');

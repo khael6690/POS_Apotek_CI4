@@ -22,11 +22,8 @@ class Obat extends BaseController
 
     public function index()
     {
-        $data_obat = $this->_m_obat->getObat();
-        // dd($data_obat);
         $data = [
-            'title' => _TITLE,
-            'data_obat' => $data_obat
+            'title' => _TITLE
         ];
         return view('Obat/index', $data);
     }
@@ -282,6 +279,12 @@ class Obat extends BaseController
             if ($this->_m_obat->delete($id)) {
                 $msg = [
                     'success' =>  'Data berhasil dihapus!'
+                ];
+
+                return $this->response->setJSON($msg);
+            } else {
+                $msg = [
+                    'error' =>  'Data gagal dihapus!'
                 ];
 
                 return $this->response->setJSON($msg);

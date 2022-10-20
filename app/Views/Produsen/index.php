@@ -30,37 +30,10 @@
                 <!-- /.card-header -->
                 <div class="card-body">
                     <div class="col-md-2">
-                        <a href="<?= base_url() ?>/produsen-create" class="btn btn-block bg-gradient-primary btn-sm mb-3"><i class="fas fa-plus-circle"></i> Tambah <?= $title; ?></a>
+                        <button type="button" class="btn bg-gradient-primary btn-sm mb-3" id="btn-create"><i class="fas fa-plus-circle"></i></button>
                     </div>
-                    <table id="example1" class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th style="width: 5%;">No</th>
-                                <th>Nama</th>
-                                <th>Alamat</th>
-                                <th style="width: 25%;">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php $no = 1;
-                            foreach ($data_produsen as $value) : ?>
-                                <tr>
-                                    <td><?= $no++; ?> </td>
-                                    <td><?= $value['nama']; ?></td>
-                                    <td><?= $value['alamat']; ?></td>
-                                    <td>
-                                        <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-sm" onclick="detail(<?= $value['id_produsen'] ?>)"><i class="fas fa-eye"></i> Detail</button>
-                                        <a href="produsen-update/<?= $value['id_produsen']; ?>" class="btn btn-warning btn-sm text-white"><i class="fas fa-edit"></i> Edit</a>
-                                        <form action="produsen-delete/<?= $value['id_produsen']; ?>" method="post" class="d-inline form-hapus" id="form-hapus">
-                                            <?= csrf_field() ?>
-                                            <input type="hidden" name="_method" value="DELETE">
-                                            <button class="btn btn-danger btn-sm text-white tombol-hapus"><i class="fas fa-trash"></i> Hapus</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
+                    <div class="viewdata">
+                    </div>
                 </div>
                 <!-- /.card-body -->
 
@@ -89,4 +62,83 @@
         </div>
         <!--/. container-fluid -->
     </section>
+    <?= $this->endSection(); ?>
+
+    <?= $this->section('script'); ?>
+    <script>
+        $(document).ready(function() {
+
+            getData()
+
+            $('#btn-create').click(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: "<?= site_url('produsen-create') ?>",
+                    dataType: "json",
+                    success: function(response) {
+                        $('#viewmodal').html(response.data).show();
+                        $('#modal-create').modal('show');
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        Swal.fire({
+                            title: xhr.status,
+                            text: thrownError,
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                });
+
+            });
+
+        });
+
+
+        function edit(id) {
+            $.ajax({
+                type: "get",
+                url: "/produsen-update/" + id,
+                data: {
+                    id: id
+                },
+                dataType: "json",
+                success: function(response) {
+                    if (response.data) {
+                        $('#viewmodal').html(response.data).show();
+                        $('#modal-update').modal('show');
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    Swal.fire({
+                        title: xhr.status,
+                        text: thrownError,
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            });
+        }
+
+
+        function getData() {
+            $.ajax({
+                url: "<?= site_url('produsen/viewdata') ?>",
+                dataType: "json",
+                success: function(response) {
+                    $('.viewdata').html(response.data);
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    Swal.fire({
+                        title: xhr.status,
+                        text: thrownError,
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            });
+        }
+    </script>
     <?= $this->endSection(); ?>
