@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="card-body">
-                Start creating your amazing application!
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid laborum, tenetur accusamus possimus ipsam, libero adipisci excepturi unde esse, officia harum corporis maiores quasi doloribus voluptas? Facilis culpa pariatur eligendi?
             </div>
             <!-- /.card-body -->
             <div class="card-footer">

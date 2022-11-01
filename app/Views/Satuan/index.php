@@ -24,7 +24,7 @@
         <div class="container-fluid">
 
             <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-primary">
                     <h3 class="card-title">Data <?= $title; ?></h3>
                 </div>
                 <!-- /.card-header -->

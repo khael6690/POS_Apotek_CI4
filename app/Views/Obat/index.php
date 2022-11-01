@@ -24,7 +24,7 @@
         <div class="container-fluid">
 
             <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-primary">
                     <h3 class="card-title">Data <?= $title; ?></h3>
                 </div>
                 <!-- /.card-header -->
@@ -44,7 +44,7 @@
             <div class="modal fade" id="modal-sm">
                 <div class="modal-dialog modal-sm">
                     <div class="modal-content">
-                        <div class="modal-header">
+                        <div class="modal-header bg-info">
                             <h4 class="modal-title">Detail <?= $title; ?></h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>

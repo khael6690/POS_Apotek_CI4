@@ -98,7 +98,12 @@
                                     <label class="form-label">Nominal</label>
                                 </div>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="nominal" autocomplete="off">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Rp.</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="nominal" autocomplete="off">
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group row justify-content-end">
@@ -119,7 +124,12 @@
                                     <label class="form-label">Total Bayar</label>
                                 </div>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="totbayar" disabled>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Rp.</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="totbayar" disabled>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group row justify-content-end">
@@ -127,7 +137,12 @@
                                     <label class="form-label">Kembalian</label>
                                 </div>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="kembalian" disabled>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Rp.</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="kembalian" disabled>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row justify-content-end">
@@ -166,14 +181,19 @@
             nominal = new AutoNumeric('#nominal', {
                 digitGroupSeparator: '.',
                 decimalCharacter: ',',
-                decimalCharacterAlternative: '.',
-                currencySymbol: 'Rp '
+                decimalCharacterAlternative: '.'
             });
+
             totbayar = new AutoNumeric('#totbayar', {
                 digitGroupSeparator: '.',
                 decimalCharacter: ',',
-                decimalCharacterAlternative: '.',
-                currencySymbol: 'Rp '
+                decimalCharacterAlternative: '.'
+            });
+
+            kembalian = new AutoNumeric('#kembalian', {
+                digitGroupSeparator: '.',
+                decimalCharacter: ',',
+                decimalCharacterAlternative: '.'
             });
 
             // input diskon
@@ -209,9 +229,10 @@
                         },
                         success: function(response) {
                             let items = $.parseJSON(response)
-                            // console.log(items.totbayar)
+
                             totbayar.set(items.totbayar);
-                            $('#kembalian').val(items.kembalian);
+                            kembalian.set(items.kembalian);
+                            // $('#kembalian').val(items.kembalian);
                         }
                     });
                 }

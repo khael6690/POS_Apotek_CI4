@@ -15,7 +15,7 @@
                 <td><?= $value['nama']; ?></td>
                 <td><?= $value['alamat']; ?></td>
                 <td>
-                    <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-sm" onclick="detail(<?= $value['id_produsen'] ?>)"><i class="fas fa-eye"></i></button>
+                    <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-detail" onclick="detail(<?= $value['id_produsen'] ?>)"><i class="fas fa-eye"></i></button>
                     <button class="btn btn-warning btn-sm text-white" onclick="edit('<?= $value['id_produsen']; ?>')"><i class="fas fa-edit"></i></button>
                     <form action="produsen-delete/<?= $value['id_produsen']; ?>" method="post" class="d-inline form-hapus" id="form-hapus">
                         <?= csrf_field() ?>

@@ -24,7 +24,7 @@
         <div class="container-fluid">
 
             <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-primary">
                     <h3 class="card-title">Data <?= $title; ?></h3>
                 </div>
                 <!-- /.card-header -->
@@ -38,10 +38,10 @@
                 <!-- /.card-body -->
 
                 <!-- Modals detail -->
-                <div class="modal fade" id="modal-sm">
+                <div class="modal fade" id="modal-detail">
                     <div class="modal-dialog modal-sm">
                         <div class="modal-content">
-                            <div class="modal-header">
+                            <div class="modal-header bg-secondary">
                                 <h4 class="modal-title">Detail <?= $title; ?></h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -59,6 +59,7 @@
                 </div>
                 <!-- /.modal -->
             </div>
+            <div id="viewmodal" style="display: none;"></div>
         </div>
         <!--/. container-fluid -->
     </section>

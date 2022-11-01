@@ -274,65 +274,72 @@ class User extends BaseController
         return redirect()->to('setuser');
     }
 
-    public function changepass()
-    {
-        $data_user = $this->_m_users->find(user_id());
-
-        $data = [
-            'title' => _TITLE,
-            'data_user' => $data_user,
-            'validation' => \config\Services::validation()
-        ];
-        return view('setuser/setpass', $data);
-    }
-
     public function changesave($id = null)
     {
 
-        $data_user = $this->_m_users->find(user_id());
-        // validasi data
-        if (!$this->validate([
-            'oldpass' => [
-                'rules' => 'required',
-                'label' => 'Password',
-                'errors' => [
-                    'required' => '{field} Harus diisi!'
-                ]
-            ],
-            'password' => [
-                'rules' => 'required',
-                'label' => 'Password',
-                'errors' => [
-                    'required' => '{field} Harus diisi!'
-                ]
-            ],
-            'pass_confirm' => [
-                'rules' => 'required|matches[password]',
-                'label' => 'Password Konfirmasi',
-                'errors' => [
-                    'required' => '{field} Harus diisi!',
-                    'matches' => '{field} Tidak sama dengan password!'
-                ]
-            ],
-        ])) {
-            // dd(\config\Services::validation()->getErrors());
-            return redirect()->to('changepass')->withInput();
-        }
+        if ($this->request->isAJAX()) {
 
-        if (Password::verify($this->request->getVar('oldpass'), $data_user->password_hash)) {
-            if ($this->_m_users->save([
-                'id' => $id,
-                'password_hash' => Password::hash($this->request->getVar('password'))
+            $data_user = $this->_m_users->find(user_id());
+            // validasi data
+            $validation = \config\Services::validation();
+            if (!$this->validate([
+                'oldpass' => [
+                    'rules' => 'required',
+                    'label' => 'Password',
+                    'errors' => [
+                        'required' => '{field} Harus diisi!'
+                    ]
+                ],
+                'password' => [
+                    'rules' => 'required',
+                    'label' => 'Password',
+                    'errors' => [
+                        'required' => '{field} Harus diisi!'
+                    ]
+                ],
+                'pass_confirm' => [
+                    'rules' => 'required|matches[password]',
+                    'label' => 'Password Konfirmasi',
+                    'errors' => [
+                        'required' => '{field} Harus diisi!',
+                        'matches' => '{field} Tidak sama dengan password!'
+                    ]
+                ],
             ])) {
+                $msg = [
+                    'error' => [
+                        'oldpass' => $validation->getError('oldpass'),
+                        'password' => $validation->getError('password'),
+                        'pass_confirm' => $validation->getError('pass_confirm')
 
-                session()->setFlashdata('sukses', 'Password berhasil diubah!');
-                return redirect()->to('changepass');
+                    ]
+                ];
+                return $this->response->setJSON($msg);
             }
-            session()->setFlashdata('warning', 'Password gagal diubah!');
-            return redirect()->to('changepass');
+
+            if (Password::verify($this->request->getVar('oldpass'), $data_user->password_hash)) {
+                if ($this->_m_users->save([
+                    'id' => user_id(),
+                    'password_hash' => Password::hash($this->request->getVar('password'))
+                ])) {
+
+                    $msg = [
+                        'success' =>  'Password berhasil diupdate!'
+                    ];
+
+                    return $this->response->setJSON($msg);
+                }
+            } else {
+                $msg = [
+                    'error' => [
+                        'oldpass' => 'Password lama yang anda masukan salah!'
+                    ]
+                ];
+
+                return $this->response->setJSON($msg);
+            }
         } else {
-            session()->setFlashdata('danger', 'Password Lama salah!');
-            return redirect()->to('changepass');
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
     }
 }

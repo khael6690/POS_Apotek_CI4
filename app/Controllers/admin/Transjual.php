@@ -184,7 +184,7 @@ class Transjual extends BaseController
             $kembalian = ($nominal - $totbayar);
             $json = [
                 'totbayar' => $totbayar,
-                'kembalian' => number_to_currency($kembalian, 'IDR', 'id_ID', 2)
+                'kembalian' => $kembalian
             ];
         } else {
             $json = [

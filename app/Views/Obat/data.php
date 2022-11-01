@@ -19,12 +19,12 @@
                 <td><?= $value['nama']; ?></td>
                 <td>Rp. <?= $value['harga']; ?></td>
                 <td>
-                    <button class="btn btn-info btn-md" data-toggle="modal" data-target="#modal-sm" onclick="detail(<?= $value['id_obat'] ?>)"><i class="fas fa-eye"></i></button>
-                    <button class="btn btn-warning text-white" onclick="edit('<?= $value['id_obat']; ?>')"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-sm" onclick="detail(<?= $value['id_obat'] ?>)"><i class="fas fa-eye"></i></button>
+                    <button class="btn btn-warning text-white btn-sm" onclick="edit('<?= $value['id_obat']; ?>')"><i class="fas fa-edit"></i></button>
                     <form action="obat-delete/<?= $value['id_obat']; ?>" method="post" class="d-inline form-hapus">
                         <?= csrf_field() ?>
                         <input type="hidden" name="_method" value="DELETE">
-                        <button type="submit" class="btn btn-danger btn-md text-white tombol-hapus" id="<?= $value['id_obat']; ?>"><i class="fas fa-trash"></i></button>
+                        <button type="submit" class="btn btn-danger btn-sm text-white tombol-hapus" id="<?= $value['id_obat']; ?>"><i class="fas fa-trash"></i></button>
                     </form>
                 </td>
             </tr>

@@ -42,7 +42,6 @@ $routes->group('', ['filter' => 'login'], function ($routes) {
     // route setting user
     $routes->get('setuser', 'admin\User::setuser');
     $routes->post('setuser/(:num)', 'admin\User::saveset/$1');
-    $routes->get('changepass', 'admin\User::changepass');
     $routes->post('changepass/(:num)', 'admin\User::changesave/$1');
 });
 

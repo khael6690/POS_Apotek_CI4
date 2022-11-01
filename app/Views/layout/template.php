@@ -3,7 +3,7 @@
 
 <?= $this->include('layout/head'); ?>
 
-<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+<body class="hold-transition sidebar-mini layout-fixed layout-footer-not-fixed layout-navbar-fixed">
   <div class="wrapper">
 
     <!-- Navbar -->
