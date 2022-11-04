@@ -124,21 +124,21 @@
                 success: function(response) {
                     if (response.error) {
                         if (response.error.nama) {
-                            $('#nama').toggleClass('is-invalid');
+                            $('#nama').addClass('is-invalid');
                             $('.errornama').html(response.error.nama);
                         } else {
                             $('#nama').removeClass('is-invalid');
                             $('.errornama').html(' ');
                         }
                         if (response.error.harga) {
-                            $('#harga').toggleClass('is-invalid');
+                            $('#harga').addClass('is-invalid');
                             $('.errorharga').html(response.error.harga);
                         } else {
                             $('#harga').removeClass('is-invalid');
                             $('.errorharga').html(' ');
                         }
                         if (response.error.img) {
-                            $('#img').toggleClass('is-invalid');
+                            $('#img').addClass('is-invalid');
                             $('.errorimg').html(response.error.img);
                         } else {
                             $('#img').removeClass('is-invalid');

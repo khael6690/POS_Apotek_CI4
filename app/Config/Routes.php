@@ -43,6 +43,15 @@ $routes->group('', ['filter' => 'login'], function ($routes) {
     $routes->get('setuser', 'admin\User::setuser');
     $routes->post('setuser/(:num)', 'admin\User::saveset/$1');
     $routes->post('changepass/(:num)', 'admin\User::changesave/$1');
+    // route management customers
+    $routes->get('customers', 'admin\Customers::index');
+    $routes->get('customers/viewdata', 'admin\Customers::viewdata');
+    $routes->post('customers-detail', 'admin\Customers::detail');
+    $routes->get('customers-create', 'admin\Customers::create');
+    $routes->post('customers-create', 'admin\Customers::save');
+    $routes->get('customers-update/(:num)', 'admin\Customers::edit/$1');
+    $routes->post('customers-update/(:num)', 'admin\Customers::update/$1');
+    $routes->delete('customers-delete/(:num)', 'admin\Customers::delete/$1');
 });
 
 // routes akses User

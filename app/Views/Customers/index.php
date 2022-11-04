@@ -34,16 +34,16 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <h3>Halaman pengelolahan data <?= $title; ?></h3>
+                    <h3>Halaman pengelolahan data Customers</h3>
                     <ul>
-                        <li>add data <?= $title; ?></li>
-                        <li>update data <?= $title; ?></li>
-                        <li>delete data <?= $title; ?></li>
+                        <li>add customers & discount</li>
+                        <li>view detail customers</li>
+                        <li>update customers</li>
+                        <li>delete customers</li>
                     </ul>
                 </div>
                 <!-- /.card-body -->
             </div>
-
             <div class="card">
                 <div class="card-header bg-primary">
                     <h3 class="card-title">Data <?= $title; ?></h3>
@@ -59,6 +59,28 @@
                 <!-- /.card-body -->
             </div>
             <div id="viewmodal" style="display: none;"></div>
+
+            <!-- Modals detail -->
+            <div class="modal fade" id="modal-detail">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header bg-info">
+                            <h4 class="modal-title">Detail <?= $title; ?></h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" id="data_detail">
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
         </div>
         <!--/. container-fluid -->
     </section>
@@ -73,7 +95,7 @@
             $('#btn-create').click(function(e) {
                 e.preventDefault();
                 $.ajax({
-                    url: "<?= site_url('satuan-create') ?>",
+                    url: "<?= site_url('customers-create') ?>",
                     dataType: "json",
                     success: function(response) {
                         $('#viewmodal').html(response.data).show();
@@ -98,7 +120,7 @@
         function edit(id) {
             $.ajax({
                 type: "get",
-                url: "/satuan-update/" + id,
+                url: "/customers-update/" + id,
                 data: {
                     id: id
                 },
@@ -124,7 +146,7 @@
 
         function getData() {
             $.ajax({
-                url: "<?= site_url('satuan/viewdata') ?>",
+                url: "<?= site_url('customers/viewdata') ?>",
                 dataType: "json",
                 success: function(response) {
                     $('.viewdata').html(response.data);

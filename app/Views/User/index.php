@@ -22,9 +22,31 @@
     <!-- /.content-header -->
     <section class="content">
         <div class="container-fluid">
+            <div class="card">
+                <div class="card-header bg-info">
+                    <h3 class="card-title"><i class="fas fa-bullhorn"></i> Petunjuk!</h3>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h3>Halaman pengelolahan data Users</h3>
+                    <ul>
+                        <li>add new user</li>
+                        <li>setting status user *aktif/nonaktif</li>
+                        <li>reset password user default "12345678"</li>
+                        <li>setting role user</li>
+                        <li>view user & delete user</li>
+                    </ul>
+                </div>
+                <!-- /.card-body -->
+            </div>
 
             <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-primary">
                     <h3 class="card-title">Data <?= $title; ?></h3>
                 </div>
                 <!-- /.card-header -->
@@ -65,13 +87,13 @@
                                     </td>
 
                                     <td>
-                                        <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-sm" onclick="detail(<?= $value->id ?>)"><i class="fas fa-eye"></i> Detail</button>
+                                        <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-sm" onclick="detail(<?= $value->id ?>)"><i class="fas fa-eye"></i></button>
                                         <?php if ($value->id !== user_id()) : ?>
-                                            <a href="user-update/<?= $value->id; ?>" class="btn btn-warning btn-sm text-white"><i class="fas fa-edit"></i> Edit</a>
+                                            <a href="user-update/<?= $value->id; ?>" class="btn btn-warning btn-sm text-white"><i class="fas fa-edit"></i></a>
                                             <form action="user-delete/<?= $value->id; ?>" method="post" class="d-inline form-hapus" id="form-hapus">
                                                 <?= csrf_field() ?>
                                                 <input type="hidden" name="_method" value="DELETE">
-                                                <button class="btn btn-danger btn-sm text-white tombol-hapus"><i class="fas fa-trash"></i> Hapus</button>
+                                                <button class="btn btn-danger btn-sm text-white tombol-hapus"><i class="fas fa-trash"></i></button>
                                             </form>
                                         <?php endif; ?>
                                     </td>

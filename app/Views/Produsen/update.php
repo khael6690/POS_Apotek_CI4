@@ -70,7 +70,7 @@
                 success: function(response) {
                     if (response.error) {
                         if (response.error.nama) {
-                            $('#nama').toggleClass('is-invalid');
+                            $('#nama').addClass('is-invalid');
                             $('.errornama').html(response.error.nama);
                         } else {
                             $('#nama').removeClass('is-invalid');

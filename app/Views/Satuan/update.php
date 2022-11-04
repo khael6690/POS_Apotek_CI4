@@ -52,7 +52,7 @@
                 success: function(response) {
                     if (response.error) {
                         if (response.error.satuan) {
-                            $('#satuan').toggleClass('is-invalid');
+                            $('#satuan').addClass('is-invalid');
                             $('.errorsatuan').html(response.error.satuan);
                         } else {
                             $('#satuan').removeClass('is-invalid');

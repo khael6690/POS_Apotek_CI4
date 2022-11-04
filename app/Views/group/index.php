@@ -22,9 +22,25 @@
     <!-- /.content-header -->
     <section class="content">
         <div class="container-fluid">
-
+            <!-- Petunjuk -->
             <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-info">
+                    <h3 class="card-title"><i class="fas fa-bullhorn"></i> Petunjuk!</h3>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h3>Halaman pengelolahan <?= $title; ?></h3>
+                    <p>Memberikan hak akses tiap group/role!</p>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <div class="card">
+                <div class="card-header bg-primary">
                     <h3 class="card-title">Data <?= $title; ?></h3>
                 </div>
                 <!-- /.card-header -->
@@ -46,7 +62,7 @@
                                     <td><?= $value->name; ?></td>
                                     <td><?= $value->description; ?></td>
                                     <td>
-                                        <a href="group-update/<?= $value->id; ?>" class="btn btn-warning btn-sm text-white"><i class="fas fa-edit"></i> Edit</a>
+                                        <a href="group-update/<?= $value->id; ?>" class="btn btn-warning btn-sm text-white"><i class="fas fa-edit"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

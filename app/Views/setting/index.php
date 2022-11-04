@@ -24,7 +24,7 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header bg-info">
-                    <h3 class="card-title">Info</h3>
+                    <h3 class="card-title"><i class="fas fa-bullhorn"></i> Info!</h3>
 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">

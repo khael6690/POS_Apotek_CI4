@@ -1,19 +1,19 @@
 <div class="modal fade" id="modal-create">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header bg-blue">
+            <div class="modal-header bg-primary">
                 <h4 class="modal-title">Add <?= $title; ?></h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="<?= base_url('produsen-create') ?>" method="POST" class="form-horizontal form-create">
+                <form action="<?= base_url('customers-create') ?>" method="POST" class="form-horizontal form-create">
                     <?= csrf_field() ?>
                     <div class="form-group row">
-                        <label for="nama" class="col-sm-4 col-form-label">Nama Produsen</label>
+                        <label for="nama" class="col-sm-4 col-form-label">Nama</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="nama" name="nama" value="<?= old('nama') ?>" placeholder="">
+                            <input type="text" class="form-control" id="nama" name="nama" value="<?= old('nama') ?>">
                             <div class="invalid-feedback errornama">
 
                             </div>
@@ -22,7 +22,10 @@
                     <div class="form-group row">
                         <label for="alamat" class="col-sm-4 col-form-label">Alamat</label>
                         <div class="col-sm-8">
-                            <textarea class="form-control" name="alamat" value="<?= old('alamat') ?>" rows="2"></textarea>
+                            <textarea class="form-control" rows="2" id="alamat" name="alamat"><?= old('alamat') ?></textarea>
+                            <div class="invalid-feedback erroralamat">
+
+                            </div>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -32,7 +35,33 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text bg-success"><i class="fas fa-phone"></i></span>
                                 </div>
-                                <input type="text" class="form-control" name="telp" value="<?= old('telp') ?>" placeholder="+62">
+                                <input type="text" class="form-control" id="telp" name="telp" value="<?= old('telp') ?>" placeholder="+62">
+                                <div class="invalid-feedback errortelp">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="email" class="col-sm-4 col-form-label">Email</label>
+                        <div class="col-sm-8">
+                            <input type="email" class="form-control" id="email" name="email" value="<?= old('email') ?>">
+                            <div class="invalid-feedback erroremail">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="diskon" class="col-sm-4 col-form-label">Diskon</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <input type="number" class="form-control" id="diskon" name="diskon" min="0" max="100" value="<?= old('diskon') ?>">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">%</span>
+                                </div>
+                                <div class="invalid-feedback errordiskon">
+
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -74,6 +103,34 @@
                         } else {
                             $('#nama').removeClass('is-invalid');
                             $('.errornama').html(' ');
+                        }
+                        if (response.error.alamat) {
+                            $('#alamat').addClass('is-invalid');
+                            $('.erroralamat').html(response.error.alamat);
+                        } else {
+                            $('#alamat').removeClass('is-invalid');
+                            $('.erroralamat').html(' ');
+                        }
+                        if (response.error.telp) {
+                            $('#telp').addClass('is-invalid');
+                            $('.errortelp').html(response.error.telp);
+                        } else {
+                            $('#telp').removeClass('is-invalid');
+                            $('.errortelp').html(' ');
+                        }
+                        if (response.error.email) {
+                            $('#email').addClass('is-invalid');
+                            $('.erroremail').html(response.error.email);
+                        } else {
+                            $('#email').removeClass('is-invalid');
+                            $('.erroremail').html(' ');
+                        }
+                        if (response.error.diskon) {
+                            $('#diskon').addClass('is-invalid');
+                            $('.errordiskon').html(response.error.diskon);
+                        } else {
+                            $('#diskon').removeClass('is-invalid');
+                            $('.errordiskon').html(' ');
                         }
                     } else {
                         Toast.fire({

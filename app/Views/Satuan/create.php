@@ -52,19 +52,12 @@
                 success: function(response) {
                     if (response.error) {
                         if (response.error.satuan) {
-                            $('#satuan').toggleClass('is-invalid');
+                            $('#satuan').addClass('is-invalid');
                             $('.errorsatuan').html(response.error.satuan);
                         } else {
                             $('#satuan').removeClass('is-invalid');
                             $('.errorsatuan').html(' ');
                         }
-                        // if (response.error.singkatan) {
-                        //     $('#singkatan').toggleClass('is-invalid');
-                        //     $('.errorsingkatan').html(response.error.singkatan);
-                        // } else {
-                        //     $('#singkatan').removeClass('is-invalid');
-                        //     $('.errorsingkatan').html(' ');
-                        // }
                     } else {
                         Toast.fire({
                             icon: 'success',

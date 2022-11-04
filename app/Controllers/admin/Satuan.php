@@ -68,7 +68,7 @@ class Satuan extends BaseController
             $validation = \config\Services::validation();
             if (!$this->validate([
                 'satuan' => [
-                    'rules' => 'required|is_unique[satuan]',
+                    'rules' => 'required|is_unique[satuan.satuan]',
                     'label' => 'Satuan',
                     'errors' => [
                         'required' => '{field} Harus diisi!',
@@ -126,7 +126,7 @@ class Satuan extends BaseController
             if ($data_satuan['satuan'] === $this->request->getVar('satuan')) {
                 $rule = 'required';
             } else {
-                $rule = 'required|is_unique[satuan]';
+                $rule = 'required|is_unique[satuan.satuan]';
             }
 
             // validasi data

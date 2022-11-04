@@ -96,6 +96,14 @@
                         </ul>
                     </li>
                 <?php endif; ?>
+                <li class="nav-item">
+                    <a href="<?= base_url('customers') ?>" class="nav-link">
+                        <i class="nav-icon fas fa-shopping-cart"></i>
+                        <p>
+                            Customers
+                        </p>
+                    </a>
+                </li>
                 <?php if (has_permission('management-transaksi')) : ?>
                     <li class="nav-item">
                         <a href="#" class="nav-link">
