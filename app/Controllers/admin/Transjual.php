@@ -54,7 +54,7 @@ class Transjual extends BaseController
             $this->show_cart();
         } elseif ($id !== null) {
             $produk = $this->_m_obat->getObat($id);
-            if ($produk !== null && $produk['stok'] != 0) {
+            if ($produk !== null && $produk['jumlah'] != 0) {
                 $this->_cart->insert(array(
                     'id'      => $produk['id_obat'],
                     'qty'     => 1,
@@ -66,7 +66,7 @@ class Transjual extends BaseController
                 ));
 
                 $this->show_cart();
-            } elseif ($produk !== null && $produk['stok'] == 0) {
+            } elseif ($produk !== null && $produk['jumlah'] == 0) {
                 $json = [
                     'status' => false,
                     'data' =>  $produk['nama_obat'],
@@ -74,7 +74,7 @@ class Transjual extends BaseController
                 ];
 
                 echo json_encode($json);
-            } elseif ($produk == null) {
+            } else {
                 $json = [
                     'status' => false,
                     'data' =>  $id,
@@ -90,19 +90,6 @@ class Transjual extends BaseController
     {
         $data = $this->_cart->contents();
         if ($data != null) {
-            // $isi = [];
-            // foreach ($data as $value) {
-            //     $discount = ($value['options']['discount'] / 100)  * $value['subtotal'];
-            //     $values = [];
-            //     $values['rowid'] = $value['rowid'];
-            //     $values['id'] = $value['id'];
-            //     $values['name'] = $value['name'];
-            //     $values['qty'] = $value['qty'];
-            //     $values['price'] = number_to_currency($value['price'], 'IDR', 'id_ID', 2);
-            //     $values['subtotal'] = number_to_currency(($value['subtotal'] - $discount), 'IDR', 'id_ID', 2);
-            //     $values['discount'] =  number_to_currency($discount, 'IDR', 'id_ID', 2);
-
-            //     $isi[] = $values;
             $item = [
                 'data' => $data
             ];
@@ -114,7 +101,6 @@ class Transjual extends BaseController
                 'data' =>  $isi,
                 'msg' => 'Success'
             ];
-            // }
         } else {
             $json = [
                 'status' => false,

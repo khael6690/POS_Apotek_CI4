@@ -95,14 +95,14 @@
                         <div class="col-sm-7">
                             <div class="form-group row justify-content-end">
                                 <div class="col-sm-2">
-                                    <label class="form-label">Nominal</label>
+                                    <label class="form-label">Total Bayar</label>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Rp.</span>
                                         </div>
-                                        <input type="text" class="form-control" id="nominal" autocomplete="off">
+                                        <input type="text" class="form-control" id="totbayar" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -121,14 +121,14 @@
                             </div>
                             <div class="form-group row justify-content-end">
                                 <div class="col-sm-2">
-                                    <label class="form-label">Total Bayar</label>
+                                    <label class="form-label">Nominal</label>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Rp.</span>
                                         </div>
-                                        <input type="text" class="form-control" id="totbayar" disabled>
+                                        <input type="text" class="form-control" id="nominal" autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -198,7 +198,6 @@
 
             // input diskon
             $('#diskon').click(function(e) {
-
                 e.preventDefault();
                 const diskon = $(this).val();
                 $.ajax({
@@ -242,7 +241,7 @@
             $('#kdproduk').keydown(function(e) {
                 if (e.keyCode == 13) {
                     e.preventDefault()
-                    let id = $(this).val();
+                    const id = $(this).val();
                     $.ajax({
                         type: "post",
                         url: "<?= base_url('add-cart-transjual') ?>/" + id,
@@ -251,9 +250,8 @@
                         },
                         success: function(result) {
                             let items = $.parseJSON(result)
-                            // console.log(result)
                             if (items.status === true) {
-                                const item = items.data
+                                let item = items.data
                                 tampilItems(item)
                             } else {
                                 Swal.fire({
