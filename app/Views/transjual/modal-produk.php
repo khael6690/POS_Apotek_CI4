@@ -8,31 +8,33 @@
                 </button>
             </div>
             <div class="modal-body">
-                <table id="tb-produk" class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama Obat</th>
-                            <th>Stok</th>
-                            <th>Harga</th>
-                            <th style="width: 25%;">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php $no = 1;
-                        foreach ($produk as $value) : ?>
+                <div class="table-responsive">
+                    <table id="tb-produk" class="table table-bordered table-striped">
+                        <thead>
                             <tr>
-                                <td><?= $no++; ?> </td>
-                                <td><?= $value['nama_obat']; ?></td>
-                                <td><?= $value['jumlah']; ?></td>
-                                <td><?= number_to_currency($value['harga'], 'IDR', 'id_ID', 2) ?></td>
-                                <td>
-                                    <button type="button" class="btn btn-primary" onclick="add_to_cart('<?= $value['id_obat']; ?>','<?= $value['nama_obat']; ?>','<?= $value['harga']; ?>','<?= $value['discount']; ?>')"><i class="fas fa-plus-circle"></i> Pilih</button>
-                                </td>
+                                <th>No</th>
+                                <th>Nama Obat</th>
+                                <th>Stok</th>
+                                <th>Harga</th>
+                                <th style="width: 25%;">Action</th>
                             </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <?php $no = 1;
+                            foreach ($produk as $value) : ?>
+                                <tr>
+                                    <td><?= $no++; ?> </td>
+                                    <td><?= $value['nama_obat']; ?></td>
+                                    <td><?= $value['jumlah']; ?></td>
+                                    <td><?= number_to_currency($value['harga'], 'IDR', 'id_ID', 2) ?></td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" onclick="add_to_cart('<?= $value['id_obat']; ?>','<?= $value['nama_obat']; ?>','<?= $value['harga']; ?>','<?= $value['discount']; ?>')"><i class="fas fa-plus-circle"></i> Pilih</button>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -58,10 +60,10 @@
                 'discount': discount,
             },
             success: function(response) {
-                let itemx = $.parseJSON(response)
+                let items = $.parseJSON(response)
                 $('#modal-produk').modal('hide')
-                if (itemx.data) {
-                    const item = itemx.data
+                if (items.data) {
+                    const item = items.data
                     tampilItems(item)
                 } else {
                     Swal.fire({

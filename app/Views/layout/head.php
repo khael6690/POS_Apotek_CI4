@@ -26,4 +26,24 @@
 
     <!-- Theme style -->
     <link rel="stylesheet" href="<?= base_url() ?>/assets/admin/dist/css/adminlte.min.css">
+    <style>
+        /* * {
+            border: 1px solid black;
+        } */
+
+        @media (min-width: 1200px) {
+            div.col-sm label {
+                margin-left: 40px;
+                margin-top: 5px;
+                padding: 2px 2px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .col-form-label.faktur {
+                margin: 0;
+                padding: 0;
+            }
+        }
+    </style>
 </head>

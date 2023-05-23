@@ -8,27 +8,29 @@
                 </button>
             </div>
             <div class="modal-body">
-                <table id="tb-customer" class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama</th>
-                            <th style="width: 25%;">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php $no = 1;
-                        foreach ($customer as $value) : ?>
+                <div class="table-responsive">
+                    <table id="tb-customer" class="table table-bordered table-striped">
+                        <thead>
                             <tr>
-                                <td><?= $no++; ?> </td>
-                                <td><?= $value['nama']; ?></td>
-                                <td>
-                                    <button type="button" class="btn btn-primary" onclick="getCustomer('<?= $value['id']; ?>','<?= $value['nama']; ?>','<?= $value['diskon']; ?>')"><i class="fas fa-plus-circle"></i> Pilih</button>
-                                </td>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th style="width: 25%;">Action</th>
                             </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <?php $no = 1;
+                            foreach ($customer as $value) : ?>
+                                <tr>
+                                    <td><?= $no++; ?> </td>
+                                    <td><?= $value['nama']; ?></td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" onclick="getCustomer('<?= $value['id']; ?>','<?= $value['nama']; ?>','<?= $value['diskon']; ?>')"><i class="fas fa-plus-circle"></i> Pilih</button>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
