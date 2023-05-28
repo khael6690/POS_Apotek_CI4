@@ -36,13 +36,24 @@ $routes->set404Override();
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 
+// routes akses login
 $routes->group('', ['filter' => 'login'], function ($routes) {
     //route akses admin
     $routes->get('/', 'admin\Admin::index');
+
     // route setting user
     $routes->get('setuser', 'admin\User::setuser');
     $routes->post('setuser/(:num)', 'admin\User::saveset/$1');
     $routes->post('changepass/(:num)', 'admin\User::changesave/$1');
+
+    //route akses stok
+    $routes->get('stok', 'admin\Stok::index');
+    $routes->get('stok-masuk', 'admin\Stok::stok_masuk');
+    $routes->get('stok-masuk/viewdata', 'admin\Stok::viewdataMasuk');
+    $routes->get('stok/viewdata', 'admin\stok::viewdata');
+    $routes->get('opname-create/(:num)', 'admin\stok::addOpname/$1');
+    $routes->post('opname-save', 'admin\stok::saveOpname');
+
     // route management customers
     $routes->get('customers', 'admin\Customers::index');
     $routes->get('customers/viewdata', 'admin\Customers::viewdata');

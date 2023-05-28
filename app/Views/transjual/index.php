@@ -62,6 +62,9 @@
                                 </div>
                             </div>
                             <div class="col-sm my-1">
+                                <label for="nama-customer" class="col-form-label">Produk :</label>
+                            </div>
+                            <div class="col-sm my-1">
                                 <div class="input-group">
                                     <input id="kdproduk" type="text" class="form-control" placeholder="Kode Produk">
                                     <span class="input-group-append">

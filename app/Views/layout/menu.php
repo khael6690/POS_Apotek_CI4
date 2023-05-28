@@ -82,13 +82,13 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="<?= base_url('stok_masuk') ?>" class="nav-link">
+                                <a href="<?= base_url('stok-masuk') ?>" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Stok Masuk</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="<?= base_url('stok_opname') ?>" class="nav-link">
+                                <a href="<?= base_url('stok-opname') ?>" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Stok Opname</p>
                                 </a>

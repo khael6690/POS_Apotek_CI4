@@ -2,37 +2,36 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-blue">
-                <h4 class="modal-title">Add <?= $title; ?></h4>
+                <h4 class="modal-title">Add Opname</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="<?= base_url('produsen-create') ?>" method="POST" class="form-horizontal form-create">
+                <form action="<?= base_url('opname-save') ?>" method="POST" class="form-horizontal form-create">
                     <?= csrf_field() ?>
+                    <input type="hidden" name="id_obat" value="<?= $data_obat['id_obat'] ?>">
                     <div class="form-group row">
-                        <label for="nama" class="col-sm-4 col-form-label">Nama Produsen</label>
+                        <label for="nama_obat" class="col-sm-4 col-form-label">Nama Obat</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="nama" name="nama" value="<?= old('nama') ?>" placeholder="">
-                            <div class="invalid-feedback errornama">
+                            <input type="text" class="form-control" name="nama_obat" value="<?= old('nama_obat', $data_obat['nama_obat']) ?>" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="jumlah" class="col-sm-4 col-form-label">Jumlah</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" id="jumlah" name="jumlah" value="<?= old('jumlah') ?>">
+                            <div class="invalid-feedback errorjumlah">
 
                             </div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="alamat" class="col-sm-4 col-form-label">Alamat</label>
+                        <label for="keterangan" class="col-sm-4 col-form-label">Keterangan</label>
                         <div class="col-sm-8">
-                            <textarea class="form-control" name="alamat" value="<?= old('alamat') ?>" rows="2"></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="telp" class="col-sm-4 col-form-label">Nomor Telfon</label>
-                        <div class="col-sm-8">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text bg-success"><i class="fas fa-phone"></i></span>
-                                </div>
-                                <input type="text" class="form-control" name="telp" value="<?= old('telp') ?>" placeholder="+62">
+                            <textarea class="form-control" id="keterangan" name="keterangan" rows="2"><?= old('keterangan') ?></textarea>
+                            <div class="invalid-feedback errorketerangan">
+
                             </div>
                         </div>
                     </div>
@@ -68,12 +67,19 @@
                 },
                 success: function(response) {
                     if (response.error) {
-                        if (response.error.nama) {
-                            $('#nama').addClass('is-invalid');
-                            $('.errornama').html(response.error.nama);
+                        if (response.error.jumlah) {
+                            $('#jumlah').addClass('is-invalid');
+                            $('.errorjumlah').html(response.error.jumlah);
                         } else {
-                            $('#nama').removeClass('is-invalid');
-                            $('.errornama').html(' ');
+                            $('#jumlah').removeClass('is-invalid');
+                            $('.errorjumlah').html(' ');
+                        }
+                        if (response.error.keterangan) {
+                            $('#keterangan').addClass('is-invalid');
+                            $('.errorketerangan').html(response.error.keterangan);
+                        } else {
+                            $('#keterangan').removeClass('is-invalid');
+                            $('.errorketerangan').html('');
                         }
                     } else {
                         Toast.fire({

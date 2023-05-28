@@ -38,12 +38,5 @@
                 padding: 2px 2px;
             }
         }
-
-        @media (min-width: 768px) {
-            .col-form-label.faktur {
-                margin: 0;
-                padding: 0;
-            }
-        }
     </style>
 </head>

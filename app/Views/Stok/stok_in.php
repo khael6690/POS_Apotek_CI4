@@ -49,9 +49,6 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <div class="col-md-2">
-                        <button type="button" class="btn bg-gradient-primary btn-sm mb-3" id="btn-create"><i class="fas fa-plus-circle"></i></button>
-                    </div>
                     <div class="viewdata">
                     </div>
                 </div>
@@ -87,25 +84,6 @@
 
     <?= $this->section('script'); ?>
     <script>
-        // Tampil viewdata
-        function getData() {
-            $.ajax({
-                url: "<?= site_url('stok/viewdata') ?>",
-                dataType: "json",
-                success: function(response) {
-                    $('.viewdata').html(response.data);
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    Swal.fire({
-                        title: xhr.status,
-                        text: thrownError,
-                        icon: 'error',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                }
-            });
-        }
         $(document).ready(function() {
 
             // load tampil viewdata
@@ -113,14 +91,13 @@
 
         });
 
-        function add(id) {
+        // Tampil viewdata
+        function getData() {
             $.ajax({
-                url: "/opname-create/" + id,
-
+                url: "<?= site_url('stok-masuk/viewdata') ?>",
                 dataType: "json",
                 success: function(response) {
-                    $('#viewmodal').html(response.data).show();
-                    $('#modal-create').modal('show');
+                    $('.viewdata').html(response.data);
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
                     Swal.fire({
