@@ -22,6 +22,7 @@ class BuyModel extends Model
                 ->join('users U', 'B.userid = U.id')
                 ->join('obat O', 'O.id_obat=BD.id_obat', 'LEFT')
                 ->groupBy('BD.buyid')
+                ->orderBy('tgl', 'DESC')
                 ->get()->getResultArray();
         } else {
             return $this->db->table('buy_detail as BD')
@@ -32,6 +33,7 @@ class BuyModel extends Model
                 ->join('obat O', 'O.id_obat=BD.id_obat', 'LEFT')
                 ->where('BD.buyid', $id)
                 ->groupBy('BD.buyid')
+                ->orderBy('tgl', 'DESC')
                 ->get()->getResultArray();
         }
     }

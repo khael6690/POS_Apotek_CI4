@@ -48,6 +48,11 @@ $routes->group('', ['filter' => 'login'], function ($routes) {
 
     //route akses stok
     $routes->get('stok', 'admin\Stok::index');
+    $routes->get('stok-opname', 'admin\Stok::indexOpname');
+    $routes->get('stok-opname/viewdata', 'admin\Stok::viewdataOpname');
+    $routes->get('opname-update/(:num)', 'admin\Stok::opnameEdit/$1');
+    $routes->post('opname-update/(:num)', 'admin\Stok::opnameUpdate/$1');
+    $routes->delete('opname-delete/(:num)', 'admin\Stok::opnameDelete/$1');
     $routes->get('stok-masuk', 'admin\Stok::stok_masuk');
     $routes->get('stok-masuk/viewdata', 'admin\Stok::viewdataMasuk');
     $routes->get('stok/viewdata', 'admin\stok::viewdata');

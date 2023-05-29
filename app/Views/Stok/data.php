@@ -5,7 +5,7 @@
             <th>Nama</th>
             <th>Produsen</th>
             <th>Stok</th>
-            <th style="width: 25%;">Action</th>
+            <th style="width: 10%;">Action</th>
         </tr>
     </thead>
     <tbody>
@@ -17,7 +17,7 @@
                 <td><?= $value['nama']; ?></td>
                 <td><?= $value['jumlah']; ?></td>
                 <td>
-                    <button class="btn btn-warning btn-sm text-white" onclick="add('<?= $value['id_obat']; ?>')"><i class="fas fa-minus"></i></button>
+                    <button class="btn btn-danger btn-sm text-white" onclick="add('<?= $value['id_obat']; ?>')"><i class="fas fa-minus"></i></button>
                 </td>
             </tr>
         <?php endforeach; ?>

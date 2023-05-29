@@ -20,6 +20,7 @@ class SaleModel extends Model
                 ->join('users u', 'u.id=s.userid')
                 ->join('customer c', 'c.id = s.customerid', 'left')
                 ->groupBy('s.sale_id')
+                ->orderBy('tgl_transaksi', 'DESC')
                 ->get()->getResultArray();
         } else {
             return $this->db->table('sale_detail as sd')
@@ -29,6 +30,7 @@ class SaleModel extends Model
                 ->join('customer c', 'c.id = s.customerid', 'left')
                 ->where('s.sale_id', $id)
                 ->groupBy('s.sale_id')
+                ->orderBy('tgl_transaksi', 'DESC')
                 ->get()->getResultArray();
         }
     }

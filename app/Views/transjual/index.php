@@ -332,7 +332,7 @@
             // membersihkan form transaksi
             function resetDataTransaksi() {
                 $('#detail_cart').html(`<tr><td colspan="7">Belum ada transaksi!</td></tr>`)
-                $('#total').load('load-total-transjual')
+                $('#total').html('Rp 0,00')
                 nominal.clear();
                 $('#kembalian').val(' ');
                 $('#kdproduk').val(' ');
