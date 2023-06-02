@@ -36,9 +36,8 @@
                 <div class="card-body">
                     <h3>Halaman pengelolahan data <?= $title; ?></h3>
                     <ul>
-                        <li>view detail <?= $title; ?></li>
-                        <li>buy to add <?= $title; ?></li>
-                        <li>add <?= $title; ?> opname</li>
+                        <li>view data <?= $title; ?></li>
+                        <li>fillter data <?= $title; ?> berdasarkan tanggal</li>
                     </ul>
                 </div>
                 <!-- /.card-body -->

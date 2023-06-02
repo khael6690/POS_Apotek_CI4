@@ -199,7 +199,7 @@ class User extends BaseController
         return view('setuser/index', $data);
     }
 
-    public function saveset($id = null)
+    public function saveset($id)
     {
         // validasi data
         if (user()->username === $this->request->getVar('username')) {

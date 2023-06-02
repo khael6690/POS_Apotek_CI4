@@ -38,7 +38,7 @@
                 <!-- /.card-body -->
             </div>
             <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-primary">
                     <h3 class="card-title">Form <?= $title; ?></h3>
                 </div>
                 <!-- /.card-header -->
@@ -95,7 +95,6 @@
                             <!-- /.card-body -->
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary">Save</button>
-                                <a href="<?= base_url() ?>" class="btn btn-dark text-white">Back</a>
                             </div>
                             <!-- /.card-footer -->
                     </form>

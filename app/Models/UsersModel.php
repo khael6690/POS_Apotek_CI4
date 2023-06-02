@@ -8,6 +8,7 @@ class UsersModel extends Model
 {
     protected $table            = 'users';
     protected $useSoftDeletes = true;
+    protected $primaryKey       = 'id';
     protected $allowedFields    = ['email', 'username', 'fullname', 'user_image', 'password_hash', 'active'];
     protected $useTimestamps = true;
 

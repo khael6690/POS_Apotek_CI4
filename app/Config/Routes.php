@@ -70,8 +70,8 @@ $routes->group('', ['filter' => 'login'], function ($routes) {
     $routes->delete('customers-delete/(:num)', 'admin\Customers::delete/$1');
 });
 
-// routes akses User
 $routes->group('', ['filter' => 'permission:management-user'], function ($routes) {
+    // routes akses User
     $routes->get('user', 'admin\User::index');
     $routes->post('user-detail', 'admin\User::detail');
     $routes->get('user-create', 'admin\User::create');
@@ -89,13 +89,13 @@ $routes->group('', ['filter' => 'permission:management-user'], function ($routes
 });
 
 $routes->group('', ['filter' => 'role:Admin'], function ($routes) {
-
+    //route akses setting
     $routes->get('setting', 'admin\Setting::index');
     $routes->post('setting/(:num)', 'admin\Setting::save/$1');
 });
 
-// route akses obat
 $routes->group('', ['filter' => 'permission:management-obat'], function ($routes) {
+    // route akses obat
     $routes->get('obat', 'admin\Obat::index');
     $routes->get('obat/viewdata', 'admin\Obat::viewdata');
     $routes->post('obat-detail', 'admin\Obat::detail');
@@ -126,6 +126,7 @@ $routes->group('', ['filter' => 'permission:management-obat'], function ($routes
 });
 
 $routes->group('', ['filter' => 'permission:management-transaksi'], function ($routes) {
+    //route akses transaksi
     $routes->get('transjual', 'admin\Transjual::index');
     $routes->get('load-cart-transjual', 'admin\Transjual::show_cart');
     $routes->post('add-cart-transjual', 'admin\Transjual::add_cart');
@@ -141,6 +142,7 @@ $routes->group('', ['filter' => 'permission:management-transaksi'], function ($r
 });
 
 $routes->group('', ['filter' => 'permission:management-laporan'], function ($routes) {
+    //route akses laporan
     $routes->get('laporan-jual', 'admin\Transjual::laporan');
     $routes->post('laporan-jual-detail', 'admin\Transjual::lapdetail');
     $routes->get('print-laporan-jual-detail/(:any)', 'admin\Transjual::printdetail/$1');
