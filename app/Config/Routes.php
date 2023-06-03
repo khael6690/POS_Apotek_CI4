@@ -43,6 +43,7 @@ $routes->group('', ['filter' => 'login'], function ($routes) {
 
     // route setting user
     $routes->get('setuser', 'admin\User::setuser');
+    $routes->get('setuser/datauser', 'admin\User::dataUser');
     $routes->post('setuser/(:num)', 'admin\User::saveset/$1');
     $routes->post('changepass/(:num)', 'admin\User::changesave/$1');
 
@@ -73,6 +74,7 @@ $routes->group('', ['filter' => 'login'], function ($routes) {
 $routes->group('', ['filter' => 'permission:management-user'], function ($routes) {
     // routes akses User
     $routes->get('user', 'admin\User::index');
+    $routes->get('user/viewdata', 'admin\User::viewdata');
     $routes->post('user-detail', 'admin\User::detail');
     $routes->get('user-create', 'admin\User::create');
     $routes->post('user-create', 'admin\User::save');
@@ -84,6 +86,7 @@ $routes->group('', ['filter' => 'permission:management-user'], function ($routes
 
     // route akses group
     $routes->get('group', 'admin\Group::index');
+    $routes->get('group/viewdata', 'admin\Group::viewdata');
     $routes->get('group-update/(:num)', 'admin\Group::edit/$1');
     $routes->post('group-update/(:num)', 'admin\Group::update/$1');
 });

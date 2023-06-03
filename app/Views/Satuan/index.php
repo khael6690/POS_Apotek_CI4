@@ -70,30 +70,30 @@
 
             getData()
 
-            $('#btn-create').click(function(e) {
-                e.preventDefault();
-                $.ajax({
-                    url: "<?= site_url('satuan-create') ?>",
-                    dataType: "json",
-                    success: function(response) {
-                        $('#viewmodal').html(response.data).show();
-                        $('#modal-create').modal('show');
-                    },
-                    error: function(xhr, ajaxOptions, thrownError) {
-                        Swal.fire({
-                            title: xhr.status,
-                            text: thrownError,
-                            icon: 'error',
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                    }
-                });
-
-            });
 
         });
 
+        $('#btn-create').click(function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: "<?= site_url('satuan-create') ?>",
+                dataType: "json",
+                success: function(response) {
+                    $('#viewmodal').html(response.data).show();
+                    $('#modal-create').modal('show');
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    Swal.fire({
+                        title: xhr.status,
+                        text: thrownError,
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            });
+
+        });
 
         function edit(id) {
             $.ajax({

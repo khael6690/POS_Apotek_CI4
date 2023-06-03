@@ -76,15 +76,14 @@
                                 Toast.fire({
                                     icon: 'success',
                                     title: response.success
-                                })
-                                getData()
+                                });
                             } else {
                                 Toast.fire({
                                     icon: 'warning',
                                     title: response.error
-                                })
-                                getData()
+                                });
                             }
+                            getData();
                         }
                     });
 

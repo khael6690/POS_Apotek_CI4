@@ -53,39 +53,42 @@
 
         $('.form-create').submit(function(e) {
             e.preventDefault();
+            var form = $(this);
             $.ajax({
-                type: "post",
-                url: $(this).attr('action'),
-                data: $(this).serialize(),
+                type: form.attr('method'),
+                url: form.attr('action'),
+                data: form.serialize(),
                 dataType: "json",
                 beforeSend: function() {
-                    $('.btn-save').attr('disable', 'disabled');
-                    $('.btn-save').html('<i class="fas fa-spinner fa-spin"></i>');
+                    form.find('.btn-save').attr('disabled', 'disabled');
+                    form.find('.btn-save').html('<i class="fas fa-spinner fa-spin"></i>');
                 },
                 complete: function() {
-                    $('.btn-save').removeAttr('disable', 'disabled');
-                    $('.btn-save').html('Simpan');
+                    form.find('.btn-save').removeAttr('disabled');
+                    form.find('.btn-save').html('Simpan');
                 },
                 success: function(response) {
                     if (response.error) {
-                        if (response.error.nama) {
-                            $('#nama').addClass('is-invalid');
-                            $('.errornama').html(response.error.nama);
-                        } else {
-                            $('#nama').removeClass('is-invalid');
-                            $('.errornama').html(' ');
-                        }
+                        response.error && response.error.nama ?
+                            (form.find('#nama').addClass('is-invalid'), form.find('.errornama').html(response.error.nama)) :
+                            (form.find('#nama').removeClass('is-invalid'), form.find('.errornama').html(''));
                     } else {
                         Toast.fire({
                             icon: 'success',
                             title: response.success
-                        })
+                        });
                         $('#modal-create').modal('hide');
-                        getData()
+                        getData();
                     }
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
-                    alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+                    Swal.fire({
+                        title: xhr.status,
+                        text: thrownError,
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                 }
             });
         });

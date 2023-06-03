@@ -42,25 +42,8 @@
 
 <script>
     $(document).ready(function() {
-        $("#example1").DataTable({
-            "responsive": true,
-            "lengthChange": true,
-            "autoWidth": false,
-            "buttons": ["colvis"]
-        })
 
-        $('#tb-produk').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "pageLength": 10,
-            "searching": true,
-            "ordering": true,
-            "info": false,
-            "autoWidth": false,
-            "responsive": true,
-        })
-
-        $('#tb-customer').DataTable({
+        $('.tb-sale').DataTable({
             "paging": true,
             "lengthChange": false,
             "pageLength": 10,

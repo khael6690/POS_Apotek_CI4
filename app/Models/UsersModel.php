@@ -7,7 +7,6 @@ use CodeIgniter\Model;
 class UsersModel extends Model
 {
     protected $table            = 'users';
-    protected $useSoftDeletes = true;
     protected $primaryKey       = 'id';
     protected $allowedFields    = ['email', 'username', 'fullname', 'user_image', 'password_hash', 'active'];
     protected $useTimestamps = true;
@@ -23,8 +22,8 @@ class UsersModel extends Model
             $this->select('users.id as userid, username, fullname, email, user_image, gu.group_id, g.name, g.id ')
                 ->join('auth_groups_users gu', 'users.id = gu.user_id')
                 ->join('auth_groups g', 'g.id = gu.group_id');
-            $this->where(['users.id ' => $id]);
-            return $this->first();
+            $this->where('users.id', $id);
+            return $this->get()->getRowArray();
         }
     }
 }

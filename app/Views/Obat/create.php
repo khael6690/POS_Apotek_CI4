@@ -105,64 +105,62 @@
         //Initialize fileinput Elements
         bsCustomFileInput.init();
 
-        $('.btn-save').click(function(e) {
+        $('.form-create').submit(function(e) {
             e.preventDefault();
-            let form = $('.form-create')[0];
-            let data = new FormData(form);
+
+            var form = $(this);
+            var formData = new FormData(form[0]);
+
             $.ajax({
-                type: "post",
-                url: "<?= base_url('obat-create') ?>",
+                type: form.attr('method'),
+                url: form.attr('action'),
+                data: formData,
                 enctype: 'multipart/form-data',
-                data: data,
                 processData: false,
                 contentType: false,
                 cache: false,
                 dataType: "json",
                 beforeSend: function() {
-                    $('.btn-save').attr('disable', 'disabled');
+                    $('.btn-save').attr('disabled', 'disabled');
                     $('.btn-save').html('<i class="fas fa-spinner fa-spin"></i>');
                 },
                 complete: function() {
-                    $('.btn-save').removeAttr('disable', 'disabled');
+                    $('.btn-save').removeAttr('disabled');
                     $('.btn-save').html('Simpan');
                 },
                 success: function(response) {
-                    if (response.error) {
-                        if (response.error.nama) {
-                            $('#nama').addClass('is-invalid');
-                            $('.errornama').html(response.error.nama);
-                        } else {
-                            $('#nama').removeClass('is-invalid');
-                            $('.errornama').html(' ');
-                        }
-                        if (response.error.harga) {
-                            $('#harga').addClass('is-invalid');
-                            $('.errorharga').html(response.error.harga);
-                        } else {
-                            $('#harga').removeClass('is-invalid');
-                            $('.errorharga').html(' ');
-                        }
-                        if (response.error.img) {
-                            $('#img').addClass('is-invalid');
-                            $('.errorimg').html(response.error.img);
-                        } else {
-                            $('#img').removeClass('is-invalid');
-                            $('.errorimg').html(' ');
-                        }
-                    } else {
+                    if (!response.error) {
                         Toast.fire({
                             icon: 'success',
                             title: response.success
-                        })
+                        });
                         $('#modal-create').modal('hide');
-                        getData()
+                        getData();
+                    } else {
+                        response.error && response.error.nama ?
+                            ($('#nama').addClass('is-invalid'), $('.errornama').html(response.error.nama)) :
+                            ($('#nama').removeClass('is-invalid'), $('.errornama').html(''));
+
+                        response.error && response.error.harga ?
+                            ($('#harga').addClass('is-invalid'), $('.errorharga').html(response.error.harga)) :
+                            ($('#harga').removeClass('is-invalid'), $('.errorharga').html(''));
+
+                        response.error && response.error.img ?
+                            ($('#img').addClass('is-invalid'), $('.errorimg').html(response.error.img)) :
+                            ($('#img').removeClass('is-invalid'), $('.errorimg').html(''));
                     }
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
-                    alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+                    Swal.fire({
+                        title: xhr.status,
+                        text: thrownError,
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                 }
             });
-
         });
+
     });
 </script>

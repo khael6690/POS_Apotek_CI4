@@ -15,7 +15,7 @@
                             <label for="nama" class="col-sm-2 col-form-label">Nama Obat</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="nama" name="nama" value="<?= old('nama', $data_obat['nama_obat']) ?>" placeholder="Nama Obat">
-                                <div class="invalid-feedback">
+                                <div class="invalid-feedback errornama">
 
                                 </div>
                             </div>
@@ -100,15 +100,16 @@
         //Initialize fileinput Elements
         bsCustomFileInput.init();
 
-        $('.btn-save').click(function(e) {
+        $('.form-update').submit(function(e) {
             e.preventDefault();
-            let form = $('.form-update')[0];
-            let data = new FormData(form);
+
+            var form = $(this);
+            var formData = new FormData(form[0]);
             $.ajax({
-                type: "post",
-                url: $('.form-update').attr('action'),
+                type: form.attr('method'),
+                url: form.attr('action'),
+                data: formData,
                 enctype: 'multipart/form-data',
-                data: data,
                 processData: false,
                 contentType: false,
                 cache: false,
@@ -122,39 +123,35 @@
                     $('.btn-save').html('Simpan');
                 },
                 success: function(response) {
-                    if (response.error) {
-                        if (response.error.nama) {
-                            $('#nama').addClass('is-invalid');
-                            $('.errornama').html(response.error.nama);
-                        } else {
-                            $('#nama').removeClass('is-invalid');
-                            $('.errornama').html(' ');
-                        }
-                        if (response.error.harga) {
-                            $('#harga').addClass('is-invalid');
-                            $('.errorharga').html(response.error.harga);
-                        } else {
-                            $('#harga').removeClass('is-invalid');
-                            $('.errorharga').html(' ');
-                        }
-                        if (response.error.img) {
-                            $('#img').addClass('is-invalid');
-                            $('.errorimg').html(response.error.img);
-                        } else {
-                            $('#img').removeClass('is-invalid');
-                            $('.errorimg').html(' ');
-                        }
-                    } else {
+                    if (!response.error) {
                         Toast.fire({
                             icon: 'success',
                             title: response.success
-                        })
+                        });
                         $('#modal-update').modal('hide');
-                        getData()
+                        getData();
+                    } else {
+                        response.error && response.error.nama ?
+                            ($('#nama').addClass('is-invalid'), $('.errornama').html(response.error.nama)) :
+                            ($('#nama').removeClass('is-invalid'), $('.errornama').html(''));
+
+                        response.error && response.error.harga ?
+                            ($('#harga').addClass('is-invalid'), $('.errorharga').html(response.error.harga)) :
+                            ($('#harga').removeClass('is-invalid'), $('.errorharga').html(''));
+
+                        response.error && response.error.img ?
+                            ($('#img').addClass('is-invalid'), $('.errorimg').html(response.error.img)) :
+                            ($('#img').removeClass('is-invalid'), $('.errorimg').html(''));
                     }
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
-                    alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+                    Swal.fire({
+                        title: xhr.status,
+                        text: thrownError,
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                 }
             });
 

@@ -9,7 +9,7 @@
             </div>
             <div class="modal-body">
                 <div class="table-responsive">
-                    <table id="tb-customer" class="table table-bordered table-striped">
+                    <table class="table table-bordered table-striped tb-sale">
                         <thead>
                             <tr>
                                 <th>No</th>

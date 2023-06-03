@@ -24,12 +24,30 @@ class User extends BaseController
     public function index()
     {
         $data_users = $this->_m_users->findAll();
-        // dd($this->_m_user->getUser());
         $data = [
             'title' => _TITLE,
             'data_users' => $data_users
         ];
         return view('User/index', $data);
+    }
+
+    public function viewdata()
+    {
+
+        if ($this->request->isAJAX()) {
+            $data_user = $this->_m_users->findAll();
+
+            $data = [
+                'data_users' => $data_user
+            ];
+
+            $msg = [
+                'data' => view('user/data', $data)
+            ];
+            return $this->response->setJSON($msg);
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
     }
 
     public function detail()
@@ -45,233 +63,345 @@ class User extends BaseController
 
     public function create()
     {
-        $data_group = $this->_m_group->orderBy('name')->findAll();
-        $data = [
-            'title' => _TITLE,
-            'data_group' => $data_group,
-            'validation' => \config\Services::validation()
-        ];
-        return view('User/create', $data);
+        if ($this->request->isAJAX()) {
+            $data_group = $this->_m_group->orderBy('name')->findAll();
+            $data = [
+                'title' => _TITLE,
+                'data_group' => $data_group
+            ];
+            $msg = [
+                'data' => view('user/create', $data)
+            ];
+            return $this->response->setJSON($msg);
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
     }
 
     public function save()
     {
-        // validasi data
-        if (!$this->validate([
-            'username' => [
-                'rules' => 'required|is_unique[users.username]',
-                'label' => 'Username',
-                'errors' => [
-                    'required' => '{field} Harus diisi!',
-                    'is_unique' => '{field} Sudah digunakan!'
-                ]
-            ],
-            'email' => [
-                'rules' => 'required',
-                'label' => 'Email',
-                'errors' => [
-                    'required' => '{field} Harus diisi!'
-                ]
-            ],
-            'password' => [
-                'rules' => 'required',
-                'label' => 'Password',
-                'errors' => [
-                    'required' => '{field} Harus diisi!'
-                ]
-            ],
-            'pass_confirm' => [
-                'rules' => 'required|matches[password]',
-                'label' => 'Password Konfirmasi',
-                'errors' => [
-                    'required' => '{field} Harus diisi!',
-                    'matches' => '{field} Tidak sama dengan password!'
-                ]
-            ],
-        ])) {
-            // dd(\config\Services::validation()->getErrors());
-            return redirect()->to('user-create')->withInput();
-        }
 
-        // masuk ke database
-        if ($this->_m_users->withGroup($this->request->getVar('group'))->save(
-            [
-                'username' => $this->request->getVar('username'),
-                'email' => $this->request->getVar('email'),
-                'fullname' => $this->request->getVar('fullname'),
-                'password_hash' => Password::hash($this->request->getVar('password')),
-                'active' => 1
-            ]
-        )) {
-            session()->setFlashdata('sukses', 'Data berhasil ditambahkan!');
-            return redirect()->to('/user');
-        } else
-            session()->setFlashdata('warning', 'Data gagal ditambahkan!');
-        return redirect()->to('/user');
+        if ($this->request->isAJAX()) {
+
+            // validasi data
+            $validation = \config\Services::validation();
+            if (!$this->validate([
+                'username' => [
+                    'rules' => 'required|is_unique[users.username]',
+                    'label' => 'Username',
+                    'errors' => [
+                        'required' => '{field} harus diisi!',
+                        'is_unique' => '{field} sudah digunakan!'
+                    ]
+                ],
+                'fullname' => [
+                    'rules' => 'required',
+                    'label' => 'Fullname',
+                    'errors' => [
+                        'required' => '{field} harus diisi!'
+                    ]
+                ],
+                'email' => [
+                    'rules' => 'required',
+                    'label' => 'Email',
+                    'errors' => [
+                        'required' => '{field} harus diisi!'
+                    ]
+                ],
+                'password' => [
+                    'rules' => 'required',
+                    'label' => 'Password',
+                    'errors' => [
+                        'required' => '{field} harus diisi!'
+                    ]
+                ],
+                'pass_confirm' => [
+                    'rules' => 'required|matches[password]',
+                    'label' => 'Password Konfirmasi',
+                    'errors' => [
+                        'required' => '{field} harus diisi!',
+                        'matches' => '{field} Tidak sama dengan password!'
+                    ]
+                ],
+            ])) {
+                // dd(\config\Services::validation()->getErrors());
+                $msg = [
+                    'error' => [
+                        'username' => $validation->getError('username'),
+                        'fullname' => $validation->getError('fullname'),
+                        'email' => $validation->getError('email'),
+                        'password' => $validation->getError('password'),
+                        'pass_confirm' => $validation->getError('pass_confirm'),
+                    ]
+                ];
+                return $this->response->setJSON($msg);
+            }
+
+            // masuk ke database
+            if ($this->_m_users->withGroup($this->request->getVar('group'))->save(
+                [
+                    'username' => $this->request->getVar('username'),
+                    'email' => $this->request->getVar('email'),
+                    'fullname' => $this->request->getVar('fullname'),
+                    'password_hash' => Password::hash($this->request->getVar('password')),
+                    'active' => 1
+                ]
+            )) {
+                $msg = [
+                    'success' =>  'Data berhasil ditambahkan!'
+                ];
+                return $this->response->setJSON($msg);
+            } else
+                $msg = [
+                    'fail' =>  'Data gagal ditambahkan!'
+                ];
+            return $this->response->setJSON($msg);
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
     }
 
     public function delete($id)
     {
-        // dd($id);
-        $data_user = $this->_m_user->find($id);
-        $gambar_lama = $data_user['user_image'];
-        if ($gambar_lama != 'default.png') {
-            unlink(WRITEPATH . '../assets/upload/user/' . $gambar_lama);
-            unlink(WRITEPATH . '../assets/upload/user/thumbs/' . $gambar_lama);
-        }
-        if ($this->_m_user->delete($id)) {
 
-            session()->setFlashdata('sukses', 'Data berhasil dihapus!');
-        } else session()->setFlashdata('warning', 'Data gagal dihapus!');
-        return redirect()->to('/user');
+        if ($this->request->isAJAX()) {
+            $data_user = $this->_m_user->getUser($id);
+            $gambar_lama = $data_user['user_image'];
+            if ($gambar_lama != 'default.png') {
+                unlink(WRITEPATH . '../public/assets/upload/user/' . $gambar_lama);
+                unlink(WRITEPATH . '../public/assets/upload/user/thumbs/' . $gambar_lama);
+            }
+            if ($this->_m_users->delete($id)) {
+                $msg = [
+                    'success' =>  'Data berhasil dihapus!'
+                ];
+
+                return $this->response->setJSON($msg);
+            } else {
+                $msg = [
+                    'error' =>  'Data gagal dihapus!'
+                ];
+
+                return $this->response->setJSON($msg);
+            }
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
     }
 
-    public function edit($id)
+    public function edit($id = null)
     {
-        $data_user = $this->_m_user->getUser($id);
-        $data_group = $this->_m_group->orderBy('name')->findAll();
-        $data = [
-            'title' => _TITLE,
-            'data_user' => $data_user,
-            'data_group' => $data_group,
-            'validation' => \config\Services::validation()
-        ];
-        return view('User/update', $data);
+        if ($this->request->isAJAX()) {
+            $data_user = $this->_m_user->getUser($id);
+            $data_group = $this->_m_group->orderBy('name')->findAll();
+            $data = [
+                'title' => _TITLE,
+                'data_user' => $data_user,
+                'data_group' => $data_group
+            ];
+            $msg = [
+                'data' => view('user/update', $data)
+            ];
+
+            return $this->response->setJSON($msg);
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
     }
 
     public function update($id)
     {
-        $data_user = $this->_m_user->getUser($id);
-        // masuk ke database
-        $this->_m_group->removeUserFromGroup($id, $data_user['id']);
-        if ($this->_m_group->addUserToGroup($id, $this->request->getVar('group'))) {
+        if ($this->request->isAJAX()) {
 
-            session()->setFlashdata('sukses', 'Data berhasil diupdate!');
-        } else
-            session()->setFlashdata('warning', 'Data gagal diupdate!');
-        return redirect()->to('/user');
+            $data_user = $this->_m_user->getUser($id);
+            // masuk ke database
+            $this->_m_group->removeUserFromGroup($id, $data_user['id']);
+            if ($this->_m_group->addUserToGroup($id, $this->request->getVar('group'))) {
+
+                $msg = [
+                    'success' =>  'Data berhasil diupdate!'
+                ];
+
+                return $this->response->setJSON($msg);
+            } else $msg = [
+                'fail' =>  'Data gagal diupdate!'
+            ];
+
+            return $this->response->setJSON($msg);
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
     }
 
     public  function resetpass($id = null)
     {
-        // dd($id);
-        if ($this->_m_user->save([
-            'id' => $id,
-            'password_hash' => Password::hash("12345678")
-        ])) {
+        if ($this->request->isAJAX()) {
+            if ($this->_m_user->save([
+                'id' => $id,
+                'password_hash' => Password::hash("12345678")
+            ])) {
 
-            session()->setFlashdata('sukses', 'Password berhasil direset!');
-        } else
-            session()->setFlashdata('warning', 'Password gagal direset!');
-        return redirect()->to('/user');
+                $msg = [
+                    'success' =>  'Password berhasil direset!'
+                ];
+
+                return $this->response->setJSON($msg);
+            } else
+                $msg = [
+                    'fail' =>  'Password gagal direset!'
+                ];
+
+            return $this->response->setJSON($msg);
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
     }
 
     public function setaktif($id = null)
     {
-        // dd($id);
-        $aktif = $this->_m_user->find($id);
-        if ($aktif['active'] == 1) {
-            $status = 0;
+        if ($this->request->isAJAX()) {
+            $aktif = $this->_m_user->find($id);
+            $aktif['active'] == 1 ? $status = 0 : $status = 1;
+
+            if ($this->_m_user->save([
+                'id' => $id,
+                'active' => $status
+            ])) {
+                $msg = [
+                    'success' =>  'Password berhasil direset!'
+                ];
+
+                return $this->response->setJSON($msg);
+            } else
+                $msg = [
+                    'fail' =>  'Password gagal direset!'
+                ];
+
+            return $this->response->setJSON($msg);
         } else {
-            $status = 1;
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
-
-        if ($this->_m_user->save([
-            'id' => $id,
-            'active' => $status
-        ])) {
-
-            session()->setFlashdata('sukses', 'Status berhasil diubah!');
-        } else
-            session()->setFlashdata('warning', 'Status gagal diubah!');
-        return redirect()->to('/user');
     }
 
     public function setuser()
     {
         $data_user = $this->_m_users->find(user_id());
-        // dd($data_users);
         $data = [
             'title' => _TITLE,
-            'data_user' => $data_user,
-            'validation' => \config\Services::validation()
+            'data_user' => $data_user
         ];
         return view('setuser/index', $data);
     }
 
+    public function dataUser()
+    {
+        if ($this->request->isAJAX()) {
+            $data_user = $this->_m_users->find(user_id());
+            $data = [
+                'datauser' => $data_user
+            ];
+            $msg = [
+                'data' => view('setuser/data', $data)
+            ];
+            return $this->response->setJSON($msg);
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+    }
+
     public function saveset($id)
     {
-        // validasi data
-        if (user()->username === $this->request->getVar('username')) {
-            $rule = 'required';
-        } else {
-            $rule = 'required|is_unique[users.username]';
-        }
-        if (!$this->validate([
-            'username' => [
-                'rules' => $rule,
-                'label' => 'Username',
-                'errors' => [
-                    'required' => '{field} Harus diisi!',
-                    'is_unique' => '{field} Sudah digunakan!'
+        if ($this->request->isAJAX()) {
+            // validasi data
+            $validation = \config\Services::validation();
+            user()->username === $this->request->getVar('username') ? $rule = 'required' : $rule = 'required|is_unique[users.username]';
+            if (!$this->validate([
+                'username' => [
+                    'rules' => $rule,
+                    'label' => 'Username',
+                    'errors' => [
+                        'required' => '{field} harus diisi!',
+                        'is_unique' => '{field} sudah digunakan!'
+                    ]
+                ],
+                'fullname' => [
+                    'rules' => 'required',
+                    'label' => 'Nama lengkap',
+                    'errors' => [
+                        'required' => '{field} harus diisi!'
+                    ]
+                ],
+                'email' => [
+                    'rules' => 'required',
+                    'label' => 'Email',
+                    'errors' => [
+                        'required' => '{field} harus diisi!'
+                    ]
+                ],
+                'user_image' => [
+                    'rules' => 'max_size[user_image,1024]|is_image[user_image]|mime_in[user_image,image/jpg,image/jpeg,image/png]',
+                    'label' => 'gambar',
+                    'errors' => [
+                        'max_size' => '{field} ukuran gambar tidak boleh lebih 1mb!',
+                        'is_image' => 'File yang dipilih bukan gambar!',
+                        'mime_in' => 'File yang dipilih bukan gambar!'
+                    ]
                 ]
-            ],
-            'email' => [
-                'rules' => 'required',
-                'label' => 'Email',
-                'errors' => [
-                    'required' => '{field} Harus diisi!'
-                ]
-            ],
-            'user_image' => [
-                'rules' => 'max_size[user_image,1024]|is_image[user_image]|mime_in[user_image,image/jpg,image/jpeg,image/png]',
-                'label' => 'gambar',
-                'errors' => [
-                    'max_size' => '{field} ukuran gambar tidak boleh lebih 1mb!',
-                    'is_image' => 'File yang dipilih bukan gambar!',
-                    'mime_in' => 'File yang dipilih bukan gambar!'
-                ]
-            ]
-        ])) {
-            // dd(\config\Services::validation()->getErrors());
-            return redirect()->to('setuser')->withInput();
-        }
-        // proses upload gambar
-        // dd($this->request->getFile('user_image'));
-        $gambar = $this->request->getFile('user_image');
-        if ($gambar->getError() === 4) //tidak ada file yg diupload
-        {
-            $namafile = user()->user_image;
-        } else {
-            $gambar   = $this->request->getFile('user_image');
-            $gambar_lama = user()->user_image;
-            $namafile = $gambar->getRandomName();
-            if ($gambar_lama != 'default.png') {
-                unlink(WRITEPATH . '../public/assets/upload/user/' . $gambar_lama);
-                unlink(WRITEPATH . '../public/assets/upload/user/thumbs/' . $gambar_lama);
+            ])) {
+                // dd(\config\Services::validation()->getErrors());
+                $msg = [
+                    'error' => [
+                        'username' => $validation->getError('username'),
+                        'fullname' => $validation->getError('fullname'),
+                        'email' => $validation->getError('email'),
+                        'user_image' => $validation->getError('user_image')
+                    ]
+                ];
+                return $this->response->setJSON($msg);
             }
-            $gambar->move(WRITEPATH . '../public/assets/upload/user/', $namafile);
-            // Create thumb
-            $image = \Config\Services::image()
-                ->withFile(WRITEPATH . '../public/assets/upload/user/' . $namafile)
-                ->fit(100, 100, 'center')
-                ->save(WRITEPATH . '../public/assets/upload/user/thumbs/' . $namafile);
+            // proses upload gambar
+            // dd($this->request->getFile('user_image'));
+            $gambar = $this->request->getFile('user_image');
+            if ($gambar->getError() === 4) //tidak ada file yg diupload
+            {
+                $namafile = user()->user_image;
+            } else {
+                $gambar   = $this->request->getFile('user_image');
+                $gambar_lama = user()->user_image;
+                $namafile = $gambar->getRandomName();
+                if ($gambar_lama != 'default.png') {
+                    unlink(WRITEPATH . '../public/assets/upload/user/' . $gambar_lama);
+                    unlink(WRITEPATH . '../public/assets/upload/user/thumbs/' . $gambar_lama);
+                }
+                $gambar->move(WRITEPATH . '../public/assets/upload/user/', $namafile);
+                // Create thumb
+                $image = \Config\Services::image()
+                    ->withFile(WRITEPATH . '../public/assets/upload/user/' . $namafile)
+                    ->fit(100, 100, 'center')
+                    ->save(WRITEPATH . '../public/assets/upload/user/thumbs/' . $namafile);
+            }
+            // masuk ke database
+            if ($this->_m_users->save(
+                [
+                    'id' => $id,
+                    'username' => $this->request->getVar('username'),
+                    'email' => $this->request->getVar('email'),
+                    'user_image' => $namafile,
+                    'fullname' => $this->request->getVar('fullname')
+                ]
+            )) {
+                $msg = [
+                    'success' =>  'Data berhasil ditambahkan!'
+                ];
+                return $this->response->setJSON($msg);
+            } else
+                $msg = [
+                    'fail' =>  'Data gagal ditambahkan!'
+                ];
+            return $this->response->setJSON($msg);
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
-        // masuk ke database
-        if ($this->_m_users->save(
-            [
-                'id' => $id,
-                'username' => $this->request->getVar('username'),
-                'email' => $this->request->getVar('email'),
-                'user_image' => $namafile,
-                'fullname' => $this->request->getVar('fullname')
-            ]
-        )) {
-            session()->setFlashdata('sukses', 'Data berhasil diubah!');
-            return redirect()->to('setuser');
-        } else
-            session()->setFlashdata('warning', 'Data gagal diubah!');
-        return redirect()->to('setuser');
     }
 
     public function changesave($id = null)
@@ -287,21 +417,21 @@ class User extends BaseController
                     'rules' => 'required',
                     'label' => 'Password',
                     'errors' => [
-                        'required' => '{field} Harus diisi!'
+                        'required' => '{field} harus diisi!'
                     ]
                 ],
                 'password' => [
                     'rules' => 'required',
                     'label' => 'Password',
                     'errors' => [
-                        'required' => '{field} Harus diisi!'
+                        'required' => '{field} harus diisi!'
                     ]
                 ],
                 'pass_confirm' => [
                     'rules' => 'required|matches[password]',
                     'label' => 'Password Konfirmasi',
                     'errors' => [
-                        'required' => '{field} Harus diisi!',
+                        'required' => '{field} harus diisi!',
                         'matches' => '{field} Tidak sama dengan password!'
                     ]
                 ],

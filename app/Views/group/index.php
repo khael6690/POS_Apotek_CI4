@@ -45,33 +45,67 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <table id="example1" class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th style="width: 5%;">No</th>
-                                <th>Group</th>
-                                <th>Deskripsi</th>
-                                <th style="width: 25%;">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php $no = 1;
-                            foreach ($data_group as $value) : ?>
-                                <tr>
-                                    <td><?= $no++; ?> </td>
-                                    <td><?= $value->name; ?></td>
-                                    <td><?= $value->description; ?></td>
-                                    <td>
-                                        <a href="group-update/<?= $value->id; ?>" class="btn btn-warning btn-sm text-white"><i class="fas fa-edit"></i></a>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
+                    <div class="viewdata"></div>
                 </div>
             </div>
+            <div id="viewnodal" style="display: none;"></div>
             <!-- /.card-body -->
         </div>
+        <!-- viewmodal -->
+        <div id="viewmodal" style="display: none;"></div>
+        <!-- /. viewmodal -->
         <!--/. container-fluid -->
     </section>
-    <?= $this->endSection(); ?>
+</div>
+<?= $this->endSection(); ?>
+<?= $this->section('script'); ?>
+<script>
+    $(document).ready(function() {
+        // load tampil viewdata
+        getData();
+    });
+
+    // Tampil viewdata
+    function getData() {
+        $.ajax({
+            url: "<?= site_url('group/viewdata') ?>",
+            dataType: "json",
+            success: function(response) {
+                $('.viewdata').html(response.data);
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                Swal.fire({
+                    title: xhr.status,
+                    text: thrownError,
+                    icon: 'error',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+        });
+    }
+
+    function edit(id) {
+        $.ajax({
+            type: "get",
+            url: "/group-update/" + id,
+            dataType: "json",
+            success: function(response) {
+                if (response.data) {
+                    $('#viewmodal').html(response.data).show();
+                    $('#modal-update').modal('show');
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                Swal.fire({
+                    title: xhr.status,
+                    text: thrownError,
+                    icon: 'error',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+        });
+    }
+</script>
+<?= $this->endSection(); ?>
