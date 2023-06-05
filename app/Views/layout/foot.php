@@ -1,6 +1,8 @@
 <!-- REQUIRED SCRIPTS -->
 <!-- jQuery -->
 <script src="<?= base_url() ?>/assets/admin/plugins/jquery/jquery.min.js"></script>
+<!-- auto numeric -->
+<script src="https://cdn.jsdelivr.net/npm/autonumeric@4.8.1"></script>
 <!-- Bootstrap -->
 <script src="<?= base_url() ?>/assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- Select2 -->
@@ -53,13 +55,6 @@
             "autoWidth": false,
             "responsive": true,
         })
-
-        //Initialize Select2 Elements
-        $('#select2').select2()
-        $('#select1').select2()
-
-        //Initialize fileinput Elements
-        bsCustomFileInput.init();
     });
 
     var Toast = Swal.mixin({

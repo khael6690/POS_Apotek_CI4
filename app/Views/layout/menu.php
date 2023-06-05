@@ -117,13 +117,13 @@
                             <li class="nav-item">
                                 <a href="<?= base_url('transjual') ?>" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Transaksi Penjualan</p>
+                                    <p>Penjualan</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="<?= base_url('/group') ?>" class="nav-link">
+                                <a href="<?= base_url('transbeli') ?>" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Transaksi Pembelian</p>
+                                    <p>Pembelian</p>
                                 </a>
                             </li>
                         </ul>

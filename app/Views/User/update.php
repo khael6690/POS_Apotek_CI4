@@ -12,20 +12,20 @@
                     <?= csrf_field() ?>
                     <div class="card-body">
                         <div class="form-group row">
-                            <label for="username" class="col-sm-2 col-form-label">Username</label>
-                            <div class="col-sm-10">
+                            <label for="username" class="col-sm-4 col-form-label">Username</label>
+                            <div class="col-sm-8">
                                 <input type="text" disabled class="form-control" value="<?= old('username', $data_user['username']) ?>" placeholder="<?= lang('Auth.username') ?>">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="email" class="col-sm-2 col-form-label">Email</label>
-                            <div class="col-sm-10">
+                            <label for="email" class="col-sm-4 col-form-label">Email</label>
+                            <div class="col-sm-8">
                                 <input type="email" disabled class="form-control" name="email" value="<?= old('email', $data_user['email'])  ?>" placeholder="<?= lang('Auth.email') ?>">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="groub" class="col-sm-2 col-form-label">Role / Level</label>
-                            <div class="col-sm-10">
+                            <label for="groub" class="col-sm-4 col-form-label">Role / Level</label>
+                            <div class="col-sm-8">
                                 <select class="form-control select" id="select1" name="group">
                                     <?php foreach ($data_group as $value) : ?>
                                         <option value="<?= $value->id ?>" <?= old('group', $data_user['id'])  == $value->id ? 'selected' : '' ?>><?= $value->name ?></option>

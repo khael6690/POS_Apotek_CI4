@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Pengelolahan Data <?= $title; ?></h1>
+                    <h1 class="m-0">Form <?= $title; ?></h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -22,53 +22,46 @@
     <!-- /.content-header -->
     <section class="content">
         <div class="container-fluid">
-
             <div class="card">
                 <div class="card-header">
-                    <h1 class="card-title"><span id="date_time"></span></h1>
-                    <!-- /.card-header -->
+                    <span id="date_time"></span>
                     <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+                        <button type="button" class="btn btn-tool" data-card-widget="maximize">
+                            <i class="fas fa-expand"></i>
                         </button>
                     </div>
-
                 </div>
                 <div class="card-body">
-
                     <div class="container-fluid">
-                        <div class="form-group row">
-                            <div class="col-sm my-1">
+                        <div class="row">
+                            <div class="col-md-6 my-1 justi">
                                 <label for="saleId" class="col-form-label">No Faktur :</label>
                             </div>
-                            <div class="col-sm my-1">
-                                <input type="text" id="saleId" class="form-control" disabled>
+                            <div class="col-md-6 my-1">
+                                <input type="text" id="buyid" class="form-control" disabled>
                             </div>
-                            <div class="col-sm my-1">
+                            <div class="col-md-6 my-1">
                                 <label for="user" class="col-form-label">User :</label>
                             </div>
-                            <div class="col-sm my-1">
+                            <div class="col-md-6 my-1">
                                 <input type="text" id="user" value="<?= user()->username ?>" class="form-control" disabled>
                             </div>
-                            <div class="col-sm my-1">
-                                <label for="nama-customer" class="col-form-label">Customer :</label>
+                            <div class="col-md-6 my-1">
+                                <label for="nama-customer" class="col-form-label">Supplier :</label>
                             </div>
-                            <div class="col-sm my-1">
-                                <div class="input-group">
-                                    <input id="nama-customer" type="text" class="form-control" disabled>
-                                    <input id="id-customer" type="hidden" class="form-control" disabled>
-                                    <span class="input-group-append">
-                                        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#modal-customer"><i class="fas fa-search"></i></button>
-                                    </span>
-                                </div>
+                            <div class="col-md-6 my-1">
+                                <input type="text" id="supplier" class="form-control">
                             </div>
-                            <div class="col-sm my-1">
+                            <div class="col-md-6 my-1">
                                 <label for="nama-customer" class="col-form-label">Produk :</label>
                             </div>
-                            <div class="col-sm my-1">
+                            <div class="col-md-6 my-1">
                                 <div class="input-group">
                                     <input id="kdproduk" type="text" class="form-control" placeholder="Kode Produk">
                                     <span class="input-group-append">
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-produk"><i class="fas fa-search"></i></button>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-produk">
+                                            <i class="fas fa-search"></i>
+                                        </button>
                                     </span>
                                 </div>
                             </div>
@@ -161,23 +154,20 @@
                         </div>
                     </div>
                 </div>
-                <!-- /.card-body -->
             </div>
-            <!--/. container-fluid -->
         </div>
+
     </section>
 </div>
-<?= $this->include('transjual/modal-produk') ?>
 
-<?= $this->include('transjual/modal-customer') ?>
-
+<?= $this->include('transbeli/modal-produk') ?>
 <?= $this->endSection(); ?>
 
 <?= $this->section('script'); ?>
 <script>
     $(document).ready(function() {
 
-        window.onload = date_time('date_time'), sale_id();
+        window.onload = date_time('date_time'), buyid();
 
         // card maximaize
         $('.card').CardWidget('maximize')
@@ -207,13 +197,32 @@
             const diskon = $(this).val();
             $.ajax({
                 type: "post",
-                url: "<?= base_url('load-totbayar-transjual') ?>",
+                url: "<?= base_url('load-totbayar-buy') ?>",
                 data: {
                     diskon: diskon
                 },
                 success: function(response) {
-                    let items = $.parseJSON(response)
-                    totbayar.set(items.totbayar);
+                    if (response.status == 200) {
+                        totbayar.set(response.totbayar);
+
+                    } else {
+                        Swal.fire({
+                            title: response.status,
+                            text: 'Tidak ada transaksi!',
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 1000
+                        });
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    Swal.fire({
+                        title: xhr.status,
+                        text: thrownError,
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                 }
             });
 
@@ -226,16 +235,33 @@
                 const nominalx = nominal.get();
                 $.ajax({
                     type: "post",
-                    url: "<?= base_url('load-kembalian-transjual') ?>",
+                    url: "<?= base_url('load-kembalian-buy') ?>",
                     data: {
                         nominal: nominalx,
                         totbayar: totbayar.get()
                     },
                     success: function(response) {
-                        let items = $.parseJSON(response)
-                        totbayar.set(items.totbayar);
-                        kembalian.set(items.kembalian);
+                        if (response.status == 200) {
+                            kembalian.set(response.kembalian);
+                        } else {
+                            Swal.fire({
+                                title: response.status,
+                                text: 'error',
+                                icon: 'error',
+                                showConfirmButton: false,
+                                timer: 1000
+                            })
+                        }
 
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        Swal.fire({
+                            title: xhr.status,
+                            text: thrownError,
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
                     }
                 });
             }
@@ -248,22 +274,21 @@
                 const id = $(this).val();
                 $.ajax({
                     type: "post",
-                    url: "<?= base_url('add-cart-transjual') ?>/" + id,
+                    url: "<?= base_url('add-cart-buy') ?>/" + id,
                     data: {
                         id: id
                     },
-                    success: function(result) {
-                        let items = $.parseJSON(result)
-                        if (items.status === true) {
-                            let item = items.data
-                            tampilItems(item)
+                    success: function(response) {
+                        if (response.status === true) {
+                            let items = response.data
+                            tampilItems(items)
                         } else {
                             Swal.fire({
-                                title: items.data,
-                                text: items.msg,
+                                title: `Produk kode ${response.data}`,
+                                text: response.msg,
                                 icon: 'error',
                                 showConfirmButton: false,
-                                timer: 1500
+                                timer: 1000
                             });
                         }
                     },
@@ -286,7 +311,7 @@
         // tampil data transaksi
         function tampilItems(item) {
             $('#detail_cart').html(item)
-            $('#total').load('load-total-transjual')
+            $('#total').load('load-total-buy')
             $('#diskon').focus();
         }
 
@@ -322,11 +347,11 @@
             return true;
         }
 
-        //Membuat Sale_id otomatis
-        function sale_id() {
+        //Membuat buyid otomatis
+        function buyid() {
             d = new Date()
-            let sale_id = "TRX-" + d.getTime()
-            $('#saleId').val(sale_id);
+            let buyid = "TRX-" + d.getTime()
+            $('#buyid').val(buyid);
         }
 
         // membersihkan form transaksi
@@ -336,11 +361,10 @@
             nominal.clear();
             $('#kembalian').val(' ');
             $('#kdproduk').val(' ');
-            $('#nama-customer').val(' ');
-            $('#id-customer').val(' ');
+            $('#supplier').val(' ');
             $('#totbayar').val('');
             $('#diskon').val('0');
-            sale_id()
+            buyid()
         }
     }
 
@@ -351,50 +375,38 @@
             swal.fire({
                 title: 'Transaksi',
                 text: "Lakukan Pembayaran?",
-                icon: 'warning',
+                icon: 'question',
                 showCancelButton: true,
                 showCloseButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya!',
+                confirmButtonText: 'Ya',
                 cancelButtonText: 'Tidak'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    const nominalx = nominal.get();
-                    const customer = $('#id-customer').val();
-                    const sale_id = $('#saleId').val();
+                    const supplier = $('#supplier').val();
+                    const buyid = $('#buyid').val();
                     const diskon = $('#diskon').val();
+                    const nominalval = nominal.get()
+                    const totbayarval = totbayar.get()
                     $.ajax({
                         type: "post",
-                        url: "<?= base_url('pembayaran') ?>",
+                        url: "<?= base_url('pay-buy') ?>",
                         data: {
-                            'sale_id': sale_id,
-                            'nominal': nominalx,
-                            'customer': customer,
-                            'diskon': diskon,
-                            'totbayar': totbayar.get()
+                            'buyid': buyid,
+                            'nominal': nominalval,
+                            'supplier': supplier,
+                            'discount': diskon,
+                            'totbayar': totbayarval
                         },
                         success: function(response) {
-                            const result = JSON.parse(response);
-
-                            if (result.status) {
+                            if (response.status) {
                                 Swal.fire({
-                                    title: result.title,
-                                    text: result.msg,
-                                    icon: result.status == true ? 'success' : 'error',
+                                    title: response.title,
+                                    text: response.msg,
+                                    icon: response.status == 200 ? 'success' : 'error',
                                     showConfirmButton: false,
-                                    timer: 1500
-                                })
-                                setTimeout(() => {
-                                    resetDataTransaksi()
-                                }, 2000);
-                            } else {
-                                Swal.fire({
-                                    title: result.title,
-                                    text: result.msg,
-                                    icon: result.status == true ? 'success' : 'error',
-                                    showConfirmButton: false,
-                                    timer: 1500
+                                    timer: 4000
                                 })
                             }
                         },
@@ -419,21 +431,20 @@
             e.preventDefault()
             swal.fire({
                 title: 'Transaksi',
-                text: "Lakukan Transksi Baru?",
+                text: "Lakukan transksi baru?",
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya!',
+                confirmButtonText: 'Ya',
                 cancelButtonText: 'Tidak'
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
                         type: "get",
-                        url: "<?= base_url('reset-cart-transjual') ?>",
+                        url: "<?= base_url('reset-cart-buy') ?>",
                         success: function(response) {
-                            const result = JSON.parse(response);
-                            if (result.status) {
+                            if (response.status == 200) {
                                 resetDataTransaksi()
                             } else {
                                 Swal.fire({
@@ -463,15 +474,14 @@
         $(document).on('click', '.hapus-cart', function(id) {
             const rowid = $(this).attr('id')
             $.ajax({
-                url: "<?= base_url('delete-cart-transjual') ?>/" + rowid,
+                url: "<?= base_url('delete-cart-buy') ?>/" + rowid,
                 type: "DELETE",
                 success: function(response) {
-                    let itemx = $.parseJSON(response)
-                    if (itemx.status == true) {
-                        tampilItems(itemx.data)
+                    if (response.status == true) {
+                        tampilItems(response.data)
                     } else {
                         $('#detail_cart').html(`<tr><td colspan="7">Belum ada transaksi!</td></tr>`)
-                        $('#total').load('load-total-transjual')
+                        $('#total').load('load-total-buy')
                     }
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
@@ -491,25 +501,32 @@
             const rowid = $(this).attr('rowid')
             const qty = $(this).val()
             $.ajax({
-                url: "<?= base_url('update-cart-transjual') ?>/" + rowid,
+                url: "<?= base_url('update-cart-buy') ?>/" + rowid,
                 type: "POST",
                 data: {
                     'qty': qty
                 },
-                success: function(result) {
-                    let items = $.parseJSON(result)
-                    if (items.data) {
-                        const item = items.data
-                        tampilItems(item)
+                success: function(response) {
+                    if (response.status == true) {
+                        tampilItems(response.data)
                     } else {
                         Swal.fire({
-                            title: 'Data',
-                            text: 'Data tidak ditemukan!',
+                            title: 'Item',
+                            text: response.msg,
                             icon: 'error',
                             showConfirmButton: false,
-                            timer: 1500
+                            timer: 1000
                         });
                     }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    Swal.fire({
+                        title: xhr.status,
+                        text: thrownError,
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                 }
             })
         })

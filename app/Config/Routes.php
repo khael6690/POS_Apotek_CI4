@@ -129,7 +129,7 @@ $routes->group('', ['filter' => 'permission:management-obat'], function ($routes
 });
 
 $routes->group('', ['filter' => 'permission:management-transaksi'], function ($routes) {
-    //route akses transaksi
+    //route akses transaksi penjualan
     $routes->get('transjual', 'admin\Transjual::index');
     $routes->get('load-cart-transjual', 'admin\Transjual::show_cart');
     $routes->post('add-cart-transjual', 'admin\Transjual::add_cart');
@@ -142,6 +142,20 @@ $routes->group('', ['filter' => 'permission:management-transaksi'], function ($r
     $routes->post('load-totbayar-transjual', 'admin\Transjual::getDiskon');
     $routes->post('load-kembalian-transjual', 'admin\Transjual::getKembalian');
     $routes->post('pembayaran', 'admin\Transjual::pembayaran');
+
+    //route akses transaksi pembelian
+    $routes->get('transbeli', 'admin\Transbeli::index');
+    $routes->get('load-cart-buy', 'admin\Transbeli::show_cart');
+    $routes->post('add-cart-buy', 'admin\Transbeli::add_cart');
+    $routes->post('add-cart-buy/(:any)', 'admin\Transbeli::add_cart/$1');
+    $routes->delete('delete-cart-buy/(:any)', 'admin\Transbeli::delete_cart/$1');
+    $routes->post('update-cart-buy/(:any)', 'admin\Transbeli::update_cart/$1');
+    $routes->get('load-total-buy', 'admin\Transbeli::getTotal');
+    $routes->get('load-totbayar-buy', 'admin\Transbeli::totbayar');
+    $routes->post('load-totbayar-buy', 'admin\Transbeli::getDiskon');
+    $routes->post('load-kembalian-buy', 'admin\Transbeli::getKembalian');
+    $routes->post('pay-buy', 'admin\Transbeli::pay');
+    $routes->get('reset-cart-buy', 'admin\Transbeli::reset');
 });
 
 $routes->group('', ['filter' => 'permission:management-laporan'], function ($routes) {

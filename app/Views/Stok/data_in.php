@@ -17,7 +17,7 @@
         <tr>
             <th style="width: 5%;">No</th>
             <th>Produk</th>
-            <th>Produsen</th>
+            <th>Supplier</th>
             <th>Jumlah</th>
             <th>Tanggal</th>
         </tr>
@@ -28,7 +28,7 @@
             <tr>
                 <td><?= $no++; ?> </td>
                 <td><?= $value['obat']; ?></td>
-                <td><?= $value['produsen']; ?></td>
+                <td><?= $value['supplier']; ?></td>
                 <td><?= $value['jumlah']; ?></td>
                 <td><?= $value['tgl']; ?></td>
 
