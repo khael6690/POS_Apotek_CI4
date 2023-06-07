@@ -131,20 +131,22 @@ $routes->group('', ['filter' => 'permission:management-obat'], function ($routes
 $routes->group('', ['filter' => 'permission:management-transaksi'], function ($routes) {
     //route akses transaksi penjualan
     $routes->get('transjual', 'admin\Transjual::index');
-    $routes->get('load-cart-transjual', 'admin\Transjual::show_cart');
-    $routes->post('add-cart-transjual', 'admin\Transjual::add_cart');
-    $routes->post('add-cart-transjual/(:any)', 'admin\Transjual::add_cart/$1');
-    $routes->post('update-cart-transjual/(:any)', 'admin\Transjual::update_cart/$1');
-    $routes->delete('delete-cart-transjual/(:any)', 'admin\Transjual::delete_cart/$1');
-    $routes->get('reset-cart-transjual', 'admin\Transjual::resettrans');
-    $routes->get('load-total-transjual', 'admin\Transjual::getTotal');
-    $routes->get('load-totbayar-transjual', 'admin\Transjual::totbayar');
-    $routes->post('load-totbayar-transjual', 'admin\Transjual::getDiskon');
-    $routes->post('load-kembalian-transjual', 'admin\Transjual::getKembalian');
-    $routes->post('pembayaran', 'admin\Transjual::pembayaran');
+    $routes->get('get-produk-sale', 'admin\Transbeli::getProduk');
+    $routes->get('load-cart-sale', 'admin\Transjual::show_cart');
+    $routes->post('add-cart-sale', 'admin\Transjual::add_cart');
+    $routes->post('add-cart-sale/(:any)', 'admin\Transjual::add_cart/$1');
+    $routes->post('update-cart-sale/(:any)', 'admin\Transjual::update_cart/$1');
+    $routes->delete('delete-cart-sale/(:any)', 'admin\Transjual::delete_cart/$1');
+    $routes->get('reset-cart-sale', 'admin\Transjual::reset');
+    $routes->get('load-total-sale', 'admin\Transjual::getTotal');
+    $routes->get('load-totbayar-sale', 'admin\Transjual::totbayar');
+    $routes->post('load-totbayar-sale', 'admin\Transjual::getDiskon');
+    $routes->post('load-kembalian-sale', 'admin\Transjual::getKembalian');
+    $routes->post('pay-sale', 'admin\Transjual::pay');
 
     //route akses transaksi pembelian
     $routes->get('transbeli', 'admin\Transbeli::index');
+    $routes->get('get-produk', 'admin\Transbeli::getProduk');
     $routes->get('load-cart-buy', 'admin\Transbeli::show_cart');
     $routes->post('add-cart-buy', 'admin\Transbeli::add_cart');
     $routes->post('add-cart-buy/(:any)', 'admin\Transbeli::add_cart/$1');

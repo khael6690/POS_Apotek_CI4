@@ -34,7 +34,7 @@
                 <div class="card-body">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-md-6 my-1 justi">
+                            <div class="col-md-6 my-1">
                                 <label for="saleId" class="col-form-label">No Faktur :</label>
                             </div>
                             <div class="col-md-6 my-1">
@@ -147,8 +147,8 @@
                             </div>
                             <div class="row justify-content-end">
                                 <div class="col-sm-4">
-                                    <button class="d-inline p-2 btn btn-primary" onclick="bayar()">Bayar</button>
-                                    <button class="d-inline p-2 btn btn-success" id="transbaru">Transaksi Baru</button>
+                                    <button class="d-inline p-2 btn btn-primary m-1" onclick="bayar()">Bayar</button>
+                                    <button class="d-inline p-2 btn btn-success m-1" id="transbaru">Transaksi Baru</button>
                                 </div>
                             </div>
                         </div>
@@ -166,7 +166,6 @@
 <?= $this->section('script'); ?>
 <script>
     $(document).ready(function() {
-
         window.onload = date_time('date_time'), buyid();
 
         // card maximaize
@@ -191,119 +190,7 @@
             decimalCharacterAlternative: '.'
         });
 
-        // input diskon
-        $('#diskon').click(function(e) {
-            e.preventDefault();
-            const diskon = $(this).val();
-            $.ajax({
-                type: "post",
-                url: "<?= base_url('load-totbayar-buy') ?>",
-                data: {
-                    diskon: diskon
-                },
-                success: function(response) {
-                    if (response.status == 200) {
-                        totbayar.set(response.totbayar);
 
-                    } else {
-                        Swal.fire({
-                            title: response.status,
-                            text: 'Tidak ada transaksi!',
-                            icon: 'error',
-                            showConfirmButton: false,
-                            timer: 1000
-                        });
-                    }
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    Swal.fire({
-                        title: xhr.status,
-                        text: thrownError,
-                        icon: 'error',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                }
-            });
-
-        });
-
-        // input kembalian
-        $('#nominal').keydown(function(e) {
-            if (e.keyCode == 13) {
-                e.preventDefault()
-                const nominalx = nominal.get();
-                $.ajax({
-                    type: "post",
-                    url: "<?= base_url('load-kembalian-buy') ?>",
-                    data: {
-                        nominal: nominalx,
-                        totbayar: totbayar.get()
-                    },
-                    success: function(response) {
-                        if (response.status == 200) {
-                            kembalian.set(response.kembalian);
-                        } else {
-                            Swal.fire({
-                                title: response.status,
-                                text: 'error',
-                                icon: 'error',
-                                showConfirmButton: false,
-                                timer: 1000
-                            })
-                        }
-
-                    },
-                    error: function(xhr, ajaxOptions, thrownError) {
-                        Swal.fire({
-                            title: xhr.status,
-                            text: thrownError,
-                            icon: 'error',
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                    }
-                });
-            }
-        });
-
-        // cari barang
-        $('#kdproduk').keydown(function(e) {
-            if (e.keyCode == 13) {
-                e.preventDefault()
-                const id = $(this).val();
-                $.ajax({
-                    type: "post",
-                    url: "<?= base_url('add-cart-buy') ?>/" + id,
-                    data: {
-                        id: id
-                    },
-                    success: function(response) {
-                        if (response.status === true) {
-                            let items = response.data
-                            tampilItems(items)
-                        } else {
-                            Swal.fire({
-                                title: `Produk kode ${response.data}`,
-                                text: response.msg,
-                                icon: 'error',
-                                showConfirmButton: false,
-                                timer: 1000
-                            });
-                        }
-                    },
-                    error: function(xhr, ajaxOptions, thrownError) {
-                        Swal.fire({
-                            title: xhr.status,
-                            text: thrownError,
-                            icon: 'error',
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                    }
-                });
-            }
-        });
     });
 
     //UI data transaksi
@@ -362,6 +249,7 @@
             $('#kembalian').val(' ');
             $('#kdproduk').val(' ');
             $('#supplier').val(' ');
+            $('#supplier').removeAttr('disabled');
             $('#totbayar').val('');
             $('#diskon').val('0');
             buyid()
@@ -370,6 +258,121 @@
 
     //Proses Transaksi
     {
+
+        // cari barang
+        $('#kdproduk').keydown(function(e) {
+            if (e.keyCode == 13) {
+                e.preventDefault()
+                const id = $(this).val();
+                $.ajax({
+                    type: "post",
+                    url: "<?= base_url('add-cart-buy') ?>/" + id,
+                    data: {
+                        id: id
+                    },
+                    success: function(response) {
+                        if (response.status === true) {
+                            tampilItems(response.data)
+                        } else {
+                            Swal.fire({
+                                title: `Produk kode ${response.data}`,
+                                text: response.msg,
+                                icon: 'error',
+                                showConfirmButton: false,
+                                timer: 1000
+                            });
+                        }
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        Swal.fire({
+                            title: xhr.status,
+                            text: thrownError,
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                });
+            }
+        });
+
+        // input diskon
+        $('#diskon').click(function(e) {
+            e.preventDefault();
+            const diskon = $(this).val();
+            $.ajax({
+                type: "post",
+                url: "<?= base_url('load-totbayar-buy') ?>",
+                data: {
+                    diskon: diskon
+                },
+                success: function(response) {
+                    if (response.status == true) {
+                        totbayar.set(response.totbayar);
+
+                    } else {
+                        Swal.fire({
+                            title: 'Kesalahan',
+                            text: 'Tidak ada transaksi!',
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 1000
+                        });
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    Swal.fire({
+                        title: xhr.status,
+                        text: thrownError,
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            });
+
+        });
+
+        // input kembalian
+        $('#nominal').keydown(function(e) {
+            if (e.keyCode == 13) {
+                e.preventDefault()
+                $.ajax({
+                    type: "post",
+                    url: "<?= base_url('load-kembalian-buy') ?>",
+                    data: {
+                        nominal: nominal.get(),
+                        totbayar: totbayar.get()
+                    },
+                    success: function(response) {
+                        if (response.status == true) {
+                            kembalian.set(response.kembalian);
+                        } else {
+                            Swal.fire({
+                                title: 'Kesalahan',
+                                text: response.msg,
+                                icon: 'error',
+                                showConfirmButton: false,
+                                timer: 1000
+                            })
+                        }
+
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        Swal.fire({
+                            title: xhr.status,
+                            text: thrownError,
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 1000
+                        });
+                    }
+                });
+            }
+        });
+
+
+
         // Pembayaran transaksi
         function bayar() {
             swal.fire({
@@ -400,13 +403,23 @@
                             'totbayar': totbayarval
                         },
                         success: function(response) {
-                            if (response.status) {
+                            if (response.status == true) {
                                 Swal.fire({
                                     title: response.title,
                                     text: response.msg,
-                                    icon: response.status == 200 ? 'success' : 'error',
+                                    icon: 'success',
                                     showConfirmButton: false,
-                                    timer: 4000
+                                    timer: 1500
+                                })
+                                $('#supplier').attr('disabled', 'disable');
+                                tb.ajax.reload()
+                            } else {
+                                Swal.fire({
+                                    title: response.title,
+                                    text: response.msg,
+                                    icon: 'error',
+                                    showConfirmButton: false,
+                                    timer: 1500
                                 })
                             }
                         },
@@ -444,7 +457,7 @@
                         type: "get",
                         url: "<?= base_url('reset-cart-buy') ?>",
                         success: function(response) {
-                            if (response.status == 200) {
+                            if (response.status == true) {
                                 resetDataTransaksi()
                             } else {
                                 Swal.fire({

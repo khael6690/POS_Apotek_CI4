@@ -34,25 +34,24 @@
 
                 </div>
                 <div class="card-body">
-
                     <div class="container-fluid">
-                        <div class="form-group row">
-                            <div class="col-sm my-1">
+                        <div class="row">
+                            <div class="col-sm-6 my-1">
                                 <label for="saleId" class="col-form-label">No Faktur :</label>
                             </div>
-                            <div class="col-sm my-1">
+                            <div class="col-sm-6 my-1">
                                 <input type="text" id="saleId" class="form-control" disabled>
                             </div>
-                            <div class="col-sm my-1">
+                            <div class="col-sm-6 my-1">
                                 <label for="user" class="col-form-label">User :</label>
                             </div>
-                            <div class="col-sm my-1">
+                            <div class="col-sm-6 my-1">
                                 <input type="text" id="user" value="<?= user()->username ?>" class="form-control" disabled>
                             </div>
-                            <div class="col-sm my-1">
+                            <div class="col-sm-6 my-1">
                                 <label for="nama-customer" class="col-form-label">Customer :</label>
                             </div>
-                            <div class="col-sm my-1">
+                            <div class="col-sm-6 my-1">
                                 <div class="input-group">
                                     <input id="nama-customer" type="text" class="form-control" disabled>
                                     <input id="id-customer" type="hidden" class="form-control" disabled>
@@ -61,10 +60,10 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="col-sm my-1">
-                                <label for="nama-customer" class="col-form-label">Produk :</label>
+                            <div class="col-sm-6 my-1">
+                                <label for="kdproduk" class="col-form-label">Produk :</label>
                             </div>
-                            <div class="col-sm my-1">
+                            <div class="col-sm-6 my-1">
                                 <div class="input-group">
                                     <input id="kdproduk" type="text" class="form-control" placeholder="Kode Produk">
                                     <span class="input-group-append">
@@ -154,8 +153,8 @@
                             </div>
                             <div class="row justify-content-end">
                                 <div class="col-sm-4">
-                                    <button class="d-inline p-2 btn btn-primary" onclick="bayar()">Bayar</button>
-                                    <button class="d-inline p-2 btn btn-success" id="transbaru">Transaksi Baru</button>
+                                    <button class="d-inline p-2 btn btn-primary m-1" onclick="bayar()">Bayar</button>
+                                    <button class="d-inline p-2 btn btn-success m-1" id="transbaru">Transaksi Baru</button>
                                 </div>
                             </div>
                         </div>
@@ -201,84 +200,6 @@
             decimalCharacterAlternative: '.'
         });
 
-        // input diskon
-        $('#diskon').click(function(e) {
-            e.preventDefault();
-            const diskon = $(this).val();
-            $.ajax({
-                type: "post",
-                url: "<?= base_url('load-totbayar-transjual') ?>",
-                data: {
-                    diskon: diskon
-                },
-                success: function(response) {
-                    let items = $.parseJSON(response)
-                    totbayar.set(items.totbayar);
-                }
-            });
-
-        });
-
-        // input kembalian
-        $('#nominal').keydown(function(e) {
-            if (e.keyCode == 13) {
-                e.preventDefault()
-                const nominalx = nominal.get();
-                $.ajax({
-                    type: "post",
-                    url: "<?= base_url('load-kembalian-transjual') ?>",
-                    data: {
-                        nominal: nominalx,
-                        totbayar: totbayar.get()
-                    },
-                    success: function(response) {
-                        let items = $.parseJSON(response)
-                        totbayar.set(items.totbayar);
-                        kembalian.set(items.kembalian);
-
-                    }
-                });
-            }
-        });
-
-        // cari barang
-        $('#kdproduk').keydown(function(e) {
-            if (e.keyCode == 13) {
-                e.preventDefault()
-                const id = $(this).val();
-                $.ajax({
-                    type: "post",
-                    url: "<?= base_url('add-cart-transjual') ?>/" + id,
-                    data: {
-                        id: id
-                    },
-                    success: function(result) {
-                        let items = $.parseJSON(result)
-                        if (items.status === true) {
-                            let item = items.data
-                            tampilItems(item)
-                        } else {
-                            Swal.fire({
-                                title: items.data,
-                                text: items.msg,
-                                icon: 'error',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
-                        }
-                    },
-                    error: function(xhr, ajaxOptions, thrownError) {
-                        Swal.fire({
-                            title: xhr.status,
-                            text: thrownError,
-                            icon: 'error',
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                    }
-                });
-            }
-        });
     });
 
     //UI data transaksi
@@ -286,7 +207,7 @@
         // tampil data transaksi
         function tampilItems(item) {
             $('#detail_cart').html(item)
-            $('#total').load('load-total-transjual')
+            $('#total').load('load-total-sale')
             $('#diskon').focus();
         }
 
@@ -346,6 +267,119 @@
 
     //Proses Transaksi
     {
+
+        // cari barang
+        $('#kdproduk').keydown(function(e) {
+            if (e.keyCode == 13) {
+                e.preventDefault()
+                const id = $(this).val();
+                $.ajax({
+                    type: "post",
+                    url: "<?= base_url('add-cart-sale') ?>/" + id,
+                    data: {
+                        id: id
+                    },
+                    success: function(response) {
+                        if (response.status === true) {
+                            tampilItems(response.data)
+                        } else {
+                            Swal.fire({
+                                title: `Produk kode ${response.data}`,
+                                text: response.msg,
+                                icon: 'error',
+                                showConfirmButton: false,
+                                timer: 1000
+                            });
+                        }
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        Swal.fire({
+                            title: xhr.status,
+                            text: thrownError,
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                });
+            }
+        });
+
+        // input diskon
+        $('#diskon').click(function(e) {
+            e.preventDefault();
+            const diskon = $(this).val();
+            $.ajax({
+                type: "post",
+                url: "<?= base_url('load-totbayar-sale') ?>",
+                data: {
+                    diskon: diskon
+                },
+                success: function(response) {
+                    if (response.status == true) {
+                        totbayar.set(response.totbayar);
+
+                    } else {
+                        Swal.fire({
+                            title: 'Kesalahan',
+                            text: 'Tidak ada transaksi!',
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 1000
+                        });
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    Swal.fire({
+                        title: xhr.status,
+                        text: thrownError,
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            });
+
+        });
+
+        // input kembalian
+        $('#nominal').keydown(function(e) {
+            if (e.keyCode == 13) {
+                e.preventDefault()
+                const nominalx = nominal.get();
+                $.ajax({
+                    type: "post",
+                    url: "<?= base_url('load-kembalian-sale') ?>",
+                    data: {
+                        nominal: nominalx,
+                        totbayar: totbayar.get()
+                    },
+                    success: function(response) {
+                        if (response.status == true) {
+                            kembalian.set(response.kembalian);
+                        } else {
+                            Swal.fire({
+                                title: 'Kesalahan',
+                                text: response.msg,
+                                icon: 'error',
+                                showConfirmButton: false,
+                                timer: 1000
+                            })
+                        }
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        Swal.fire({
+                            title: xhr.status,
+                            text: thrownError,
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 1000
+                        });
+                    }
+                });
+            }
+        });
+
         // Pembayaran transaksi
         function bayar() {
             swal.fire({
@@ -366,7 +400,7 @@
                     const diskon = $('#diskon').val();
                     $.ajax({
                         type: "post",
-                        url: "<?= base_url('pembayaran') ?>",
+                        url: "<?= base_url('pay-sale') ?>",
                         data: {
                             'sale_id': sale_id,
                             'nominal': nominalx,
@@ -375,24 +409,20 @@
                             'totbayar': totbayar.get()
                         },
                         success: function(response) {
-                            const result = JSON.parse(response);
-
-                            if (result.status) {
+                            if (response.status == true) {
                                 Swal.fire({
-                                    title: result.title,
-                                    text: result.msg,
-                                    icon: result.status == true ? 'success' : 'error',
+                                    title: response.title,
+                                    text: response.msg,
+                                    icon: 'success',
                                     showConfirmButton: false,
                                     timer: 1500
                                 })
-                                setTimeout(() => {
-                                    resetDataTransaksi()
-                                }, 2000);
+                                tb.ajax.reload()
                             } else {
                                 Swal.fire({
-                                    title: result.title,
-                                    text: result.msg,
-                                    icon: result.status == true ? 'success' : 'error',
+                                    title: response.title,
+                                    text: response.msg,
+                                    icon: 'error',
                                     showConfirmButton: false,
                                     timer: 1500
                                 })
@@ -430,10 +460,9 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         type: "get",
-                        url: "<?= base_url('reset-cart-transjual') ?>",
+                        url: "<?= base_url('reset-cart-sale') ?>",
                         success: function(response) {
-                            const result = JSON.parse(response);
-                            if (result.status) {
+                            if (response.status == true) {
                                 resetDataTransaksi()
                             } else {
                                 Swal.fire({
@@ -463,15 +492,14 @@
         $(document).on('click', '.hapus-cart', function(id) {
             const rowid = $(this).attr('id')
             $.ajax({
-                url: "<?= base_url('delete-cart-transjual') ?>/" + rowid,
+                url: "<?= base_url('delete-cart-sale') ?>/" + rowid,
                 type: "DELETE",
                 success: function(response) {
-                    let itemx = $.parseJSON(response)
-                    if (itemx.status == true) {
-                        tampilItems(itemx.data)
+                    if (response.status == true) {
+                        tampilItems(response.data)
                     } else {
                         $('#detail_cart').html(`<tr><td colspan="7">Belum ada transaksi!</td></tr>`)
-                        $('#total').load('load-total-transjual')
+                        $('#total').load('load-total-buy')
                     }
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
@@ -491,25 +519,32 @@
             const rowid = $(this).attr('rowid')
             const qty = $(this).val()
             $.ajax({
-                url: "<?= base_url('update-cart-transjual') ?>/" + rowid,
+                url: "<?= base_url('update-cart-sale') ?>/" + rowid,
                 type: "POST",
                 data: {
                     'qty': qty
                 },
-                success: function(result) {
-                    let items = $.parseJSON(result)
-                    if (items.data) {
-                        const item = items.data
-                        tampilItems(item)
+                success: function(response) {
+                    if (response.status == true) {
+                        tampilItems(response.data)
                     } else {
                         Swal.fire({
-                            title: 'Data',
-                            text: 'Data tidak ditemukan!',
+                            title: 'Item',
+                            text: response.msg,
                             icon: 'error',
                             showConfirmButton: false,
-                            timer: 1500
+                            timer: 1000
                         });
                     }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    Swal.fire({
+                        title: xhr.status,
+                        text: thrownError,
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                 }
             })
         })

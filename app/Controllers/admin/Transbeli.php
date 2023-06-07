@@ -33,6 +33,20 @@ class Transbeli extends BaseController
         return view('transbeli/index', $data);
     }
 
+    public function getProduk()
+    {
+        if ($this->request->isAJAX()) {
+            $produk = $this->_m_obat->getObat();
+            $json = [
+                'data' => $produk,
+                'status' => true
+            ];
+            return $this->response->setJSON($json);
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+    }
+
     public function add_cart($id = null)
     {
         if ($this->request->isAJAX()) {
@@ -133,8 +147,12 @@ class Transbeli extends BaseController
 
     public function getTotal()
     {
-        $total = number_to_currency($this->total(), 'IDR', 'id_ID', 2);
-        return $this->response->setJSON($total);
+        if ($this->request->isAJAX()) {
+            $total = number_to_currency($this->total(), 'IDR', 'id_ID', 2);
+            return $this->response->setJSON($total);
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
     }
 
     public function getDiskon()
@@ -145,14 +163,14 @@ class Transbeli extends BaseController
             $totbayar = $total - $diskon;
             $totbayar === 0 ? $totbayar = 0 : $totbayar;
             $json = [
-                'status' => 200,
+                'status' => true,
                 'totbayar' => $totbayar
             ];
             return $this->response->setJSON($json);
         } elseif ($this->request->isAJAX() && !$this->_cart->contents()) {
             $json = [
                 'totbayar' => null,
-                'status' => 404
+                'status' => false
             ];
             return $this->response->setJSON($json);
         } else {
@@ -162,21 +180,25 @@ class Transbeli extends BaseController
 
     public function getKembalian()
     {
-        if ($this->request->isAJAX()) {
+        if ($this->request->isAJAX() && $this->_cart->contents()) {
             $nominal = $this->request->getPost('nominal');
             $totbayar = $this->request->getPost('totbayar');
-            if ($totbayar !== null && $nominal !== null) {
-                $json = [
-                    'status' => 404,
-                    'kembalian' => null
-                ];
-            }
-            $kembalian = ($nominal - $totbayar);
+            $totbayar === null && $nominal === null ? $kembalian = null :
+                $kembalian = $nominal - $totbayar;
+
             $json = [
-                'status' => 200,
+                'status' => true,
                 'kembalian' => $kembalian
             ];
 
+            return $this->response->setJSON($json);
+        } elseif ($this->request->isAJAX() && !$this->_cart->contents()) {
+            $json = [
+                'status' => false,
+                'kembalian' => null,
+                'msg' => 'Tidak ada transaksi!'
+
+            ];
             return $this->response->setJSON($json);
         } else {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
@@ -188,7 +210,7 @@ class Transbeli extends BaseController
         if ($this->request->isAJAX()) {
             if (!$this->_cart->contents()) {
                 $response = [
-                    'status' => 404,
+                    'status' => false,
                     'title' => 'Transaksi gagal',
                     'msg' => 'Tidak ada transaksi!'
                 ];
@@ -201,7 +223,7 @@ class Transbeli extends BaseController
                 if ($nominal < $totbayar) {
                     //nominal tidak cukup
                     $response = [
-                        'status' => 405,
+                        'status' => false,
                         'title' => 'Transaksi gagal',
                         'msg' => 'Nominal tidak mencukupi!'
                     ];
@@ -232,10 +254,9 @@ class Transbeli extends BaseController
                     }
                     // JSON sukses
                     $response = [
-                        'status' => 200,
+                        'status' => true,
                         'title' => 'Transaksi berhasil',
-                        'msg' => 'Pembayaran selesai!',
-                        'value' => $supplier
+                        'msg' => 'Pembayaran selesai!'
                     ];
                     return $this->response->setJSON($response);
                 }
@@ -250,7 +271,7 @@ class Transbeli extends BaseController
         if ($this->request->isAJAX()) {
             $this->_cart->destroy();
             $json = [
-                'status' => 200
+                'status' => true
             ];
             return $this->response->setJSON($json);
         } else {
