@@ -47,10 +47,10 @@
                         <thead>
                             <tr>
                                 <th style="width: 5%;">No</th>
-                                <th>Sale ID</th>
+                                <th>Buy ID</th>
                                 <th>Tgl Transaksi</th>
                                 <th>User</th>
-                                <th>Customer</th>
+                                <th>Supplier</th>
                                 <th>Total Transaksi</th>
                                 <th>Action</th>
                             </tr>
@@ -60,13 +60,13 @@
                             foreach ($result as $value) : ?>
                                 <tr>
                                     <td><?= $no++; ?> </td>
-                                    <td><?= $value['sale_id']; ?></td>
+                                    <td><?= $value['buyid']; ?></td>
                                     <td><?= $value['tgl_transaksi']; ?></td>
                                     <td><?= $value['username']; ?></td>
-                                    <td><?= $value['nama_customer']; ?></td>
+                                    <td><?= $value['supplier']; ?></td>
                                     <td><?= number_to_currency($value['total'], 'IDR', 'id_ID', 2); ?></td>
                                     <td>
-                                        <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-lg" onclick="detail('<?= $value['sale_id'] ?>')"><i class="fas fa-eye"></i> Detail</button>
+                                        <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-lg" onclick="detail('<?= $value['buyid'] ?>')"><i class="fas fa-eye"></i> Detail</button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -139,7 +139,7 @@
                     extend: 'print',
                     orientation: 'potrait',
                     pageSize: 'Legal',
-                    title: 'Laporan Penjualan',
+                    title: 'Laporan Pembelian',
                     exportOptions: {
                         columns: ':visible'
                     },
@@ -147,7 +147,7 @@
                     extend: 'excel',
                     orientation: 'potrait',
                     pageSize: 'Legal',
-                    title: 'Laporan Penjualan',
+                    title: 'Laporan Pembelian',
                     exportOptions: {
                         columns: ':visible'
                     },
@@ -155,7 +155,7 @@
                     extend: 'pdf',
                     orientation: 'potrait',
                     pageSize: 'Legal',
-                    title: 'Laporan Penjualan',
+                    title: 'Laporan Pembelian',
                     exportOptions: {
                         columns: ':visible'
                     },

@@ -1,13 +1,15 @@
 <div class="modal-body">
 
+
+
     <!-- Main content -->
     <div class="invoice p-3 mb-3">
         <!-- title row -->
         <div class="row">
             <div class="col-12">
                 <h4>
-                    <?= $profile['0']['nama']; ?>
-                    <small class="float-right">Date: <?= $sale[0]['tgl_transaksi']; ?></small>
+                    <?= $profile[0]['nama']; ?>
+                    <small class="float-right">Date: <?= $buy[0]['tgl_transaksi']; ?></small>
                 </h4>
             </div>
             <!-- /.col -->
@@ -17,28 +19,20 @@
             <div class="col-sm-4 invoice-col">
                 Kasir
                 <address>
-                    <strong><?= $sale[0]['fullname']; ?></strong><br>
-                    <?= $profile['0']['alamat']; ?><br>
-                    <?= $profile['0']['kota']; ?><br>
-                    Phone: <?= $profile['0']['telp']; ?><br>
-                    Email: <?= $profile['0']['email']; ?>
+                    <strong><?= $buy[0]['namaadm']; ?></strong>
+
                 </address>
             </div>
             <!-- /.col -->
             <div class="col-sm-4 invoice-col">
-                Customer
+                Supplier
                 <address>
-                    <strong><?= ($sale[0]['nama_customer'] == null) ? 'Guest' : $sale[0]['nama_customer']; ?></strong><br>
-                    <?php if ($sale[0]['nama_customer'] !== null) : ?>
-                        <?= $sale[0]['alamat']; ?><br>
-                        Phone: <?= $sale[0]['telp']; ?><br>
-                        Email: <?= $sale[0]['email']; ?>
-                    <?php endif; ?>
+                    <strong><?= ($buy[0]['supplier'] == null) ? 'Guest' : $buy[0]['supplier']; ?></strong>
                 </address>
             </div>
             <!-- /.col -->
             <div class="col-sm-4 invoice-col">
-                <b>Invoice #<?= $sale[0]['sale_id']; ?></b>
+                <b>Invoice #<?= $buy[0]['buyid']; ?></b>
             </div>
             <!-- /.col -->
         </div>
@@ -72,7 +66,7 @@
                         <?php $total += $value['total_price'];
                             $qty += $value['amount'];
                         endforeach;
-                        $hasil = ($sale[0]['discount'] / 100) * $total;
+                        $hasil = ($buy[0]['discount'] / 100) * $total;
                         $totbayar = $total - $hasil;
                         ?>
                     </tbody>
@@ -97,7 +91,7 @@
                         </tr>
                         <tr>
                             <th>Discount:</th>
-                            <td><?= $sale[0]['discount']; ?>%</td>
+                            <td><?= $buy[0]['discount']; ?>%</td>
                         </tr>
                         <tr>
                             <th>Total Bayar:</th>
@@ -109,13 +103,22 @@
             <!-- /.col -->
         </div>
         <!-- /.row -->
+        <div class="row">
+            <div class="col-md-5">
+                <?= $profile[0]['alamat']; ?><br>
+                <?= $profile[0]['kota']; ?><br>
+                Phone: <?= $profile[0]['telp']; ?><br>
+                Email: <?= $profile[0]['email']; ?>
+            </div>
+        </div>
     </div>
     <!-- /.invoice -->
 </div>
 <div class="modal-footer justify-content-between">
     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-    <a href="<?= base_url('print-laporan-jual-detail/' . $sale[0]['sale_id']) ?>" rel="noopener" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
+    <a href="<?= base_url('print-laporan-beli-detail/' . $buy[0]['buyid']) ?>" rel="noopener" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
 </div>
+
 <?= $this->section('script'); ?>
 <script>
 

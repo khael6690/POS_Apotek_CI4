@@ -73,7 +73,8 @@
                             title: response.success
                         });
                         $('#modal-create').modal('hide');
-                        getData();
+                        getData()
+                        getDataOpname()
                     } else {
                         response.error && response.error.jumlah ?
                             ($('#jumlah').addClass('is-invalid'), $('.errorjumlah').html(response.error.jumlah)) :

@@ -23,68 +23,70 @@
     <section class="content">
         <div class="container-fluid">
             <!-- Petunjuk -->
-            <div class="card">
-                <div class="card-header bg-info">
-                    <h3 class="card-title"><i class="fas fa-bullhorn"></i> Petunjuk!</h3>
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header bg-info">
+                            <h3 class="card-title"><i class="fas fa-bullhorn"></i> Petunjuk!</h3>
 
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <h3>Halaman pengelolahan data <?= $title; ?></h3>
-                    <ul>
-                        <li>add data <?= $title; ?></li>
-                        <li>view detail data <?= $title; ?></li>
-                        <li>update data <?= $title; ?></li>
-                        <li>delete data <?= $title; ?></li>
-                    </ul>
-                </div>
-                <!-- /.card-body -->
-            </div>
-
-            <div class="card">
-                <div class="card-header bg-primary">
-                    <h3 class="card-title">Data <?= $title; ?></h3>
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                    <div class="col-md-2">
-                        <button type="button" class="btn bg-gradient-primary btn-sm mb-3" id="btn-create"><i class="fas fa-plus-circle"></i></button>
-                    </div>
-                    <div class="viewdata">
-                    </div>
-                </div>
-                <!-- /.card-body -->
-            </div>
-
-            <div id="viewmodal" style="display: none;"></div>
-
-            <!-- Modals detail -->
-            <div class="modal fade" id="modal-sm">
-                <div class="modal-dialog modal-sm">
-                    <div class="modal-content">
-                        <div class="modal-header bg-info">
-                            <h4 class="modal-title">Detail <?= $title; ?></h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
                         </div>
-                        <div class="modal-body" id="data_detail">
+                        <div class="card-body">
+                            <h3>Halaman pengelolahan data <?= $title; ?></h3>
+                            <ul>
+                                <li>add data <?= $title; ?></li>
+                                <li>view detail data <?= $title; ?></li>
+                                <li>update data <?= $title; ?></li>
+                                <li>delete data <?= $title; ?></li>
+                            </ul>
                         </div>
-                        <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        </div>
+                        <!-- /.card-body -->
                     </div>
-                    <!-- /.modal-content -->
+
+                    <div class="card">
+                        <div class="card-header bg-primary">
+                            <h3 class="card-title">Data <?= $title; ?></h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="col-md-2">
+                                <button type="button" class="btn bg-gradient-primary btn-sm mb-3" id="btn-create"><i class="fas fa-plus-circle"></i></button>
+                            </div>
+                            <div class="viewdata">
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+
+                    <div id="viewmodal" style="display: none;"></div>
+
+                    <!-- Modals detail -->
+                    <div class="modal fade" id="modal-sm">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-header bg-info">
+                                    <h4 class="modal-title">Detail <?= $title; ?></h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body" id="data_detail">
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+                    <!-- /.modal -->
                 </div>
-                <!-- /.modal-dialog -->
-            </div>
-            <!-- /.modal -->
-        </div>
-        <!--/. container-fluid -->
+                <!--/. container-fluid -->
     </section>
     <?= $this->endSection(); ?>
 

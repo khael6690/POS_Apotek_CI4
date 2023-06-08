@@ -12,11 +12,11 @@ define('_TITLE', 'Transaksi Beli');
 
 class Transbeli extends BaseController
 {
-    private $_m_obat, $_m_buy, $_buy_detail, $_m_profile, $_cart;
+    private $_m_obat, $_m_buy, $m_buy_detail, $_m_profile, $_cart;
     public function __construct()
     {
         $this->_m_buy = new BuyModel();
-        $this->_buy_detail = new BuyDetailModel();
+        $this->m_buy_detail = new BuyDetailModel();
         $this->_cart = \Config\Services::cart();
         $this->_m_obat = new ObatModel();
         $this->_m_profile = new ProfileModel();
@@ -243,7 +243,7 @@ class Transbeli extends BaseController
 
                     foreach ($this->_cart->contents() as $items) {
                         $discount = ($items['options']['discount'] / 100)  * $items['subtotal'];
-                        $this->_buy_detail->save([
+                        $this->m_buy_detail->save([
                             'buyid' => $buyid,
                             'id_obat' => $items['id'],
                             'amount' => $items['qty'],
@@ -277,5 +277,47 @@ class Transbeli extends BaseController
         } else {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
+    }
+
+    public function laporan()
+    {
+        $laporan = $this->_m_buy->getLaporan();
+        $data = [
+            'title' => 'Laporan Pembelian',
+            'result' => $laporan
+        ];
+        return view('laporan/pembelian', $data);
+    }
+
+    public function lapdetail()
+    {
+        $id = $this->request->getGetPost('id');
+        $data_buy = $this->_m_buy->getLaporan($id);
+        $data_detail = $this->m_buy_detail->getDetail($id);
+        $data_profile = $this->_m_profile->findAll();
+
+        $data = [
+            'title' => 'Laporan Pembelian',
+            'buy' => $data_buy,
+            'detail' => $data_detail,
+            'profile' => $data_profile
+        ];
+        // dd($data);
+        return view('laporan/detail_beli', $data);
+    }
+
+    public function printdetail($id)
+    {
+        $data_buy = $this->_m_buy->getLaporan($id);
+        $data_profile = $this->_m_profile->findAll();
+        $data_detail = $this->m_buy_detail->getDetail($id);
+
+        $data = [
+            'title' => 'Laporan Pembelian',
+            'buy' => $data_buy,
+            'detail' => $data_detail,
+            'profile' => $data_profile
+        ];
+        return view('laporan/print_detail_buy', $data);
     }
 }

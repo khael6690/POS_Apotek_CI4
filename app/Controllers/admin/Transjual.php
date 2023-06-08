@@ -3,6 +3,7 @@
 namespace App\Controllers\admin;
 
 use App\Controllers\BaseController;
+use App\Models\BuyModel;
 use App\Models\CustomerModel;
 use App\Models\ObatModel;
 use App\Models\ProfileModel;
@@ -13,7 +14,7 @@ define('_TITLE', 'Transaksi Jual');
 
 class Transjual extends BaseController
 {
-    private $_m_obat, $_cart, $_m_customer, $_m_sale, $_m_sale_detail, $_m_profile;
+    private $_m_obat, $_cart, $_m_customer, $_m_sale, $_m_sale_detail, $_m_profile, $_m_buy;
     public function __construct()
     {
         $this->_m_profile = new ProfileModel();
@@ -22,6 +23,7 @@ class Transjual extends BaseController
         $this->_m_customer = new CustomerModel();
         $this->_cart = \Config\Services::cart();
         $this->_m_obat = new ObatModel();
+        $this->_m_buy = new BuyModel();
     }
 
     public function index()

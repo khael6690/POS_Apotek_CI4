@@ -40,6 +40,8 @@ $routes->set404Override();
 $routes->group('', ['filter' => 'login'], function ($routes) {
     //route akses admin
     $routes->get('/', 'admin\Admin::index');
+    $routes->get('grafik', 'admin\Admin::getGrafik');
+    $routes->get('count-rows', 'admin\Admin::getRows');
 
     // route setting user
     $routes->get('setuser', 'admin\User::setuser');
@@ -131,7 +133,7 @@ $routes->group('', ['filter' => 'permission:management-obat'], function ($routes
 $routes->group('', ['filter' => 'permission:management-transaksi'], function ($routes) {
     //route akses transaksi penjualan
     $routes->get('transjual', 'admin\Transjual::index');
-    $routes->get('get-produk-sale', 'admin\Transbeli::getProduk');
+    $routes->get('get-produk-sale', 'admin\Transjual::getProduk');
     $routes->get('load-cart-sale', 'admin\Transjual::show_cart');
     $routes->post('add-cart-sale', 'admin\Transjual::add_cart');
     $routes->post('add-cart-sale/(:any)', 'admin\Transjual::add_cart/$1');
@@ -161,10 +163,15 @@ $routes->group('', ['filter' => 'permission:management-transaksi'], function ($r
 });
 
 $routes->group('', ['filter' => 'permission:management-laporan'], function ($routes) {
-    //route akses laporan
+    //route akses laporan penjualan
     $routes->get('laporan-jual', 'admin\Transjual::laporan');
     $routes->post('laporan-jual-detail', 'admin\Transjual::lapdetail');
     $routes->get('print-laporan-jual-detail/(:any)', 'admin\Transjual::printdetail/$1');
+
+    // route akses laporan pembelian
+    $routes->get('laporan-beli', 'admin\Transbeli::laporan');
+    $routes->post('laporan-beli-detail', 'admin\Transbeli::lapdetail');
+    $routes->get('print-laporan-beli-detail/(:any)', 'admin\Transbeli::printdetail/$1');
 });
 /*
  * --------------------------------------------------------------------

@@ -89,6 +89,7 @@
                         })
                         $('#modal-update').modal('hide');
                         getData()
+                        getDataOpname()
                     }
                 },
                 error: function(xhr, ajaxOptions, thrownError) {

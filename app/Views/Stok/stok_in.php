@@ -23,24 +23,28 @@
     <section class="content">
         <div class="container-fluid">
             <!-- Petunjuk -->
-            <div class="card">
-                <div class="card-header bg-info">
-                    <h3 class="card-title"><i class="fas fa-bullhorn"></i> Petunjuk!</h3>
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header bg-info">
+                            <h3 class="card-title"><i class="fas fa-bullhorn"></i> Petunjuk!</h3>
 
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Halaman pengelolahan data <?= $title; ?></h3>
+                            <ul>
+                                <li>view data <?= $title; ?></li>
+                                <li>fillter data <?= $title; ?> berdasarkan tanggal</li>
+                            </ul>
+                        </div>
+                        <!-- /.card-body -->
                     </div>
                 </div>
-                <div class="card-body">
-                    <h3>Halaman pengelolahan data <?= $title; ?></h3>
-                    <ul>
-                        <li>view data <?= $title; ?></li>
-                        <li>fillter data <?= $title; ?> berdasarkan tanggal</li>
-                    </ul>
-                </div>
-                <!-- /.card-body -->
             </div>
             <div class="card">
                 <div class="card-header bg-primary">

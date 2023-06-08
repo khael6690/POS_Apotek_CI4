@@ -17,7 +17,7 @@
                 <td><?= $value['nama']; ?></td>
                 <td><?= $value['jumlah']; ?></td>
                 <td>
-                    <button class="btn btn-danger btn-sm text-white" onclick="add('<?= $value['id_obat']; ?>')"><i class="fas fa-minus"></i></button>
+                    <button class="btn btn-success btn-sm text-white" onclick="add('<?= $value['id_obat']; ?>')"><i class="fas fa-minus"></i></button>
                 </td>
             </tr>
         <?php endforeach; ?>
@@ -28,7 +28,7 @@
     $(document).ready(function() {
         $("#tb-stok").DataTable({
             "responsive": true,
-            "lengthChange": true,
+            "lengthChange": false,
             "autoWidth": false
         })
     });
