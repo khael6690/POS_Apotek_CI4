@@ -66,7 +66,7 @@
 
             <!-- Modals detail -->
             <div class="modal fade" id="modal-detail">
-                <div class="modal-dialog modal-sm">
+                <div class="modal-dialog modal-md">
                     <div class="modal-content">
                         <div class="modal-header bg-info">
                             <h4 class="modal-title">Detail <?= $title; ?></h4>
@@ -124,10 +124,7 @@
         function edit(id) {
             $.ajax({
                 type: "get",
-                url: "/customers-update/" + id,
-                data: {
-                    id: id
-                },
+                url: "<?= site_url('customers-update/') ?>" + id,
                 dataType: "json",
                 success: function(response) {
                     if (response.data) {
@@ -145,6 +142,44 @@
                     });
                 }
             });
+        }
+
+        function hapus(id, nama) {
+            swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "Hapus data " + nama,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "delete",
+                            url: '<?= site_url('customers/') ?>' + id,
+                            dataType: "json",
+                            success: function(response) {
+                                if (response.success) {
+                                    Toast.fire({
+                                        icon: 'success',
+                                        title: response.success
+                                    });
+                                } else {
+                                    Toast.fire({
+                                        icon: 'warning',
+                                        title: response.error
+                                    });
+                                }
+                                getData();
+                            }
+                        });
+
+                    }
+                }
+            })
         }
 
 

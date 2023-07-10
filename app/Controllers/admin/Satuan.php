@@ -18,7 +18,6 @@ class Satuan extends BaseController
 
     public function index()
     {
-        $data_satuan = $this->_m_satuan->findAll();
         $data = [
             'title' => _TITLE
         ];

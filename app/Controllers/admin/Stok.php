@@ -31,7 +31,7 @@ class Stok extends BaseController
     public function viewdata()
     {
         if ($this->request->isAJAX()) {
-            $data_obat = $this->_m_obat->getObat();
+            $data_obat = $this->_m_obat->getStok();
 
             $data = [
                 'data_obat' => $data_obat

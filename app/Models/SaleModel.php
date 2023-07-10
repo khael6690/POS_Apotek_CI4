@@ -37,23 +37,19 @@ class SaleModel extends Model
 
     public function getRows()
     {
-        $this->db->table('sale AS S')
-            ->select('*')
-            ->where('MONTH(S.created_at) = MONTH(CURDATE())')
+        $this->select('*')
+            ->where('MONTH(sale.created_at) = MONTH(CURDATE())')
             ->get();
         return $this->countAllResults();
     }
 
     public function saleGrafik()
     {
-        return $this->db->table('sale_detail as sd')
-            ->select("s.sale_id, s.userid, YEAR(s.created_at) AS tgl, s.discount, u.username, u.fullname, s.customerid, c.nama AS nama_customer, c.alamat, c.telp, c.email, SUM(sd.total_price) AS total")
-            ->join('sale s', 'sd.sale_id = s.sale_id')
-            ->join('users u', 'u.id = s.userid')
-            ->join('customer c', 'c.id = s.customerid')
+        $this->select('DATE_FORMAT(sale.created_at, "%b") AS tgl, SUM(sd.total_price) AS total')
+            ->join('sale_detail sd', 'sd.sale_id = sale.sale_id', 'RIGHT')
+            ->where('YEAR(sale.created_at) = YEAR(CURDATE())')
             ->groupBy('tgl')
-            ->orderBy('tgl DESC')
-            ->get()
-            ->getResultArray();
+            ->orderBy('tgl', 'DESC');
+        return $this->get()->getResultArray();
     }
 }

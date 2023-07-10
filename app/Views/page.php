@@ -220,6 +220,12 @@
             type: "get",
             url: "<?= base_url('count-rows') ?>",
             dataType: "json",
+            beforeSend: function() {
+                $('#sale-box').html('<i class="fas fa-spinner fa-spin"></i>');
+                $('#buy-box').html('<i class="fas fa-spinner fa-spin"></i>');
+                $('#users-box').html('<i class="fas fa-spinner fa-spin"></i>');
+                $('#opname-box').html('<i class="fas fa-spinner fa-spin"></i>');
+            },
             success: function(response) {
                 if (response.status == true) {
                     $('#sale-box').html(response.data.sales);
@@ -236,9 +242,6 @@
             type: "get",
             url: "<?= base_url('grafik') ?>",
             dataType: "json",
-            beforeSend: function() {
-                $('#chartsale').html('<i class="fa fa-spin fa-spinner"></i>');
-            },
             success: function(response) {
                 const sales = response.data.sales;
                 const buys = response.data.buy;
@@ -266,8 +269,8 @@
                     }, {
                         label: 'Pembelian',
                         data: chartY2,
-                        backgroundColor: 'rgba(210, 214, 222, 1)',
-                        borderColor: 'rgba(210, 214, 222, 1)',
+                        backgroundColor: 'rgba(242, 4, 4, 0.8)',
+                        borderColor: 'rgba(242, 4, 4, 0.6)',
                         borderWidth: 4
                     }]
                 };

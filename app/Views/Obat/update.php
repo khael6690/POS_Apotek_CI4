@@ -1,5 +1,5 @@
 <div class="modal fade" id="modal-update">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header bg-primary">
                 <h4 class="modal-title">Update <?= $title; ?></h4>
@@ -47,7 +47,7 @@
                         <div class="form-group row">
                             <label for="satuan" class="col-sm-2 col-form-label">Satuan</label>
                             <div class="col-sm-10">
-                                <select class="form-control select" id="select1" name="satuan">
+                                <select class="form-control select select2" name="satuan">
                                     <?php foreach ($data_satuan as $satuan) : ?>
                                         <option value="<?= $satuan['id'] ?>" <?= old('satuan', $data_obat['satuan']) == $satuan['id'] ? 'selected' : '' ?>><?= $satuan['satuan'] ?></option>
                                     <?php endforeach; ?>
@@ -57,7 +57,7 @@
                         <div class="form-group row">
                             <label for="stok" class="col-sm-2 col-form-label">Produsen</label>
                             <div class="col-sm-10">
-                                <select class="form-control" name="produsen" id="select2">
+                                <select class="form-control select select2" name="produsen">
                                     <?php foreach ($data_produsen as $produsen) : ?>
                                         <option value="<?= $produsen['id_produsen'] ?>" <?= old('produsen', $data_obat['produsen']) == $produsen['id_produsen'] ? 'selected' : '' ?>><?= $produsen['nama'] ?></option>
                                     <?php endforeach; ?>
@@ -94,8 +94,9 @@
     $(document).ready(function() {
 
         //Initialize Select2 Elements
-        $('#select2').select2()
-        $('#select1').select2()
+        $('.select2').select2({
+            theme: 'bootstrap4'
+        })
 
         //Initialize fileinput Elements
         bsCustomFileInput.init();

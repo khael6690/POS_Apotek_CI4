@@ -34,7 +34,11 @@
                 <div class="col-sm-4 invoice-col">
                     Kasir
                     <address>
-                        <strong><?= $buy[0]['namaadm']; ?></strong>
+                        <strong><?= $buy[0]['namaadm']; ?></strong><br>
+                        <?= $profile['0']['alamat']; ?><br>
+                        <?= $profile['0']['kota']; ?><br>
+                        Phone: <?= $profile['0']['telp']; ?><br>
+                        Email: <?= $profile['0']['email']; ?>
                     </address>
                 </div>
                 <!-- /.col -->
@@ -115,15 +119,6 @@
                     </div>
                 </div>
                 <!-- /.col -->
-            </div>
-            <!-- /.row -->
-            <div class="row">
-                <div class="col-md-5">
-                    <?= $profile['0']['alamat']; ?><br>
-                    <?= $profile['0']['kota']; ?><br>
-                    Phone: <?= $profile['0']['telp']; ?><br>
-                    Email: <?= $profile['0']['email']; ?>
-                </div>
             </div>
 
         </div>

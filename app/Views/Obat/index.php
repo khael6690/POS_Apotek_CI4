@@ -65,8 +65,8 @@
                     <div id="viewmodal" style="display: none;"></div>
 
                     <!-- Modals detail -->
-                    <div class="modal fade" id="modal-sm">
-                        <div class="modal-dialog modal-sm">
+                    <div class="modal fade" id="modal-detail">
+                        <div class="modal-dialog modal-md">
                             <div class="modal-content">
                                 <div class="modal-header bg-info">
                                     <h4 class="modal-title">Detail <?= $title; ?></h4>
@@ -124,7 +124,7 @@
         function edit(id) {
             $.ajax({
                 type: "get",
-                url: "/obat-update/" + id,
+                url: "<?= site_url('obat-update/') ?>" + id,
                 data: {
                     id: id
                 },
@@ -145,6 +145,44 @@
                     });
                 }
             });
+        }
+
+        function hapus(id, nama) {
+            swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "Hapus data " + nama,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Hapus!',
+                cancelButtonText: 'Tidak!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "delete",
+                            url: "<?= site_url('obat-delete/') ?>" + id,
+                            dataType: "json",
+                            success: function(response) {
+                                if (response.success) {
+                                    Toast.fire({
+                                        icon: 'success',
+                                        title: response.success
+                                    });
+                                } else {
+                                    Toast.fire({
+                                        icon: 'warning',
+                                        title: response.error
+                                    });
+                                }
+                                getData();
+                            }
+                        });
+
+                    }
+                }
+            })
         }
 
 

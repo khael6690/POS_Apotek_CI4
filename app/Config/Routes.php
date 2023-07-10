@@ -65,12 +65,13 @@ $routes->group('', ['filter' => 'login'], function ($routes) {
     // route management customers
     $routes->get('customers', 'admin\Customers::index');
     $routes->get('customers/viewdata', 'admin\Customers::viewdata');
+    $routes->get('customers/data', 'admin\Customers::data');
     $routes->post('customers-detail', 'admin\Customers::detail');
     $routes->get('customers-create', 'admin\Customers::create');
     $routes->post('customers-create', 'admin\Customers::save');
     $routes->get('customers-update/(:num)', 'admin\Customers::edit/$1');
     $routes->post('customers-update/(:num)', 'admin\Customers::update/$1');
-    $routes->delete('customers-delete/(:num)', 'admin\Customers::delete/$1');
+    $routes->delete('customers/(:num)', 'admin\Customers::delete/$1');
 });
 
 $routes->group('', ['filter' => 'permission:management-user'], function ($routes) {
@@ -103,6 +104,7 @@ $routes->group('', ['filter' => 'permission:management-obat'], function ($routes
     // route akses obat
     $routes->get('obat', 'admin\Obat::index');
     $routes->get('obat/viewdata', 'admin\Obat::viewdata');
+    $routes->get('obat/data', 'admin\Obat::data');
     $routes->post('obat-detail', 'admin\Obat::detail');
     $routes->get('obat-create', 'admin\Obat::create');
     $routes->post('obat-create', 'admin\Obat::save');

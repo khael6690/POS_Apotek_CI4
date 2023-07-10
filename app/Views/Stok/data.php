@@ -29,7 +29,8 @@
         $("#tb-stok").DataTable({
             "responsive": true,
             "lengthChange": false,
-            "autoWidth": false
+            "autoWidth": false,
+            'info': false
         })
     });
 </script>

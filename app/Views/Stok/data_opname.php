@@ -49,7 +49,6 @@
             text: "Hapus data",
             icon: 'warning',
             showCancelButton: true,
-            showCloseButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Hapus!',

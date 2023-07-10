@@ -23,9 +23,6 @@
                         <label for="alamat" class="col-sm-4 col-form-label">Alamat</label>
                         <div class="col-sm-8">
                             <textarea class="form-control" rows="2" id="alamat" name="alamat"><?= old('alamat') ?></textarea>
-                            <div class="invalid-feedback erroralamat">
-
-                            </div>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -36,9 +33,6 @@
                                     <span class="input-group-text bg-success"><i class="fas fa-phone"></i></span>
                                 </div>
                                 <input type="text" class="form-control" id="telp" name="telp" value="<?= old('telp') ?>" placeholder="+62">
-                                <div class="invalid-feedback errortelp">
-
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -46,9 +40,6 @@
                         <label for="email" class="col-sm-4 col-form-label">Email</label>
                         <div class="col-sm-8">
                             <input type="email" class="form-control" id="email" name="email" value="<?= old('email') ?>">
-                            <div class="invalid-feedback erroremail">
-
-                            </div>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -101,18 +92,6 @@
                         response.error && response.error.nama ?
                             (form.find('#nama').addClass('is-invalid'), form.find('.errornama').html(response.error.nama)) :
                             (form.find('#nama').removeClass('is-invalid'), form.find('.errornama').html(''));
-
-                        response.error && response.error.alamat ?
-                            (form.find('#alamat').addClass('is-invalid'), form.find('.erroralamat').html(response.error.alamat)) :
-                            (form.find('#alamat').removeClass('is-invalid'), form.find('.erroralamat').html(''));
-
-                        response.error && response.error.telp ?
-                            (form.find('#telp').addClass('is-invalid'), form.find('.errortelp').html(response.error.telp)) :
-                            (form.find('#telp').removeClass('is-invalid'), form.find('.errortelp').html(''));
-
-                        response.error && response.error.email ?
-                            (form.find('#email').addClass('is-invalid'), form.find('.erroremail').html(response.error.email)) :
-                            (form.find('#email').removeClass('is-invalid'), form.find('.erroremail').html(''));
 
                         response.error && response.error.diskon ?
                             (form.find('#diskon').addClass('is-invalid'), form.find('.errordiskon').html(response.error.diskon)) :

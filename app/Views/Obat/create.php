@@ -46,7 +46,7 @@
                     <div class="form-group row">
                         <label for="satuan" class="col-sm-2 col-form-label">Satuan</label>
                         <div class="col-sm-10">
-                            <select class="form-control select" id="select1" name="satuan">
+                            <select class="form-control select select2" name="satuan">
                                 <?php foreach ($data_satuan as $satuan) : ?>
                                     <option value="<?= $satuan['id'] ?>" <?= old('satuan') == $satuan['satuan'] ? 'selected' : '' ?>><?= $satuan['satuan'] ?></option>
                                 <?php endforeach; ?>
@@ -59,7 +59,7 @@
                     <div class="form-group row">
                         <label for="stok" class="col-sm-2 col-form-label">Produsen</label>
                         <div class="col-sm-10">
-                            <select class="form-control select" id="select2" name="produsen">
+                            <select class="form-control select select2" name="produsen">
                                 <?php foreach ($data_produsen as $produsen) : ?>
                                     <option value="<?= $produsen['id_produsen'] ?>" <?= old('produsen') == $produsen['id_produsen'] ? 'selected' : '' ?>><?= $produsen['nama'] ?></option>
                                 <?php endforeach; ?>
@@ -99,8 +99,9 @@
     $(document).ready(function() {
 
         //Initialize Select2 Elements
-        $('#select2').select2()
-        $('#select1').select2()
+        $('.select2').select2({
+            theme: 'bootstrap4'
+        })
 
         //Initialize fileinput Elements
         bsCustomFileInput.init();

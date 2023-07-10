@@ -1,5 +1,5 @@
 <div class="modal fade" id="modal-customer">
-    <div class="modal-dialog modal-md">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Data Customer</h4>
@@ -9,7 +9,7 @@
             </div>
             <div class="modal-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped tb-sale">
+                    <table class="table table-bordered table-striped" id="tb-customers">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -43,6 +43,15 @@
 
 <?= $this->section('script'); ?>
 <script>
+    $(document).ready(function() {
+        $("#tb-customers").DataTable({
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+            'info': false
+        })
+    });
+
     function getCustomer(id, nama, diskon) {
         $('#id-customer').val(id)
         $('#nama-customer').val(nama)

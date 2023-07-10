@@ -6,7 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\ObatModel;
 use App\Models\ProdusenModel;
 use App\Models\SatuanModel;
-use CodeIgniter\HTTP\Request;
+use \Hermawan\DataTables\DataTable;
 
 define('_TITLE', 'Obat');
 
@@ -41,6 +41,29 @@ class Obat extends BaseController
                 'data' => view('obat/data', $data)
             ];
             return $this->response->setJSON($msg);
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+    }
+
+    public function data()
+    {
+        if ($this->request->isAJAX()) {
+            $builder = $this->_m_obat->getObat();
+
+            return DataTable::of($builder)
+                ->addNumbering()
+                ->add('action', function ($row) {
+                    return
+                        '<button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-detail" onclick="detail(' . $row->id_obat . ')"><i class="fas fa-eye"></i></button>
+                        <button class="btn btn-warning text-white btn-sm" onclick="edit(' . $row->id_obat . ')"><i class="fas fa-edit"></i></button>
+                        <button type="submit" class="btn btn-danger btn-sm text-white" onclick="hapus(' . $row->id_obat . ',\'' . $row->nama_obat . '\')"><i class="fas fa-trash"></i></button>';
+                }, 'last')
+                ->hide('id_obat')
+                ->format('harga', function ($value) {
+                    return 'Rp. ' . number_format($value, 2, '.', ',');
+                })
+                ->toJson();
         } else {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
@@ -127,12 +150,12 @@ class Obat extends BaseController
             } else {
                 $gambar   = $this->request->getFile('img');
                 $namafile = $gambar->getRandomName();
-                $gambar->move(WRITEPATH . '../public/assets/upload/obat/', $namafile);
+                $gambar->move('assets/upload/obat/', $namafile);
                 // Create thumb
                 $image = \Config\Services::image()
-                    ->withFile(WRITEPATH . '../public/assets/upload/obat/' . $namafile)
+                    ->withFile('assets/upload/obat/' . $namafile)
                     ->fit(100, 100, 'center')
-                    ->save(WRITEPATH . '../public/assets/upload/obat/thumbs/' . $namafile);
+                    ->save('assets/upload/obat/thumbs/' . $namafile);
             }
             // masuk ke database
             if ($this->_m_obat->save(
@@ -235,15 +258,15 @@ class Obat extends BaseController
                 $namafile = $gambar->getRandomName();
                 $gambar_lama = $data_obat['img'];
                 if ($gambar_lama != 'default.png') {
-                    unlink(WRITEPATH . '../public/assets/upload/obat/' . $gambar_lama);
-                    unlink(WRITEPATH . '../public/assets/upload/obat/thumbs/' . $gambar_lama);
+                    unlink('assets/upload/obat/' . $gambar_lama);
+                    unlink('assets/upload/obat/thumbs/' . $gambar_lama);
                 }
-                $gambar->move(WRITEPATH . '../public/assets/upload/obat/', $namafile);
+                $gambar->move('assets/upload/obat/', $namafile);
                 // Create thumb
                 $image = \Config\Services::image()
-                    ->withFile(WRITEPATH . '../public/assets/upload/obat/' . $namafile)
+                    ->withFile('assets/upload/obat/' . $namafile)
                     ->fit(100, 100, 'center')
-                    ->save(WRITEPATH . '../public/assets/upload/obat/thumbs/' . $namafile);
+                    ->save('assets/upload/obat/thumbs/' . $namafile);
             }
             if ($this->_m_obat->save(
                 [
@@ -273,8 +296,8 @@ class Obat extends BaseController
             $data_obat = $this->_m_obat->where(['id_obat' => $id])->first();
             $gambar_lama = $data_obat['img'];
             if ($gambar_lama != 'default.png') {
-                unlink(WRITEPATH . '../public/assets/upload/obat/' . $gambar_lama);
-                unlink(WRITEPATH . '../public/assets/upload/obat/thumbs/' . $gambar_lama);
+                unlink('assets/upload/obat/' . $gambar_lama);
+                unlink('assets/upload/obat/thumbs/' . $gambar_lama);
             }
             if ($this->_m_obat->delete($id)) {
                 $msg = [

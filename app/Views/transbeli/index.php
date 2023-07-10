@@ -380,7 +380,6 @@
                 text: "Lakukan Pembayaran?",
                 icon: 'question',
                 showCancelButton: true,
-                showCloseButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Ya',

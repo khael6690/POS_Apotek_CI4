@@ -14,22 +14,16 @@ class BuyModel extends Model
     {
         if ($id === null) {
             return $this->db->table('buy_detail as BD')
-                ->select('B.buyid,BD.amount AS jumlah,O.nama AS obat , U.fullname AS namaadm, B.supplier, date(B.created_at) tgl')
+                ->select('O.nama AS obat, BD.amount AS jumlah, B.supplier, date(B.created_at) tgl')
                 ->join('buy B', 'B.buyid = BD.buyid')
-                ->join('users U', 'B.userid = U.id')
                 ->join('obat O', 'O.id_obat=BD.id_obat', 'LEFT')
-                ->groupBy('BD.buyid')
-                ->orderBy('tgl', 'DESC')
                 ->get()->getResultArray();
         } else {
             return $this->db->table('buy_detail as BD')
-                ->select('B.buyid,BD.amount AS jumlah,O.nama AS obat , U.fullname AS namaadm, B.supplier, date(B.created_at) tgl')
+                ->select('O.nama AS obat, BD.amount AS jumlah, B.supplier, date(B.created_at) tgl')
                 ->join('buy B', 'B.buyid = BD.buyid')
-                ->join('users U', 'B.userid = U.id')
-                ->join('obat O', 'O.id_obat=BD.id_obat', 'LEFT')
+                ->join('obat O', 'O.id_obat = BD.id_obat', 'LEFT')
                 ->where('BD.buyid', $id)
-                ->groupBy('BD.buyid')
-                ->orderBy('tgl', 'DESC')
                 ->get()->getResultArray();
         }
     }
@@ -68,14 +62,11 @@ class BuyModel extends Model
 
     public function buyGrafik()
     {
-        return $this->db->table('buy_detail as BD')
-            ->select('B.buyid,BD.amount AS jumlah,O.nama AS obat , U.fullname AS namaadm, B.supplier, YEAR(B.created_at) tgl, SUM(BD.total_price) AS total')
-            ->join('buy B', 'B.buyid = BD.buyid')
-            ->join('users U', 'B.userid = U.id')
-            ->join('obat O', 'O.id_obat=BD.id_obat')
+        $this->select('DATE_FORMAT(buy.created_at,  "%b") AS tgl, SUM(bd.total_price) AS total')
+            ->join('buy_detail bd', 'bd.buyid = buy.buyid', 'RIGHT')
+            ->where('YEAR(buy.created_at) = YEAR(CURDATE())')
             ->groupBy('tgl')
-            ->orderBy('tgl DESC')
-            ->get()
-            ->getResultArray();
+            ->orderBy('tgl', 'DESC');
+        return $this->get()->getResultArray();
     }
 }

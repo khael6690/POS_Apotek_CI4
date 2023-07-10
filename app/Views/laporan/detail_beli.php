@@ -3,7 +3,7 @@
 
 
     <!-- Main content -->
-    <div class="invoice p-3 mb-3">
+    <div class="invoice border-0 p-2 mb-2">
         <!-- title row -->
         <div class="row">
             <div class="col-12">
@@ -16,22 +16,25 @@
         </div>
         <!-- info row -->
         <div class="row invoice-info">
-            <div class="col-sm-4 invoice-col">
+            <div class="col-sm-5 invoice-col">
                 Kasir
                 <address>
-                    <strong><?= $buy[0]['namaadm']; ?></strong>
-
+                    <strong><?= $buy[0]['namaadm']; ?></strong><br>
+                    <?= $profile['0']['alamat']; ?><br>
+                    <?= $profile['0']['kota']; ?><br>
+                    Phone: <?= $profile['0']['telp']; ?><br>
+                    Email: <?= $profile['0']['email']; ?>
                 </address>
             </div>
             <!-- /.col -->
-            <div class="col-sm-4 invoice-col">
+            <div class="col-sm-3 invoice-col">
                 Supplier
                 <address>
                     <strong><?= ($buy[0]['supplier'] == null) ? 'Guest' : $buy[0]['supplier']; ?></strong>
                 </address>
             </div>
             <!-- /.col -->
-            <div class="col-sm-4 invoice-col">
+            <div class="col-sm-4 text-right invoice-col">
                 <b>Invoice #<?= $buy[0]['buyid']; ?></b>
             </div>
             <!-- /.col -->
@@ -103,14 +106,7 @@
             <!-- /.col -->
         </div>
         <!-- /.row -->
-        <div class="row">
-            <div class="col-md-5">
-                <?= $profile[0]['alamat']; ?><br>
-                <?= $profile[0]['kota']; ?><br>
-                Phone: <?= $profile[0]['telp']; ?><br>
-                Email: <?= $profile[0]['email']; ?>
-            </div>
-        </div>
+
     </div>
     <!-- /.invoice -->
 </div>

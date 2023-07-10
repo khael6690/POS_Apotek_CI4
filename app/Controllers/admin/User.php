@@ -168,8 +168,8 @@ class User extends BaseController
             $data_user = $this->_m_user->getUser($id);
             $gambar_lama = $data_user['user_image'];
             if ($gambar_lama != 'default.png') {
-                unlink(WRITEPATH . '../public/assets/upload/user/' . $gambar_lama);
-                unlink(WRITEPATH . '../public/assets/upload/user/thumbs/' . $gambar_lama);
+                unlink('assets/upload/user/' . $gambar_lama);
+                unlink('assets/upload/user/thumbs/' . $gambar_lama);
             }
             if ($this->_m_users->delete($id)) {
                 $msg = [
@@ -370,15 +370,15 @@ class User extends BaseController
                 $gambar_lama = user()->user_image;
                 $namafile = $gambar->getRandomName();
                 if ($gambar_lama != 'default.png') {
-                    unlink(WRITEPATH . '../public/assets/upload/user/' . $gambar_lama);
-                    unlink(WRITEPATH . '../public/assets/upload/user/thumbs/' . $gambar_lama);
+                    unlink('assets/upload/user/' . $gambar_lama);
+                    unlink('assets/upload/user/thumbs/' . $gambar_lama);
                 }
-                $gambar->move(WRITEPATH . '../public/assets/upload/user/', $namafile);
+                $gambar->move('assets/upload/user/', $namafile);
                 // Create thumb
                 $image = \Config\Services::image()
-                    ->withFile(WRITEPATH . '../public/assets/upload/user/' . $namafile)
+                    ->withFile('assets/upload/user/' . $namafile)
                     ->fit(100, 100, 'center')
-                    ->save(WRITEPATH . '../public/assets/upload/user/thumbs/' . $namafile);
+                    ->save('assets/upload/user/thumbs/' . $namafile);
             }
             // masuk ke database
             if ($this->_m_users->save(

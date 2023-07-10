@@ -1,8 +1,8 @@
 <div class="card card-primary">
     <!-- /.card-header -->
     <div class="card-body">
-        <img src="<?= base_url('assets/upload/obat/' . $data_obat['img']) ?>" class="card-img-top img-thumbnail" alt="<?= $data_obat['nama_obat']; ?>">
-        <hr>
+        <!-- <img src="<?= base_url('assets/upload/obat/' . $data_obat['img']) ?>" class="card-img-top img-thumbnail" alt="<?= $data_obat['nama_obat']; ?>">
+        <hr> -->
         <strong><i class="fas fa-capsules text-success mr-1"></i> Nama Obat</strong>
         <p class="text-muted"> <?= $data_obat['nama_obat']; ?>
         </p>

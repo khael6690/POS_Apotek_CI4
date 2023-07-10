@@ -4,6 +4,7 @@ namespace App\Controllers\admin;
 
 use App\Controllers\BaseController;
 use App\Models\CustomerModel;
+use \Hermawan\DataTables\DataTable;
 
 define('_TITLE', 'Customers');
 
@@ -36,6 +37,24 @@ class Customers extends BaseController
                 'data' => view('Customers/data', $data)
             ];
             return $this->response->setJSON($msg);
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+    }
+
+    public function data()
+    {
+        if ($this->request->isAJAX()) {
+            $builder = $this->_m_customers->select('id,nama,email');
+
+            return DataTable::of($builder)->addNumbering()->add('action', function ($row) {
+                return
+                    '<button class="btn btn-info btn-sm m-1" data-toggle="modal" data-target="#modal-detail" onclick="detail(' . $row->id . ')"><i class="fas fa-eye"></i></button>
+                    <button class="btn btn-warning btn-sm m-1 text-white" onclick="edit(' . $row->id . ')"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-danger btn-sm m-1 text-white" onclick="hapus(' . $row->id . ',\'' . $row->nama . '\')"><i class="fas fa-trash"></i></button>';
+            }, 'last')
+                ->hide('id')
+                ->toJson();
         } else {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
@@ -74,34 +93,11 @@ class Customers extends BaseController
         if ($this->request->isAJAX()) {
 
             // validasi data
-            $validation = \config\Services::validation();
+            $validation = \Config\Services::validation();
             if (!$this->validate([
                 'nama' => [
                     'rules' => 'required',
                     'label' => 'Nama',
-                    'errors' => [
-                        'required' => '{field} tidak boleh kosong!'
-                    ]
-                ],
-                'alamat' => [
-                    'rules' => 'required',
-                    'label' => 'Alamat',
-                    'errors' => [
-                        'required' => '{field} tidak boleh kosong!'
-                    ]
-                ],
-                'email' => [
-                    'rules' => 'required|is_unique[customer.email]|valid_email',
-                    'label' => 'Email',
-                    'errors' => [
-                        'required' => '{field} tidak boleh kosong!',
-                        'valid_email' => '{field} tidak valid!',
-                        'is_unique' => '{field} sudah terdaftar!'
-                    ]
-                ],
-                'telp' => [
-                    'rules' => 'required',
-                    'label' => 'No Telfon',
                     'errors' => [
                         'required' => '{field} tidak boleh kosong!'
                     ]
@@ -117,9 +113,6 @@ class Customers extends BaseController
                 $msg = [
                     'error' => [
                         'nama' => $validation->getError('nama'),
-                        'alamat' => $validation->getError('alamat'),
-                        'email' => $validation->getError('email'),
-                        'telp' => $validation->getError('telp'),
                         'diskon' => $validation->getError('diskon')
                     ]
                 ];

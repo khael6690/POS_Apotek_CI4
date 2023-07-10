@@ -51,7 +51,7 @@
             <!-- ./row -->
 
             <div class="row">
-                <div class="col-lg-7">
+                <div class="col-md-12">
                     <!-- Stok barang -->
                     <div class="card">
                         <div class="card-header bg-success">
@@ -67,7 +67,10 @@
 
                 </div>
                 <!-- ./col stok barang -->
-                <div class="col-lg-5">
+            </div>
+            <!-- ./row -->
+            <div class="row">
+                <div class="col-md-12">
                     <!-- stok brang masuk -->
                     <div class="card">
                         <div class="card-header bg-success">
@@ -82,7 +85,6 @@
                     </div>
                 </div>
             </div>
-            <!-- ./row -->
 
             <div id="viewmodal" style="display: none;"></div>
         </div>
