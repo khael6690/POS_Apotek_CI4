@@ -3,6 +3,7 @@
 namespace App\Controllers\admin;
 
 use App\Controllers\BaseController;
+use App\Models\BuyModel;
 use App\Models\CustomerModel;
 use App\Models\ObatModel;
 use App\Models\ProfileModel;
@@ -13,7 +14,7 @@ define('_TITLE', 'Transaksi Jual');
 
 class Transjual extends BaseController
 {
-    private $_m_obat, $_cart, $_m_customer, $_m_sale, $_m_sale_detail, $_m_profile;
+    private $_m_obat, $_cart, $_m_customer, $_m_sale, $_m_sale_detail, $_m_profile, $_m_buy;
     public function __construct()
     {
         $this->_m_profile = new ProfileModel();
@@ -22,6 +23,7 @@ class Transjual extends BaseController
         $this->_m_customer = new CustomerModel();
         $this->_cart = \Config\Services::cart();
         $this->_m_obat = new ObatModel();
+        $this->_m_buy = new BuyModel();
     }
 
     public function index()
@@ -38,51 +40,69 @@ class Transjual extends BaseController
         return view('transjual/index', $data);
     }
 
+    public function getProduk()
+    {
+        if ($this->request->isAJAX()) {
+            $produk = $this->_m_obat->getStok();
+            $json = [
+                'data' => $produk,
+                'status' => true
+            ];
+            return $this->response->setJSON($json);
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+    }
+
     public function add_cart($id = null)
     {
-        if ($id === null) {
-            $this->_cart->insert(array(
-                'id'      => $this->request->getVar('obat_id'),
-                'qty'     => 1,
-                'price'   => $this->request->getVar('harga'),
-                'name'    => $this->request->getVar('nama'),
-                'options' => array(
-                    'discount' => $this->request->getVar('discount')
-                )
-            ));
-
-            $this->show_cart();
-        } elseif ($id !== null) {
-            $produk = $this->_m_obat->getObat($id);
-            if ($produk !== null && $produk['stok'] != 0) {
+        if ($this->request->isAJAX()) {
+            if ($id === null) {
                 $this->_cart->insert(array(
-                    'id'      => $produk['id_obat'],
+                    'id'      => $this->request->getVar('obat_id'),
                     'qty'     => 1,
-                    'price'   => $produk['harga'],
-                    'name'    => $produk['nama_obat'],
+                    'price'   => $this->request->getVar('harga'),
+                    'name'    => $this->request->getVar('nama'),
                     'options' => array(
-                        'discount' => $produk['discount']
+                        'discount' => $this->request->getVar('discount')
                     )
                 ));
 
-                $this->show_cart();
-            } elseif ($produk !== null && $produk['stok'] == 0) {
-                $json = [
-                    'status' => false,
-                    'data' =>  $produk['nama_obat'],
-                    'msg' => 'Stok sudah habis!'
-                ];
+                return $this->show_cart();
+            } elseif ($id !== null) {
+                $produk = $this->_m_obat->getObat($id);
+                if ($produk !== null && $produk['jumlah'] != 0) {
+                    $this->_cart->insert(array(
+                        'id'      => $produk['id_obat'],
+                        'qty'     => 1,
+                        'price'   => $produk['harga'],
+                        'name'    => $produk['nama_obat'],
+                        'options' => array(
+                            'discount' => $produk['discount']
+                        )
+                    ));
 
-                echo json_encode($json);
-            } elseif ($produk == null) {
-                $json = [
-                    'status' => false,
-                    'data' =>  $id,
-                    'msg' => 'Data tidak ditemukan!'
-                ];
+                    return $this->show_cart();
+                } elseif ($produk !== null && $produk['jumlah'] == 0) {
+                    $json = [
+                        'status' => false,
+                        'data' =>  $produk['nama_obat'],
+                        'msg' => 'Stok sudah habis!'
+                    ];
 
-                echo json_encode($json);
+                    return $this->response->setJSON($json);
+                } else {
+                    $json = [
+                        'status' => false,
+                        'data' =>  $id,
+                        'msg' => 'Data tidak ditemukan!'
+                    ];
+
+                    return $this->response->setJSON($json);
+                }
             }
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
     }
 
@@ -90,19 +110,6 @@ class Transjual extends BaseController
     {
         $data = $this->_cart->contents();
         if ($data != null) {
-            // $isi = [];
-            // foreach ($data as $value) {
-            //     $discount = ($value['options']['discount'] / 100)  * $value['subtotal'];
-            //     $values = [];
-            //     $values['rowid'] = $value['rowid'];
-            //     $values['id'] = $value['id'];
-            //     $values['name'] = $value['name'];
-            //     $values['qty'] = $value['qty'];
-            //     $values['price'] = number_to_currency($value['price'], 'IDR', 'id_ID', 2);
-            //     $values['subtotal'] = number_to_currency(($value['subtotal'] - $discount), 'IDR', 'id_ID', 2);
-            //     $values['discount'] =  number_to_currency($discount, 'IDR', 'id_ID', 2);
-
-            //     $isi[] = $values;
             $item = [
                 'data' => $data
             ];
@@ -114,7 +121,6 @@ class Transjual extends BaseController
                 'data' =>  $isi,
                 'msg' => 'Success'
             ];
-            // }
         } else {
             $json = [
                 'status' => false,
@@ -123,23 +129,32 @@ class Transjual extends BaseController
             ];
         }
 
-        echo json_encode($json);
+        return $this->response->setJSON($json);
     }
 
     public function delete_cart($rowid)
     {
-        $this->_cart->remove($rowid);
+        if ($this->request->isAJAX()) {
 
-        return $this->show_cart();
+            $this->_cart->remove($rowid);
+
+            return $this->show_cart();
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
     }
 
     public function update_cart($rowid)
     {
-        $this->_cart->update(array(
-            'rowid'   => $rowid,
-            'qty'     => $this->request->getVar('qty')
-        ));
-        return $this->show_cart();
+        if ($this->request->isAJAX()) {
+            $this->_cart->update(array(
+                'rowid'   => $rowid,
+                'qty'     => $this->request->getVar('qty')
+            ));
+            return $this->show_cart();
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
     }
 
     public function total()
@@ -154,7 +169,12 @@ class Transjual extends BaseController
 
     public function getTotal()
     {
-        echo number_to_currency($this->total(), 'IDR', 'id_ID', 2);
+        if ($this->request->isAJAX()) {
+            $total = number_to_currency($this->total(), 'IDR', 'id_ID', 2);
+            return $this->response->setJSON($total);
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
     }
 
     public function getDiskon()
@@ -163,16 +183,21 @@ class Transjual extends BaseController
             $total = $this->total();
             $diskon = ($this->request->getPost('diskon') / 100) * $total;
             $totbayar = $total - $diskon;
+            $totbayar === 0 ? $totbayar = 0 : $totbayar;
             $json = [
-                'totbayar' => $totbayar
+                'totbayar' => $totbayar,
+                'status' => true
             ];
+            return $this->response->setJSON($json);
+        } elseif ($this->request->isAJAX() && !$this->_cart->contents()) {
+            $json = [
+                'totbayar' => null,
+                'status' => false
+            ];
+            return $this->response->setJSON($json);
         } else {
-            $totbayar = 0;
-            $json = [
-                'totbayar' => $totbayar
-            ];
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
-        echo json_encode($json);
     }
 
     public function getKembalian()
@@ -181,82 +206,99 @@ class Transjual extends BaseController
 
             $nominal = $this->request->getPost('nominal');
             $totbayar = $this->request->getPost('totbayar');
-            $kembalian = ($nominal - $totbayar);
+            $totbayar === null && $nominal === null ? $kembalian = null :
+                $kembalian = $nominal - $totbayar;
+
             $json = [
-                'totbayar' => $totbayar,
-                'kembalian' => number_to_currency($kembalian, 'IDR', 'id_ID', 2)
+                'status' => true,
+                'kembalian' => $kembalian
             ];
-        } else {
+
+            return $this->response->setJSON($json);
+        } elseif ($this->request->isAJAX() && !$this->_cart->contents()) {
             $json = [
-                'totbayar' => null,
+                'status' => false,
                 'kembalian' => null,
+                'msg' => 'Tidak ada transaksi!'
+
             ];
+            return $this->response->setJSON($json);
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
-        echo json_encode($json);
     }
 
-    public function pembayaran()
+    public function pay()
     {
-        if (!$this->_cart->contents()) {
-            $response = [
-                'status' => false,
-                'title' => 'Transaksi Gagal',
-                'msg' => 'Tidak ada transaksi!'
-            ];
-            echo json_encode($response);
-        } else {
-            //ada transaksi
-            $total = $this->total();
-            $totbayar = $this->request->getVar('totbayar');
-            $nominal = $this->request->getVar('nominal');
-
-            if ($nominal < $totbayar) {
-                //nominal tidak cukup
+        if ($this->request->isAJAX()) {
+            if (!$this->_cart->contents()) {
                 $response = [
                     'status' => false,
-                    'title' => 'Transaksi Gagal',
-                    'msg' => 'Nominal Tidak Mencukupi!'
+                    'title' => 'Transaksi gagal',
+                    'msg' => 'Tidak ada transaksi!'
                 ];
-                echo json_encode($response);
+                return $this->response->setJSON($response);
             } else {
-                //nominal cukup
-                $saleid = $this->request->getVar('sale_id');
-                $this->_m_sale->save([
-                    'sale_id' => $saleid,
-                    'userid' => user_id(),
-                    'customerid' => $this->request->getVar('customer'),
-                    'discount' => $this->request->getVar('diskon')
-                ]);
+                //ada transaksi
+                $totbayar = $this->request->getVar('totbayar');
+                $nominal = $this->request->getVar('nominal');
 
-                foreach ($this->_cart->contents() as $items) {
-                    $discount = ($items['options']['discount'] / 100)  * $items['subtotal'];
-                    $this->_m_sale_detail->save([
+                if ($nominal < $totbayar) {
+                    //nominal tidak cukup
+                    $response = [
+                        'status' => false,
+                        'title' => 'Transaksi gagal',
+                        'msg' => 'Nominal tidak mencukupi!'
+                    ];
+                    return $this->response->setJSON($response);
+                } else {
+                    //nominal cukup
+                    $saleid = $this->request->getVar('sale_id');
+                    $customer = $this->request->getVar('customer');
+                    $discountval = $this->request->getVar('diskon');
+                    $this->_m_sale->save([
                         'sale_id' => $saleid,
-                        'id_obat' => $items['id'],
-                        'amount' => $items['qty'],
-                        'price' => $items['price'],
-                        'discount' => $discount,
-                        'total_price' => $items['subtotal'] - $discount
+                        'userid' => user_id(),
+                        'customerid' => $customer,
+                        'discount' => $discountval
                     ]);
-                }
 
-                $response = [
-                    'status' => true,
-                    'title' => 'Transaksi',
-                    'msg' => 'Pembayaran Berhasil disimpan!'
-                ];
-                echo json_encode($response);
+                    foreach ($this->_cart->contents() as $items) {
+                        $discount = ($items['options']['discount'] / 100)  * $items['subtotal'];
+                        $this->_m_sale_detail->save([
+                            'sale_id' => $saleid,
+                            'id_obat' => $items['id'],
+                            'amount' => $items['qty'],
+                            'price' => $items['price'],
+                            'discount' => $discount,
+                            'total_price' => $items['subtotal'] - $discount
+                        ]);
+                    }
+                    // response sukses
+                    $response = [
+                        'status' => true,
+                        'title' => 'Transaksi berhasil',
+                        'msg' => 'Pembayaran selesai!'
+                    ];
+                    return $this->response->setJSON($response);
+                }
             }
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
     }
 
-    public function resettrans()
+    public function reset()
     {
-        $this->_cart->destroy();
-        $json = [
-            'status' => true
-        ];
-        echo json_encode($json);
+        if ($this->request->isAJAX()) {
+            $this->_cart->destroy();
+            $json = [
+                'status' => true
+            ];
+            return $this->response->setJSON($json);
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
     }
 
     public function laporan()

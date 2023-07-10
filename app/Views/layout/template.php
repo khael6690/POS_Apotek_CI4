@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<?= $this->include('layout/head'); ?>
+<?= $this->include('components/head'); ?>
 
-<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+<body class="hold-transition sidebar-mini layout-fixed layout-footer-not-fixed layout-navbar-fixed">
   <div class="wrapper">
 
     <!-- Navbar -->
-    <?= $this->include('layout/navbar'); ?>
+    <?= $this->include('components/navbar'); ?>
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
-    <?= $this->include('layout/menu'); ?>
+    <?= $this->include('components/sidebar'); ?>
 
     <!-- Main content -->
     <?= $this->renderSection('content'); ?>
@@ -26,7 +26,7 @@
   </footer>
   </div>
   <!-- ./wrapper -->
-  <?= $this->include('layout/foot'); ?>
+  <?= $this->include('components/foot'); ?>
   <?= $this->renderSection('script'); ?>
 
 </body>

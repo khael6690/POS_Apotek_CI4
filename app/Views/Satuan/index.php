@@ -22,46 +22,125 @@
     <!-- /.content-header -->
     <section class="content">
         <div class="container-fluid">
+            <!-- Petunjuk -->
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header bg-info">
+                            <h3 class="card-title"><i class="fas fa-bullhorn"></i> Petunjuk!</h3>
 
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Data <?= $title; ?></h3>
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                    <div class="col-md-2">
-                        <a href="<?= base_url() ?>/satuan-create" class="btn btn-block bg-gradient-primary btn-sm mb-3"><i class="fas fa-plus-circle"></i> Tambah <?= $title; ?></a>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Halaman pengelolahan data <?= $title; ?></h3>
+                            <ul>
+                                <li>add data <?= $title; ?></li>
+                                <li>update data <?= $title; ?></li>
+                                <li>delete data <?= $title; ?></li>
+                            </ul>
+                        </div>
+                        <!-- /.card-body -->
                     </div>
-                    <table id="example1" class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th style="width: 5%;">No</th>
-                                <th>Satuan</th>
-                                <th style="width: 25%;">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php $no = 1;
-                            foreach ($data_satuan as $satuan) : ?>
-                                <tr>
-                                    <td><?= $no++; ?> </td>
-                                    <td><?= $satuan['satuan']; ?></td>
-                                    <td>
-                                        <a href="satuan-update/<?= $satuan['id']; ?>" class="btn btn-warning btn-sm text-white"><i class="fas fa-edit"></i> Edit</a>
-                                        <form action="satuan-delete/<?= $satuan['id']; ?>" method="post" class="d-inline form-hapus" id="form-hapus">
-                                            <?= csrf_field() ?>
-                                            <input type="hidden" name="_method" value="DELETE">
-                                            <button class="btn btn-danger btn-sm text-white tombol-hapus"><i class="fas fa-trash"></i> Hapus</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
+
+                    <div class="card">
+                        <div class="card-header bg-primary">
+                            <h3 class="card-title">Data <?= $title; ?></h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="col-md-2">
+                                <button type="button" class="btn bg-gradient-primary btn-sm mb-3" id="btn-create"><i class="fas fa-plus-circle"></i></button>
+                            </div>
+                            <div class="viewdata">
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <div id="viewmodal" style="display: none;"></div>
                 </div>
-                <!-- /.card-body -->
-            </div>
-        </div>
-        <!--/. container-fluid -->
+                <!--/. container-fluid -->
     </section>
+    <?= $this->endSection(); ?>
+
+    <?= $this->section('script'); ?>
+    <script>
+        $(document).ready(function() {
+
+            getData()
+
+
+        });
+
+        $('#btn-create').click(function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: "<?= site_url('satuan-create') ?>",
+                dataType: "json",
+                success: function(response) {
+                    $('#viewmodal').html(response.data).show();
+                    $('#modal-create').modal('show');
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    Swal.fire({
+                        title: xhr.status,
+                        text: thrownError,
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            });
+
+        });
+
+        function edit(id) {
+            $.ajax({
+                type: "get",
+                url: "/satuan-update/" + id,
+                data: {
+                    id: id
+                },
+                dataType: "json",
+                success: function(response) {
+                    if (response.data) {
+                        $('#viewmodal').html(response.data).show();
+                        $('#modal-update').modal('show');
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    Swal.fire({
+                        title: xhr.status,
+                        text: thrownError,
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            });
+        }
+
+
+        function getData() {
+            $.ajax({
+                url: "<?= site_url('satuan/viewdata') ?>",
+                dataType: "json",
+                success: function(response) {
+                    $('.viewdata').html(response.data);
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    Swal.fire({
+                        title: xhr.status,
+                        text: thrownError,
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            });
+        }
+    </script>
     <?= $this->endSection(); ?>

@@ -31,79 +31,90 @@
                         <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
                         </button>
                     </div>
+
                 </div>
                 <div class="card-body">
-                    <!-- <div class="container"> -->
-
-                    <div class="form-group row">
-                        <div class="col-sm-1">
-                            <label for="tgl" class="col-form-label">No Faktur :</label>
-                        </div>
-                        <div class="col-sm-2">
-                            <input type="text" id="saleId" class="form-control" disabled>
-                        </div>
-                        <div class="col-sm-1">
-                            <label for="user" class="col-form-label">User :</label>
-                        </div>
-                        <div class="col-sm-2">
-                            <input type="text" value="<?= user()->username ?>" class="form-control" disabled>
-                        </div>
-                        <div class="col-sm-1">
-                            <label for="customer" class="col-form-label">Customer :</label>
-                        </div>
-                        <div class="col-sm-2">
-                            <div class="input-group">
-                                <input id="nama-customer" type="text" class="form-control" disabled>
-                                <input id="id-customer" type="hidden" class="form-control" disabled>
-                                <span class="input-group-append">
-                                    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#modal-customer"><i class="fas fa-search"></i></button>
-                                </span>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-6 my-1">
+                                <label for="saleId" class="col-form-label">No Faktur :</label>
                             </div>
-                        </div>
-                        <div class="col-sm-2">
-                            <div class="input-group">
-                                <input id="kdproduk" type="text" class="form-control" placeholder="Kode Produk">
-                                <span class="input-group-append">
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-produk"><i class="fas fa-search"></i></button>
-                                </span>
+                            <div class="col-sm-6 my-1">
+                                <input type="text" id="saleId" class="form-control" disabled>
+                            </div>
+                            <div class="col-sm-6 my-1">
+                                <label for="user" class="col-form-label">User :</label>
+                            </div>
+                            <div class="col-sm-6 my-1">
+                                <input type="text" id="user" value="<?= user()->username ?>" class="form-control" disabled>
+                            </div>
+                            <div class="col-sm-6 my-1">
+                                <label for="nama-customer" class="col-form-label">Customer :</label>
+                            </div>
+                            <div class="col-sm-6 my-1">
+                                <div class="input-group">
+                                    <input id="nama-customer" type="text" class="form-control" disabled>
+                                    <input id="id-customer" type="hidden" class="form-control" disabled>
+                                    <span class="input-group-append">
+                                        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#modal-customer"><i class="fas fa-search"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 my-1">
+                                <label for="kdproduk" class="col-form-label">Produk :</label>
+                            </div>
+                            <div class="col-sm-6 my-1">
+                                <div class="input-group">
+                                    <input id="kdproduk" type="text" class="form-control" placeholder="Kode Produk">
+                                    <span class="input-group-append">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-produk"><i class="fas fa-search"></i></button>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <table class="table table-striped table-hover mt-4">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Produk</th>
-                                <th>Jumlah</th>
-                                <th>Harga</th>
-                                <th>Diskon</th>
-                                <th>Subtotal</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="detail_cart">
-                            <tr>
-                                <td colspan="7">Belum ada transaksi!</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="row mt-4">
+                    <div class="table-responsive mt-2">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Produk</th>
+                                    <th>Jumlah</th>
+                                    <th>Harga</th>
+                                    <th>Diskon</th>
+                                    <th>Subtotal</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="detail_cart">
+                                <tr>
+                                    <td colspan="7">Belum ada transaksi!</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row mt-3 mx-0">
                         <div class="col-sm-5">
-                            <label class="form-label">Subtotal</label>
+                            <p>Subtotal</p>
                             <h1><span id="total">Rp 0,00</span></h1>
                         </div>
                         <div class="col-sm-7">
                             <div class="form-group row justify-content-end">
                                 <div class="col-sm-2">
-                                    <label class="form-label">Nominal</label>
+                                    <label for="totbayar" class="form-label mx-1 my-1">Total Bayar</label>
                                 </div>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="nominal" autocomplete="off">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Rp.</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="totbayar" disabled>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group row justify-content-end">
                                 <div class="col-sm-2">
-                                    <label class="form-label">Discount</label>
+                                    <label for="diskon" class="form-label mx-1 my-1">Discount</label>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="input-group">
@@ -116,152 +127,87 @@
                             </div>
                             <div class="form-group row justify-content-end">
                                 <div class="col-sm-2">
-                                    <label class="form-label">Total Bayar</label>
+                                    <label for="nominal" class="form-label mx-1 my-1">Nominal</label>
                                 </div>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="totbayar" disabled>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Rp.</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="nominal" autocomplete="off">
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group row justify-content-end">
                                 <div class="col-sm-2">
-                                    <label class="form-label">Kembalian</label>
+                                    <label for="kembalian" class="form-label mx-1 my-1">Kembalian</label>
                                 </div>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="kembalian" disabled>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Rp.</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="kembalian" disabled>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row justify-content-end">
                                 <div class="col-sm-4">
-                                    <button class="btn btn-primary" onclick="bayar()">Bayar</button>
-                                    <button class="btn btn-success" id="transbaru">Transaksi Baru</button>
+                                    <button class="d-inline p-2 btn btn-primary m-1" onclick="bayar()">Bayar</button>
+                                    <button class="d-inline p-2 btn btn-success m-1" id="transbaru">Transaksi Baru</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- </div> -->
                 <!-- /.card-body -->
             </div>
             <!--/. container-fluid -->
         </div>
     </section>
+</div>
+<?= $this->include('transjual/modal-produk') ?>
 
-    <?= $this->include('transjual/modal-produk') ?>
+<?= $this->include('transjual/modal-customer') ?>
 
-    <?= $this->include('transjual/modal-customer') ?>
+<?= $this->endSection(); ?>
 
-    <?= $this->endSection(); ?>
+<?= $this->section('script'); ?>
+<script>
+    $(document).ready(function() {
 
-    <?= $this->section('script'); ?>
-    <script>
-        $(document).ready(function() {
+        window.onload = date_time('date_time'), sale_id();
 
-            window.onload = date_time('date_time'), sale_id();
+        // card maximaize
+        $('.card').CardWidget('maximize')
 
-            // card maximaize
-            $('.card').CardWidget('maximize')
-
-
-            // numeric input
-            nominal = new AutoNumeric('#nominal', {
-                digitGroupSeparator: '.',
-                decimalCharacter: ',',
-                decimalCharacterAlternative: '.',
-                currencySymbol: 'Rp '
-            });
-            totbayar = new AutoNumeric('#totbayar', {
-                digitGroupSeparator: '.',
-                decimalCharacter: ',',
-                decimalCharacterAlternative: '.',
-                currencySymbol: 'Rp '
-            });
-
-            // input diskon
-            $('#diskon').click(function(e) {
-
-                e.preventDefault();
-                const diskon = $(this).val();
-                $.ajax({
-                    type: "post",
-                    url: "<?= base_url('load-totbayar-transjual') ?>",
-                    data: {
-                        diskon: diskon
-                    },
-                    success: function(response) {
-                        let items = $.parseJSON(response)
-                        totbayar.set(items.totbayar);
-                    }
-                });
-
-            });
-
-            // input kembalian
-            $('#nominal').keydown(function(e) {
-                if (e.keyCode == 13) {
-                    e.preventDefault()
-                    const nominalx = nominal.get();
-                    $.ajax({
-                        type: "post",
-                        url: "<?= base_url('load-kembalian-transjual') ?>",
-                        data: {
-                            nominal: nominalx,
-                            totbayar: totbayar.get()
-                        },
-                        success: function(response) {
-                            let items = $.parseJSON(response)
-                            // console.log(items.totbayar)
-                            totbayar.set(items.totbayar);
-                            $('#kembalian').val(items.kembalian);
-                        }
-                    });
-                }
-            });
-
-            // cari barang
-            $('#kdproduk').keydown(function(e) {
-                if (e.keyCode == 13) {
-                    e.preventDefault()
-                    let id = $(this).val();
-                    $.ajax({
-                        type: "post",
-                        url: "<?= base_url('add-cart-transjual') ?>/" + id,
-                        data: {
-                            id: id
-                        },
-                        success: function(result) {
-                            let items = $.parseJSON(result)
-                            // console.log(result)
-                            if (items.status === true) {
-                                const item = items.data
-                                tampilItems(item)
-                            } else {
-                                Swal.fire({
-                                    title: items.data,
-                                    text: items.msg,
-                                    icon: 'error',
-                                    showConfirmButton: false,
-                                    timer: 1500
-                                });
-                            }
-                        },
-                        error: function(xhr, ajaxOptions, thrownError) {
-                            Swal.fire({
-                                title: xhr.status,
-                                text: thrownError,
-                                icon: 'error',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
-                        }
-                    });
-                }
-            });
+        // numeric input
+        nominal = new AutoNumeric('#nominal', {
+            digitGroupSeparator: '.',
+            decimalCharacter: ',',
+            decimalCharacterAlternative: '.'
         });
 
+        totbayar = new AutoNumeric('#totbayar', {
+            digitGroupSeparator: '.',
+            decimalCharacter: ',',
+            decimalCharacterAlternative: '.'
+        });
+
+        kembalian = new AutoNumeric('#kembalian', {
+            digitGroupSeparator: '.',
+            decimalCharacter: ',',
+            decimalCharacterAlternative: '.'
+        });
+
+    });
+
+    //UI data transaksi
+    {
         // tampil data transaksi
         function tampilItems(item) {
             $('#detail_cart').html(item)
-            $('#total').load('load-total-transjual')
+            $('#total').load('load-total-sale')
             $('#diskon').focus();
         }
 
@@ -304,6 +250,199 @@
             $('#saleId').val(sale_id);
         }
 
+        // membersihkan form transaksi
+        function resetDataTransaksi() {
+            $('#detail_cart').html(`<tr><td colspan="7">Belum ada transaksi!</td></tr>`)
+            $('#total').html('Rp 0,00')
+            nominal.clear();
+            $('#kembalian').val(' ');
+            $('#kdproduk').val(' ');
+            $('#nama-customer').val(' ');
+            $('#id-customer').val(' ');
+            $('#totbayar').val('');
+            $('#diskon').val('0');
+            sale_id()
+        }
+    }
+
+    //Proses Transaksi
+    {
+
+        // cari barang
+        $('#kdproduk').keydown(function(e) {
+            if (e.keyCode == 13) {
+                e.preventDefault()
+                const id = $(this).val();
+                $.ajax({
+                    type: "post",
+                    url: "<?= base_url('add-cart-sale') ?>/" + id,
+                    data: {
+                        id: id
+                    },
+                    success: function(response) {
+                        if (response.status === true) {
+                            tampilItems(response.data)
+                        } else {
+                            Swal.fire({
+                                title: `Produk kode ${response.data}`,
+                                text: response.msg,
+                                icon: 'error',
+                                showConfirmButton: false,
+                                timer: 1000
+                            });
+                        }
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        Swal.fire({
+                            title: xhr.status,
+                            text: thrownError,
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                });
+            }
+        });
+
+        // input diskon
+        $('#diskon').click(function(e) {
+            e.preventDefault();
+            const diskon = $(this).val();
+            $.ajax({
+                type: "post",
+                url: "<?= base_url('load-totbayar-sale') ?>",
+                data: {
+                    diskon: diskon
+                },
+                success: function(response) {
+                    if (response.status == true) {
+                        totbayar.set(response.totbayar);
+
+                    } else {
+                        Swal.fire({
+                            title: 'Kesalahan',
+                            text: 'Tidak ada transaksi!',
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 1000
+                        });
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    Swal.fire({
+                        title: xhr.status,
+                        text: thrownError,
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            });
+
+        });
+
+        // input kembalian
+        $('#nominal').keydown(function(e) {
+            if (e.keyCode == 13) {
+                e.preventDefault()
+                const nominalx = nominal.get();
+                $.ajax({
+                    type: "post",
+                    url: "<?= base_url('load-kembalian-sale') ?>",
+                    data: {
+                        nominal: nominalx,
+                        totbayar: totbayar.get()
+                    },
+                    success: function(response) {
+                        if (response.status == true) {
+                            kembalian.set(response.kembalian);
+                        } else {
+                            Swal.fire({
+                                title: 'Kesalahan',
+                                text: response.msg,
+                                icon: 'error',
+                                showConfirmButton: false,
+                                timer: 1000
+                            })
+                        }
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        Swal.fire({
+                            title: xhr.status,
+                            text: thrownError,
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 1000
+                        });
+                    }
+                });
+            }
+        });
+
+        // Pembayaran transaksi
+        function bayar() {
+            swal.fire({
+                title: 'Transaksi',
+                text: "Lakukan Pembayaran?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya!',
+                cancelButtonText: 'Tidak'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const nominalx = nominal.get();
+                    const customer = $('#id-customer').val();
+                    const sale_id = $('#saleId').val();
+                    const diskon = $('#diskon').val();
+                    $.ajax({
+                        type: "post",
+                        url: "<?= base_url('pay-sale') ?>",
+                        data: {
+                            'sale_id': sale_id,
+                            'nominal': nominalx,
+                            'customer': customer,
+                            'diskon': diskon,
+                            'totbayar': totbayar.get()
+                        },
+                        success: function(response) {
+                            if (response.status == true) {
+                                Swal.fire({
+                                    title: response.title,
+                                    text: response.msg,
+                                    icon: 'success',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                                tb.ajax.reload()
+                            } else {
+                                Swal.fire({
+                                    title: response.title,
+                                    text: response.msg,
+                                    icon: 'error',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                            }
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            Swal.fire({
+                                title: xhr.status,
+                                text: thrownError,
+                                icon: 'error',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        }
+                    });
+                }
+            })
+
+
+        }
+
         // konfirmasi transaksi baru
         $('#transbaru').on('click', function(e) {
             e.preventDefault()
@@ -312,7 +451,6 @@
                 text: "Lakukan Transksi Baru?",
                 icon: 'question',
                 showCancelButton: true,
-                showCloseButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Ya!',
@@ -321,20 +459,10 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         type: "get",
-                        url: "<?= base_url('reset-cart-transjual') ?>",
+                        url: "<?= base_url('reset-cart-sale') ?>",
                         success: function(response) {
-                            const result = JSON.parse(response);
-                            if (result.status) {
-                                $('#detail_cart').html(`<tr><td colspan="7">Belum ada transaksi!</td></tr>`)
-                                $('#total').load('load-total-transjual')
-                                nominal.clear();
-                                $('#kembalian').val(' ');
-                                $('#kdproduk').val(' ');
-                                $('#nama-customer').val(' ');
-                                $('#id-customer').val(' ');
-                                $('#totbayar').val('');
-                                $('#diskon').val('0');
-                                sale_id()
+                            if (response.status == true) {
+                                resetDataTransaksi()
                             } else {
                                 Swal.fire({
                                     title: 'Error',
@@ -363,16 +491,14 @@
         $(document).on('click', '.hapus-cart', function(id) {
             const rowid = $(this).attr('id')
             $.ajax({
-                url: "<?= base_url('delete-cart-transjual') ?>/" + rowid,
+                url: "<?= base_url('delete-cart-sale') ?>/" + rowid,
                 type: "DELETE",
                 success: function(response) {
-                    let itemx = $.parseJSON(response)
-                    if (itemx.status == true) {
-                        const item = itemx.data
-                        tampilItems(item)
+                    if (response.status == true) {
+                        tampilItems(response.data)
                     } else {
                         $('#detail_cart').html(`<tr><td colspan="7">Belum ada transaksi!</td></tr>`)
-                        $('#total').load('load-total-transjual')
+                        $('#total').load('load-total-buy')
                     }
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
@@ -392,92 +518,35 @@
             const rowid = $(this).attr('rowid')
             const qty = $(this).val()
             $.ajax({
-                url: "<?= base_url('update-cart-transjual') ?>/" + rowid,
+                url: "<?= base_url('update-cart-sale') ?>/" + rowid,
                 type: "POST",
                 data: {
                     'qty': qty
                 },
-                success: function(result) {
-                    let items = $.parseJSON(result)
-                    if (items.data) {
-                        const item = items.data
-                        tampilItems(item)
+                success: function(response) {
+                    if (response.status == true) {
+                        tampilItems(response.data)
                     } else {
                         Swal.fire({
-                            title: 'Data',
-                            text: 'Data tidak ditemukan!',
+                            title: 'Item',
+                            text: response.msg,
                             icon: 'error',
                             showConfirmButton: false,
-                            timer: 1500
+                            timer: 1000
                         });
                     }
-                }
-            })
-        })
-
-        // Pembayaran transaksi
-        function bayar() {
-            swal.fire({
-                title: 'Transaksi',
-                text: "Lakukan Pembayaran?",
-                icon: 'warning',
-                showCancelButton: true,
-                showCloseButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya!',
-                cancelButtonText: 'Tidak'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    const nominalx = nominal.get();
-                    const customer = $('#id-customer').val();
-                    const sale_id = $('#saleId').val();
-                    const diskon = $('#diskon').val();
-                    $.ajax({
-                        type: "post",
-                        url: "<?= base_url('pembayaran') ?>",
-                        data: {
-                            'sale_id': sale_id,
-                            'nominal': nominalx,
-                            'customer': customer,
-                            'diskon': diskon,
-                            'totbayar': totbayar.get()
-                        },
-                        success: function(response) {
-                            const result = JSON.parse(response);
-
-                            if (result.status) {
-                                Swal.fire({
-                                    title: result.title,
-                                    text: result.msg,
-                                    icon: result.status == true ? 'success' : 'error',
-                                    showConfirmButton: false,
-                                    timer: 1500
-                                })
-                            } else {
-                                Swal.fire({
-                                    title: result.title,
-                                    text: result.msg,
-                                    icon: result.status == true ? 'success' : 'error',
-                                    showConfirmButton: false,
-                                    timer: 1500
-                                })
-                            }
-                        },
-                        error: function(xhr, ajaxOptions, thrownError) {
-                            Swal.fire({
-                                title: xhr.status,
-                                text: thrownError,
-                                icon: 'error',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
-                        }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    Swal.fire({
+                        title: xhr.status,
+                        text: thrownError,
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 1500
                     });
                 }
             })
-
-
-        }
-    </script>
-    <?= $this->endSection(); ?>
+        })
+    }
+</script>
+<?= $this->endSection(); ?>

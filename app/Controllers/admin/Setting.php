@@ -19,7 +19,6 @@ class Setting extends BaseController
     public function index()
     {
         $data_profile = $this->_profile->find('191');
-        // dd($data_profile);
         $data = [
             'title' => _TITLE,
             'data_profile' => $data_profile,

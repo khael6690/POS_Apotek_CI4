@@ -25,7 +25,6 @@
         </ul>
 
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        <a href="user-update/<?= $data_users['userid']; ?>" class="btn btn-warning text-white float-right"><i class="fas fa-edit"></i> Edit</a>
     </div>
     <!-- /.card-body -->
 </div>

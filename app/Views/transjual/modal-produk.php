@@ -8,31 +8,22 @@
                 </button>
             </div>
             <div class="modal-body">
-                <table id="tb-produk" class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama Obat</th>
-                            <th>Stok</th>
-                            <th>Harga</th>
-                            <th style="width: 25%;">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php $no = 1;
-                        foreach ($produk as $value) : ?>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped" id="tb-produk">
+                        <thead>
                             <tr>
-                                <td><?= $no++; ?> </td>
-                                <td><?= $value['nama_obat']; ?></td>
-                                <td><?= $value['jumlah']; ?></td>
-                                <td><?= number_to_currency($value['harga'], 'IDR', 'id_ID', 2) ?></td>
-                                <td>
-                                    <button type="button" class="btn btn-primary" onclick="add_to_cart('<?= $value['id_obat']; ?>','<?= $value['nama_obat']; ?>','<?= $value['harga']; ?>','<?= $value['discount']; ?>')"><i class="fas fa-plus-circle"></i> Pilih</button>
-                                </td>
+                                <th>No</th>
+                                <th>Nama Obat</th>
+                                <th>Stok</th>
+                                <th>Harga</th>
+                                <th style="width: 5%;">Action</th>
                             </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -46,30 +37,56 @@
 
 <?= $this->section('script'); ?>
 <script>
-    // tampil data transaksi
-    // function tampil_data(item) {
-    //     let text = "";
-    //     for (var i = 0; i < item.length; i++) {
-    //         $('#detail_cart').html(text +=
-    //             `<tr><td>` + (i + 1) + `</td>
-    //                 <td>` + item[i].name + `</td>
-    //                 <td style="width: 10%;"><input type="number" min="1" class="form-control" value="` + item[i].qty + `" rowid="` + item[i].rowid + `" id="jumqty"></td>
-    //                 <td>` + item[i].price + `</td>
-    //                 <td>` + item[i].discount + `</td>
-    //                 <td>` + item[i].subtotal + `</td>
-    //                 <td>
-    //                     <button class="btn btn-danger hapus-cart" id="` + item[i].rowid + `">Hapus</button>
-    //                 </td>
-    //                 </tr>`);
-    //     }
-    //     $('#total').load('load-total-transjual')
-    //     $('#nominal').focus();
-    // }
+    var tb = $('#tb-produk').DataTable({
+        ajax: {
+            url: '<?= base_url('get-produk-sale') ?>', // Ganti dengan URL endpoint Anda
+            method: 'GET',
+            dataSrc: 'data' // Nama properti yang berisi data pada respons JSON
+        },
+        columns: [{
+                data: null,
+                render: function(data, type, row, meta) {
+                    // Mengembalikan nomor urut bertambah sesuai panjang datanya
+                    return meta.row + 1;
+                }
+            },
+            {
+                data: 'nama_obat'
+            },
+            {
+                data: 'jumlah'
+            },
+            {
+                data: 'harga',
+                render: function(data, type, full) {
+                    return type === 'display' ?
+                        "Rp " + data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") : data
+                }
+            },
+            {
+                data: null,
+                render: function(data, type, full) {
+                    return type === 'display' ?
+                        `<button type="button" class="btn btn-primary" onclick="add_to_cart('${full.id_obat}','${full.nama_obat}','${full.harga}','${full.discount}')"><i class="fas fa-plus-circle"></i></button>` :
+                        data;
+                }
+            },
+        ],
+        "paging": true,
+        "lengthChange": false,
+        "pageLength": 10,
+        "searching": true,
+        "ordering": true,
+        "info": false,
+        "autoWidth": false,
+        "responsive": true,
+    });
+
 
     // menambahkan produk
     function add_to_cart(id, nama, harga, discount) {
         $.ajax({
-            url: "<?= base_url('add-cart-transjual') ?>",
+            url: "<?= base_url('add-cart-sale') ?>",
             type: "POST",
             data: {
                 'obat_id': id,
@@ -78,18 +95,16 @@
                 'discount': discount,
             },
             success: function(response) {
-                let itemx = $.parseJSON(response)
                 $('#modal-produk').modal('hide')
-                if (itemx.data) {
-                    const item = itemx.data
-                    tampilItems(item)
+                if (response.status == true) {
+                    tampilItems(response.data)
                 } else {
                     Swal.fire({
-                        title: 'Data',
-                        text: 'Data tidak ditemukan!',
+                        title: 'Items',
+                        text: response.msg,
                         icon: 'error',
                         showConfirmButton: false,
-                        timer: 1500
+                        timer: 1000
                     });
                 }
             },

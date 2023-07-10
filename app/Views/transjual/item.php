@@ -1,4 +1,5 @@
-<?php $no = 1;
+<?php
+$no = 1;
 foreach ($cart as $produk) :
     $discount = ($produk['options']['discount'] / 100)  * $produk['subtotal']; ?>
     <tr>

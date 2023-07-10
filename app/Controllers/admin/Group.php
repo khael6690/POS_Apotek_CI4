@@ -11,7 +11,7 @@ define('_TITLE', 'Group');
 class Group extends BaseController
 {
 
-    private $_m_group, $_m_permissions;
+    private $_m_group, $_m_permissions, $db;
     public function __construct()
     {
         $this->db = \config\Database::connect();
@@ -21,57 +21,94 @@ class Group extends BaseController
 
     public function index()
     {
-        $data_group = $this->_m_group->findAll();
         $data = [
-            'title' => _TITLE,
-            'data_group' => $data_group
+            'title' => _TITLE
         ];
         return view('Group/index', $data);
     }
 
+
+    public function viewdata()
+    {
+        if ($this->request->isAJAX()) {
+            $data_group = $this->_m_group->findAll();
+            $data = [
+                'data_group' => $data_group
+            ];
+
+            $msg = [
+                'data' => view('Group/data', $data)
+            ];
+            return $this->response->setJSON($msg);
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+    }
+
     public function edit($id = null)
     {
-        // dd($this->_m_group->getPermissionsForGroup($id));
-        foreach ($this->_m_group->getPermissionsForGroup($id) as $value) {
-            // dd($value);
-            $permissionsGroup[$value['id']] = $value['name'];
+        if ($this->request->isAJAX()) {
+            // dd($this->_m_group->getPermissionsForGroup($id));
+            foreach ($this->_m_group->getPermissionsForGroup($id) as $value) {
+                // dd($value);
+                $permissionsGroup[$value['id']] = $value['name'];
+            }
+
+            $data_group = $this->_m_group->find($id);
+            $data = [
+                'title' => _TITLE,
+                'data_group' => $data_group,
+                'permissions' => $this->_m_permissions->findAll(),
+                'permissionsGroup' => $permissionsGroup
+            ];
+            $msg = [
+                'data' => view('Group/update', $data)
+            ];
+            return $this->response->setJSON($msg);
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
-        // dd($permissionsGroup);
-        $data_group = $this->_m_group->find($id);
-        $data = [
-            'title' => _TITLE,
-            'data_group' => $data_group,
-            'permissions' => $this->_m_permissions->findAll(),
-            'permissionsGroup' => $permissionsGroup,
-            'validation' => \config\Services::validation()
-        ];
-        return view('Group/update', $data);
     }
 
     public  function update($id)
     {
-        if (!$this->validate([
-            'permissions' => [
-                'rules' => 'required',
-                'label' => 'Izin',
-                'errors' => [
-                    'required' => '{field} Harus diisi salah satu!'
+        if ($this->request->isAJAX()) {
+            // validasi data
+            $validation = \config\Services::validation();
+            if (!$this->validate([
+                'permissions' => [
+                    'rules' => 'required',
+                    'label' => 'Izin',
+                    'errors' => [
+                        'required' => '{field} harus pilih minimal satu!'
+                    ]
                 ]
-            ]
-        ])) {
-            // dd(\config\Services::validation()->getErrors());
-            return redirect()->to('group-update/' . $id)->withInput();
-        }
-        if ($this->db->table('auth_groups_permissions')->where('group_id', $id)->delete()) {
-            $permissions = $this->request->getPost('permissions');
-            if (count($permissions) > 0) {
-                foreach ($permissions as $value) {
-                    $this->_m_group->addPermissionToGroup($value, $id);
-                }
+            ])) {
+                $msg = [
+                    'error' => [
+                        'permissions' => $validation->getError('permissions')
+                    ]
+                ];
+                return $this->response->setJSON($msg);
             }
-            session()->setFlashdata('sukses', 'Group berhasil diupdate!');
-        } else
-            session()->setFlashdata('warning', 'Group gagal diupdate!');
-        return redirect()->to('/group');
+            if ($this->db->table('auth_groups_permissions')->where('group_id', $id)->delete()) {
+                $permissions = $this->request->getPost('permissions');
+                if (count($permissions) > 0) {
+                    foreach ($permissions as $value) {
+                        $this->_m_group->addPermissionToGroup($value, $id);
+                    }
+                }
+                $msg = [
+                    'success' =>  'Data berhasil diupdate!'
+                ];
+                return $this->response->setJSON($msg);
+            } else
+                $msg = [
+                    'fail' =>  'Data gagal diupdate!'
+                ];
+            return $this->response->setJSON($msg);
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
     }
 }

@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 14 Okt 2022 pada 09.46
--- Versi server: 10.4.21-MariaDB
--- Versi PHP: 8.0.10
+-- Generation Time: Jun 20, 2023 at 02:49 PM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 8.0.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `auth_activation_attempts`
+-- Table structure for table `auth_activation_attempts`
 --
 
 CREATE TABLE `auth_activation_attempts` (
@@ -38,7 +38,7 @@ CREATE TABLE `auth_activation_attempts` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `auth_groups`
+-- Table structure for table `auth_groups`
 --
 
 CREATE TABLE `auth_groups` (
@@ -48,7 +48,7 @@ CREATE TABLE `auth_groups` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data untuk tabel `auth_groups`
+-- Dumping data for table `auth_groups`
 --
 
 INSERT INTO `auth_groups` (`id`, `name`, `description`) VALUES
@@ -59,7 +59,7 @@ INSERT INTO `auth_groups` (`id`, `name`, `description`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `auth_groups_permissions`
+-- Table structure for table `auth_groups_permissions`
 --
 
 CREATE TABLE `auth_groups_permissions` (
@@ -68,26 +68,23 @@ CREATE TABLE `auth_groups_permissions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data untuk tabel `auth_groups_permissions`
+-- Dumping data for table `auth_groups_permissions`
 --
 
 INSERT INTO `auth_groups_permissions` (`group_id`, `permission_id`) VALUES
-(1, 4),
 (1, 5),
 (1, 6),
 (2, 1),
-(2, 4),
 (2, 6),
 (3, 1),
 (3, 2),
-(3, 4),
 (3, 5),
 (3, 6);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `auth_groups_users`
+-- Table structure for table `auth_groups_users`
 --
 
 CREATE TABLE `auth_groups_users` (
@@ -96,19 +93,21 @@ CREATE TABLE `auth_groups_users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data untuk tabel `auth_groups_users`
+-- Dumping data for table `auth_groups_users`
 --
 
 INSERT INTO `auth_groups_users` (`group_id`, `user_id`) VALUES
-(2, 2),
-(2, 19),
+(1, 23),
+(1, 24),
+(2, 21),
+(2, 25),
 (3, 1),
-(3, 12);
+(3, 26);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `auth_logins`
+-- Table structure for table `auth_logins`
 --
 
 CREATE TABLE `auth_logins` (
@@ -121,7 +120,7 @@ CREATE TABLE `auth_logins` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data untuk tabel `auth_logins`
+-- Dumping data for table `auth_logins`
 --
 
 INSERT INTO `auth_logins` (`id`, `ip_address`, `email`, `user_id`, `date`, `success`) VALUES
@@ -231,12 +230,75 @@ INSERT INTO `auth_logins` (`id`, `ip_address`, `email`, `user_id`, `date`, `succ
 (104, '::1', 'umamjr007@gmail.com', 1, '2022-10-12 07:25:38', 1),
 (105, '::1', 'umamjr007@gmail.com', 1, '2022-10-12 23:09:24', 1),
 (106, '::1', 'umamjr007@gmail.com', 1, '2022-10-13 09:35:18', 1),
-(107, '::1', 'umamjr007@gmail.com', 1, '2022-10-14 01:28:57', 1);
+(107, '::1', 'umamjr007@gmail.com', 1, '2022-10-14 01:28:57', 1),
+(108, '::1', 'akuganteng@mail.com', 12, '2022-10-14 05:06:40', 1),
+(109, '::1', 'khaeumam@mail.com', 2, '2022-10-14 05:07:53', 1),
+(110, '::1', 'umamjr007@gmail.com', 1, '2022-10-14 05:23:14', 1),
+(111, '::1', 'umamjr007@gmail.com', 1, '2022-10-15 11:09:27', 1),
+(112, '::1', 'khaeumam@mail.com', 2, '2022-10-15 12:34:20', 1),
+(113, '::1', 'umamjr007@gmail.com', 1, '2022-10-15 12:34:27', 1),
+(114, '::1', 'khaeumam@mail.com', 2, '2022-10-15 12:34:47', 1),
+(115, '::1', 'umamjr007@gmail.com', 1, '2022-10-15 12:35:12', 1),
+(116, '::1', 'umamjr007@gmail.com', 1, '2022-10-16 00:22:17', 1),
+(117, '::1', 'umamjr007@gmail.com', 1, '2022-10-16 08:34:58', 1),
+(118, '::1', 'umamjr007@gmail.com', 1, '2022-10-18 05:00:29', 1),
+(119, '::1', 'umamjr007@gmail.com', 1, '2022-10-18 10:17:18', 1),
+(120, '::1', 'umamjr007@gmail.com', 1, '2022-10-18 10:17:54', 1),
+(121, '::1', 'umamjr007@gmail.com', 1, '2022-10-18 10:33:46', 1),
+(122, '::1', 'umam', NULL, '2022-10-19 01:47:13', 0),
+(123, '::1', 'umam', NULL, '2022-10-19 01:47:36', 0),
+(124, '::1', 'umamjr007@gmail.com', 1, '2022-10-19 01:48:13', 1),
+(125, '::1', 'umamjr007@gmail.com', 1, '2022-10-20 02:08:14', 1),
+(126, '::1', 'umamjr007@gmail.com', 1, '2022-10-26 03:36:44', 1),
+(127, '::1', 'umamjr007@gmail.com', 1, '2022-11-01 01:31:07', 1),
+(128, '::1', 'umam', NULL, '2022-11-01 02:47:44', 0),
+(129, '::1', 'umamjr007@gmail.com', 1, '2022-11-01 02:47:52', 1),
+(130, '::1', 'umamjr007@gmail.com', 1, '2022-11-01 03:06:24', 1),
+(131, '::1', 'umam', NULL, '2022-11-01 03:20:13', 0),
+(132, '::1', 'umamjr007@gmail.com', 1, '2022-11-01 03:20:22', 1),
+(133, '::1', 'umam', NULL, '2022-11-01 03:28:00', 0),
+(134, '::1', 'umamjr007@gmail.com', 1, '2022-11-01 03:28:08', 1),
+(135, '::1', 'umam', NULL, '2022-11-01 03:32:18', 0),
+(136, '::1', 'umamjr007@gmail.com', 1, '2022-11-01 03:32:22', 1),
+(137, '::1', 'umamjr007@gmail.com', 1, '2022-11-01 03:45:34', 1),
+(138, '::1', 'umamjr007@gmail.com', 1, '2022-11-01 03:46:45', 1),
+(139, '::1', 'umamjr007@gmail.com', 1, '2022-11-04 01:27:08', 1),
+(140, '::1', 'umamjr007@gmail.com', 1, '2023-05-08 08:41:55', 1),
+(141, '::1', 'umamjr007@gmail.com', 1, '2023-05-09 04:03:16', 1),
+(142, '::1', 'umamjr007@gmail.com', 1, '2023-05-09 08:38:25', 1),
+(143, '::1', 'umamjr007@gmail.com', 1, '2023-05-10 09:43:41', 1),
+(144, '::1', 'umamjr007@gmail.com', 1, '2023-05-11 06:50:05', 1),
+(145, '::1', 'umamjr007@gmail.com', 1, '2023-05-19 08:15:05', 1),
+(146, '::1', 'umamjr007@gmail.com', 1, '2023-05-21 09:48:47', 1),
+(147, '::1', 'umamjr007@gmail.com', 1, '2023-05-22 22:33:38', 1),
+(148, '::1', 'umamjr007@gmail.com', 1, '2023-05-25 09:20:42', 1),
+(149, '::1', 'umamjr007@gmail.com', 1, '2023-05-27 06:34:06', 1),
+(150, '::1', 'umamjr007@gmail.com', 1, '2023-05-28 06:44:06', 1),
+(151, '::1', 'umamjr007@gmail.com', 1, '2023-05-29 01:33:26', 1),
+(152, '::1', 'umamjr007@gmail.com', 1, '2023-05-31 10:36:57', 1),
+(153, '::1', 'umamjr007@gmail.com', 1, '2023-06-01 10:08:38', 1),
+(154, '::1', 'umamjr007@gmail.com', 1, '2023-06-01 21:47:23', 1),
+(155, '::1', 'umamjr007@gmail.com', 1, '2023-06-02 09:55:12', 1),
+(156, '::1', 'akuganteng@mail.com', 12, '2023-06-02 11:00:10', 1),
+(157, '::1', 'umam', NULL, '2023-06-02 11:00:42', 0),
+(158, '::1', 'umam', NULL, '2023-06-02 11:00:45', 0),
+(159, '::1', 'umam', NULL, '2023-06-02 11:00:52', 0),
+(160, '::1', 'umam', NULL, '2023-06-02 11:00:57', 0),
+(161, '::1', 'umamjr007@gmail.com', 1, '2023-06-02 11:01:48', 1),
+(162, '::1', 'admin@mail', 1, '2023-06-02 20:08:44', 1),
+(163, '::1', 'admin@mail', 1, '2023-06-02 20:09:36', 1),
+(164, '::1', 'admin@mail', 1, '2023-06-03 07:46:34', 1),
+(165, '::1', 'admin@mail', 1, '2023-06-05 06:03:47', 1),
+(166, '::1', 'admin@mail', 1, '2023-06-06 06:15:07', 1),
+(167, '::1', 'admin@mail', 1, '2023-06-06 21:09:28', 1),
+(168, '::1', 'admin@mail', 1, '2023-06-07 05:58:05', 1),
+(169, '::1', 'admin@mail', 1, '2023-06-07 21:20:18', 1),
+(170, '::1', 'admin@mail', 1, '2023-06-19 04:27:23', 1);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `auth_permissions`
+-- Table structure for table `auth_permissions`
 --
 
 CREATE TABLE `auth_permissions` (
@@ -246,20 +308,19 @@ CREATE TABLE `auth_permissions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data untuk tabel `auth_permissions`
+-- Dumping data for table `auth_permissions`
 --
 
 INSERT INTO `auth_permissions` (`id`, `name`, `description`) VALUES
 (1, 'management-obat', ''),
 (2, 'management-user', ''),
-(4, 'akses-home', ''),
 (5, 'management-transaksi', ''),
 (6, 'management-laporan', '');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `auth_reset_attempts`
+-- Table structure for table `auth_reset_attempts`
 --
 
 CREATE TABLE `auth_reset_attempts` (
@@ -274,7 +335,7 @@ CREATE TABLE `auth_reset_attempts` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `auth_tokens`
+-- Table structure for table `auth_tokens`
 --
 
 CREATE TABLE `auth_tokens` (
@@ -286,16 +347,16 @@ CREATE TABLE `auth_tokens` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data untuk tabel `auth_tokens`
+-- Dumping data for table `auth_tokens`
 --
 
 INSERT INTO `auth_tokens` (`id`, `selector`, `hashedValidator`, `user_id`, `expires`) VALUES
-(5, '2746ecbf8ea070cdb6bf5158', '8a50d6980faa6adc74c32ce6d4575d1bdcecebe1f31ab03236f00d65a5063cd9', 1, '2022-10-19 01:28:59');
+(16, '302d68afdb2d18279ea4363a', 'dad9028f2739cb0c056f28d559e8d460cbfd4ed9dbfffda05c36240b6da8c86e', 1, '2023-06-12 21:20:19');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `auth_users_permissions`
+-- Table structure for table `auth_users_permissions`
 --
 
 CREATE TABLE `auth_users_permissions` (
@@ -306,7 +367,88 @@ CREATE TABLE `auth_users_permissions` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `customer`
+-- Table structure for table `buy`
+--
+
+CREATE TABLE `buy` (
+  `buyid` varchar(255) NOT NULL,
+  `userid` int(11) DEFAULT NULL,
+  `supplier` varchar(225) DEFAULT NULL,
+  `discount` float NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `buy`
+--
+
+INSERT INTO `buy` (`buyid`, `userid`, `supplier`, `discount`, `created_at`, `updated_at`) VALUES
+('TRX-1686050433673', 1, ' umam', 0, '2023-06-06 06:21:05', '2023-06-06 06:21:05'),
+('TRX-1686051064000', 1, 'alissa', 0, '2023-06-06 06:31:41', '2023-06-06 06:31:41'),
+('TRX-1686051197010', 1, '', 0, '2023-06-06 06:33:52', '2023-06-06 06:33:52'),
+('TRX-1686064497072', 1, '', 0, '2023-06-06 10:15:49', '2023-06-06 10:15:49'),
+('TRX-1686065175052', 1, '', 0, '2023-06-06 10:26:45', '2023-06-06 10:26:45'),
+('TRX-1686065527020', 1, '', 0, '2023-06-06 10:32:26', '2023-06-06 10:32:26'),
+('TRX-1686065665808', 1, '', 0, '2023-06-06 10:34:37', '2023-06-06 10:34:37'),
+('TRX-1686065715388', 1, ' umam', 0, '2023-06-06 10:35:38', '2023-06-06 10:35:38'),
+('TRX-1686065772791', 1, ' umam', 0, '2022-06-06 10:38:37', '2023-06-06 10:38:37'),
+('TRX-1686103842414', 1, 'alissa', 0, '2021-06-06 21:11:35', '2023-06-06 21:11:35'),
+('TRX-1686104169001', 1, 'guest', 0, '2021-06-06 21:16:38', '2023-06-06 21:16:38'),
+('TRX-1686104641419', 1, 'guest', 0, '2020-06-06 21:24:22', '2023-06-06 21:24:22'),
+('TRX-1686108841152', 1, 'guest', 0, '2020-06-06 22:34:28', '2023-06-06 22:34:28');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `buy_detail`
+--
+
+CREATE TABLE `buy_detail` (
+  `buyid` varchar(50) NOT NULL,
+  `id_obat` int(11) NOT NULL,
+  `amount` int(11) NOT NULL,
+  `price` float NOT NULL,
+  `discount` float NOT NULL,
+  `total_price` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `buy_detail`
+--
+
+INSERT INTO `buy_detail` (`buyid`, `id_obat`, `amount`, `price`, `discount`, `total_price`) VALUES
+('TRX-1686050433673', 15, 100, 3000, 0, 300000),
+('TRX-1686051064000', 57, 100, 4000, 0, 400000),
+('TRX-1686051197010', 17, 100, 2000, 0, 200000),
+('TRX-1686064497072', 13, 17, 2000, 6800, 27200),
+('TRX-1686064497072', 15, 10, 3000, 0, 30000),
+('TRX-1686065175052', 13, 10, 2000, 4000, 16000),
+('TRX-1686065527020', 13, 1, 2000, 400, 1600),
+('TRX-1686065665808', 13, 1, 2000, 400, 1600),
+('TRX-1686065715388', 13, 1, 2000, 400, 1600),
+('TRX-1686065772791', 13, 1, 2000, 400, 1600),
+('TRX-1686103842414', 13, 6, 2000, 2400, 9600),
+('TRX-1686104169001', 13, 10, 2000, 4000, 16000),
+('TRX-1686104641419', 13, 1, 2000, 400, 1600),
+('TRX-1686108841152', 13, 10, 2000, 4000, 16000);
+
+--
+-- Triggers `buy_detail`
+--
+DELIMITER $$
+CREATE TRIGGER `after buy` AFTER INSERT ON `buy_detail` FOR EACH ROW BEGIN
+   UPDATE stok SET stok = stok + NEW.amount
+   WHERE id_obat = NEW.id_obat;
+
+END
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer`
 --
 
 CREATE TABLE `customer` (
@@ -315,24 +457,41 @@ CREATE TABLE `customer` (
   `alamat` varchar(255) NOT NULL,
   `telp` varchar(20) NOT NULL,
   `email` varchar(255) NOT NULL,
+  `diskon` float NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `customer`
+-- Dumping data for table `customer`
 --
 
-INSERT INTO `customer` (`id`, `nama`, `alamat`, `telp`, `email`, `created_at`, `updated_at`) VALUES
-(1, 'aldi', 'Jl. Kalijaga No. 116 Kec. Pegambiran. Kota Cirebon', '0871626212', 'test@gmail.com', '2022-10-11 05:31:56', '2022-10-11 05:31:56'),
-(2, 'bagong', 'Jl. Kalijaga No. 116 Kec. Pegambiran. Kota Cirebon', '', 'test@gmail.com', '2022-10-11 05:31:56', '2022-10-11 05:31:56'),
-(3, 'rayhan', 'Jl. Kalijaga No. 116 Kec. Pegambiran. Kota Cirebon', '', 'test@gmail.com', '2022-10-11 05:32:20', '2022-10-11 05:32:20'),
-(4, 'amel', 'Jl. Kalijaga No. 116 Kec. Pegambiran. Kota Cirebon', '', 'test@gmail.com', '2022-10-11 05:32:20', '2022-10-11 05:32:20');
+INSERT INTO `customer` (`id`, `nama`, `alamat`, `telp`, `email`, `diskon`, `created_at`, `updated_at`) VALUES
+(1, 'aldi', 'Jl. Kalijaga No. 116 Kec. Pegambiran. Kota Cirebon', '0871626212', 'aldi@gmail.com', 50, '2022-10-11 05:31:56', '2022-11-04 03:05:34'),
+(2, 'bagong', 'Jl. Kalijaga No. 116 Kec. Pegambiran. Kota Cirebon', '02131293215', 'bagong@gmail.com', 10, '2022-10-11 05:31:56', '2022-11-04 03:05:50'),
+(3, 'rayhan', 'Jl. Kalijaga No. 116 Kec. Pegambiran. Kota Cirebon', '22211', 'rayhan@gmail.com', 20, '2022-10-11 05:32:20', '2022-11-04 03:06:02'),
+(10, 'amel', 'Jl. Kalijaga No. 116 Kec. Pegambiran. Kota Cirebon', '223123', 'amel@gmail.com', 10, '2022-11-04 03:07:09', '2022-11-04 03:07:09'),
+(11, 'lala', 'Jl. Kalijaga No. 116 Kec. Pegambiran. Kota Cirebon', '223123', 'lala@gmail.com', 5, '2022-11-04 03:07:28', '2022-11-04 03:07:28'),
+(12, 'testing', 'Jl. Testing', '+628986997966', 'testing@mail.com', 0, '2023-05-09 04:11:43', '2023-05-09 04:11:43'),
+(14, 'khael', 'jl.kosong', '+6291288123', 'umamjr007@gmail.com', 0, '2023-06-06 23:48:27', '2023-06-06 23:48:27');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `migrations`
+-- Table structure for table `kategori`
+--
+
+CREATE TABLE `kategori` (
+  `id_kategori` int(11) NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `migrations`
 --
 
 CREATE TABLE `migrations` (
@@ -346,7 +505,7 @@ CREATE TABLE `migrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data untuk tabel `migrations`
+-- Dumping data for table `migrations`
 --
 
 INSERT INTO `migrations` (`id`, `version`, `class`, `group`, `namespace`, `time`, `batch`) VALUES
@@ -355,15 +514,14 @@ INSERT INTO `migrations` (`id`, `version`, `class`, `group`, `namespace`, `time`
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `obat`
+-- Table structure for table `obat`
 --
 
 CREATE TABLE `obat` (
-  `id_obat` int(5) NOT NULL,
+  `id_obat` int(11) NOT NULL,
   `nama` varchar(50) NOT NULL,
   `img` varchar(255) NOT NULL DEFAULT 'default.png',
   `deskripsi` varchar(250) NOT NULL,
-  `stok` int(11) NOT NULL,
   `satuan` int(11) NOT NULL,
   `produsen` int(5) NOT NULL,
   `harga` double NOT NULL,
@@ -373,45 +531,36 @@ CREATE TABLE `obat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `obat`
+-- Dumping data for table `obat`
 --
 
-INSERT INTO `obat` (`id_obat`, `nama`, `img`, `deskripsi`, `stok`, `satuan`, `produsen`, `harga`, `discount`, `created_at`, `updated_at`) VALUES
-(13, 'Bodrex', '1664891556_4c98679b4f749437b669.jpg', 'obat sakit kepala', 11, 1, 5, 2000, 20, '2022-10-03 05:41:08', '2022-10-13 04:42:31'),
-(15, 'Paracetamol', '1664900779_661a084bc6a787f5b734.jpeg', 'Obat pereda sakit', 530, 2, 2, 3000, 0, '2022-10-03 09:14:10', '2022-10-13 04:36:04'),
-(17, 'Ranitidin', '1664900846_0c125003cca2ce3498a6.jpg', 'asdasd', 1, 2, 3, 2000, 0, '2022-10-03 09:16:44', '2022-10-13 11:46:52');
+INSERT INTO `obat` (`id_obat`, `nama`, `img`, `deskripsi`, `satuan`, `produsen`, `harga`, `discount`, `created_at`, `updated_at`) VALUES
+(13, 'Bodrex', '1664891556_4c98679b4f749437b669.jpg', 'obat sakit kepala', 1, 5, 2000, 20, '2022-10-03 05:41:08', '2023-06-02 11:46:22'),
+(15, 'Paracetamol', '1664900779_661a084bc6a787f5b734.jpeg', 'Obat pereda sakit', 2, 2, 3000, 0, '2022-10-03 09:14:10', '2022-10-20 02:52:23'),
+(17, 'Ranitidin', '1664900846_0c125003cca2ce3498a6.jpg', 'asdasd', 2, 3, 2000, 0, '2022-10-03 09:16:44', '2022-10-13 11:46:52'),
+(57, 'Betadine', 'default.png', '', 6, 6, 4000, 0, '2022-10-19 02:55:16', '2022-10-20 02:29:33');
+
+--
+-- Triggers `obat`
+--
+DELIMITER $$
+CREATE TRIGGER `add stok` AFTER INSERT ON `obat` FOR EACH ROW BEGIN 
+	INSERT INTO stok SET id_obat = NEW.id_obat;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `hapus stok` AFTER DELETE ON `obat` FOR EACH ROW BEGIN
+DELETE FROM stok
+WHERE stok.id_obat = old.id_obat;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pegawai`
---
-
-CREATE TABLE `pegawai` (
-  `id_pegawai` int(11) UNSIGNED ZEROFILL NOT NULL,
-  `nama` varchar(100) NOT NULL,
-  `alamat` varchar(250) NOT NULL,
-  `no_hp` varchar(16) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `jabatan` int(11) NOT NULL,
-  `user_login_id` int(11) NOT NULL,
-  `status` int(1) NOT NULL,
-  `jk` varchar(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data untuk tabel `pegawai`
---
-
-INSERT INTO `pegawai` (`id_pegawai`, `nama`, `alamat`, `no_hp`, `email`, `jabatan`, `user_login_id`, `status`, `jk`) VALUES
-(00000000001, 'krisna', 'tesiting', '123809238', 'kfebrianto2015@gmail.com', 2, 25, 1, 'l'),
-(00000000002, 'apoteker', 'jalan apoteker', '09123823', 'kfebrianto2017@gmail.com', 3, 26, 1, 'l'),
-(00000000003, 'pemilik', 'pemilik ', '12938910238', 'kfebrianto2018@gmail.com', 1, 27, 1, 'l');
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `produsen`
+-- Table structure for table `produsen`
 --
 
 CREATE TABLE `produsen` (
@@ -424,20 +573,20 @@ CREATE TABLE `produsen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `produsen`
+-- Dumping data for table `produsen`
 --
 
 INSERT INTO `produsen` (`id_produsen`, `nama`, `alamat`, `telp`, `created_at`, `updated_at`) VALUES
 (2, 'Sanbe Farma', 'Jln . Leuwi Gajah no 50 cimahi selatan', '07771', NULL, '2022-10-04 22:53:23'),
 (3, 'Novartis', 'Jl. Kalijaga No.111 Kota cirebon', '444444', NULL, '2022-10-04 22:53:36'),
 (4, 'Dexa Medica', 'Jl. ABC', '222222', '2022-10-04 18:41:00', '2022-10-04 22:54:40'),
-(5, 'Kalbe farma', '', '', '2022-10-04 18:41:19', '2022-10-04 18:41:19'),
-(6, 'Biofarma', '', '', '2022-10-04 18:41:19', '2022-10-04 18:41:19');
+(5, 'Kalbe farma', 'jl. kalbe farma', '+629381293912', '2022-10-04 18:41:19', '2023-05-09 09:13:14'),
+(6, 'Biofarma', 'jl. Biofarma', '+629123771723', '2022-10-04 18:41:19', '2023-05-09 09:13:35');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `profile`
+-- Table structure for table `profile`
 --
 
 CREATE TABLE `profile` (
@@ -446,66 +595,61 @@ CREATE TABLE `profile` (
   `alamat` varchar(255) NOT NULL,
   `kota` varchar(255) NOT NULL,
   `telp` varchar(20) NOT NULL,
-  `email` varchar(255) NOT NULL
+  `email` varchar(255) NOT NULL,
+  `logo` varchar(200) NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `profile`
+-- Dumping data for table `profile`
 --
 
-INSERT INTO `profile` (`id`, `nama`, `alamat`, `kota`, `telp`, `email`) VALUES
-(1, 'Apotek ABC', 'JL. Merdeka No.50, Kec. Pegambiran', 'Kota Cirebon', '08716262122', 'Perusahaan123@mail.com');
+INSERT INTO `profile` (`id`, `nama`, `alamat`, `kota`, `telp`, `email`, `logo`, `created_at`, `updated_at`) VALUES
+(191, 'SI Ponit Of Sale', 'JL. Merdeka No.50, Kec. Pegambiran', 'Kota Cirebon', '08716262122', 'SistemInformasiPOS@mail.com', 'AdminLTELogo.png', '2022-10-15 23:54:45', '2023-06-07 23:52:46');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `sale`
+-- Table structure for table `sale`
 --
 
 CREATE TABLE `sale` (
   `sale_id` varchar(50) NOT NULL,
   `userid` int(11) NOT NULL,
   `customerid` int(11) DEFAULT NULL,
+  `discount` float NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `sale`
+-- Dumping data for table `sale`
 --
 
-INSERT INTO `sale` (`sale_id`, `userid`, `customerid`, `created_at`, `updated_at`) VALUES
-('TRX1665476924', 1, 1, '2022-10-11 03:28:44', '2022-10-11 03:28:44'),
-('TRX1665477044', 1, 0, '2022-10-11 03:30:44', '2022-10-11 03:30:44'),
-('TRX1665477065', 1, 2, '2022-10-11 03:31:05', '2022-10-11 03:31:05'),
-('TRX1665562151', 1, 4, '2022-10-12 03:09:11', '2022-10-12 03:09:11'),
-('TRX1665578979', 1, 0, '2022-10-12 07:49:39', '2022-10-12 07:49:39'),
-('TRX1665579107', 1, 3, '2022-10-12 07:51:47', '2022-10-12 07:51:47'),
-('TRX1665579793', 1, 0, '2022-10-12 08:03:13', '2022-10-12 08:03:13'),
-('TRX1665579833', 1, 0, '2022-10-12 08:03:53', '2022-10-12 08:03:53'),
-('TRX1665583697', 1, 1, '2022-10-12 09:08:17', '2022-10-12 09:08:17'),
-('TRX1665583810', 1, 0, '2022-10-12 09:10:10', '2022-10-12 09:10:10'),
-('TRX1665644163', 1, 0, '2022-10-13 01:56:03', '2022-10-13 01:56:03'),
-('TRX1665644245', 1, 4, '2022-10-13 01:57:25', '2022-10-13 01:57:25'),
-('TRX1665647289', 1, 0, '2022-10-13 02:48:09', '2022-10-13 02:48:09'),
-('TRX1665651071', 1, 0, '2022-10-13 03:51:11', '2022-10-13 03:51:11'),
-('TRX1665653155', 1, 1, '2022-10-13 04:25:55', '2022-10-13 04:25:55'),
-('TRX1665653250', 1, 0, '2022-10-13 04:27:30', '2022-10-13 04:27:30'),
-('TRX1665653330', 1, 2, '2022-10-13 04:28:50', '2022-10-13 04:28:50'),
-('TRX1665653407', 1, 0, '2022-10-13 04:30:07', '2022-10-13 04:30:07'),
-('TRX1665653450', 1, 0, '2022-10-13 04:30:50', '2022-10-13 04:30:50'),
-('TRX1665653764', 1, 4, '2022-10-13 04:36:04', '2022-10-13 04:36:04'),
-('TRX1665653969', 1, 0, '2022-10-13 04:39:29', '2022-10-13 04:39:29'),
-('TRX1665654151', 1, 0, '2022-10-13 04:42:31', '2022-10-13 04:42:31'),
-('TRX1665679567', 1, 4, '2022-10-13 11:46:07', '2022-10-13 11:46:07'),
-('TRX1665679630', 1, 0, '2022-10-13 11:47:10', '2022-10-13 11:47:10'),
-('TRX1665680030', 1, 1, '2022-10-13 11:53:50', '2022-10-13 11:53:50'),
-('TRX1665680184', 1, 1, '2022-10-13 11:56:24', '2022-10-13 11:56:24');
+INSERT INTO `sale` (`sale_id`, `userid`, `customerid`, `discount`, `created_at`, `updated_at`) VALUES
+('TRX-1683628713872', 1, 12, 0, '2022-05-09 05:38:53', '2023-05-09 05:38:53'),
+('TRX-1683628742233', 1, 1, 50, '2021-05-09 05:39:23', '2023-05-09 05:39:23'),
+('TRX-1683641163492', 1, 12, 0, '2020-05-09 09:06:18', '2023-05-09 09:06:18'),
+('TRX-1683641243470', 1, 12, 0, '2020-05-09 09:07:45', '2023-05-09 09:07:45'),
+('TRX-1683641306215', 1, 3, 20, '2023-05-09 09:08:41', '2023-05-09 09:08:41'),
+('TRX-1684502748567', 1, 0, 0, '2023-05-19 08:26:10', '2023-05-19 08:26:10'),
+('TRX-1684503220278', 1, 12, 0, '2023-05-19 08:34:12', '2023-05-19 08:34:12'),
+('TRX-1684503450289', 1, 0, 0, '2023-05-19 08:37:42', '2023-05-19 08:37:42'),
+('TRX-1685342703633', 1, 11, 5, '2023-05-29 01:45:30', '2023-05-29 01:45:30'),
+('TRX-1685342925435', 1, 0, 0, '2023-05-29 01:49:05', '2023-05-29 01:49:05'),
+('TRX-1685343232981', 1, 0, 0, '2023-05-29 01:54:28', '2023-05-29 01:54:28'),
+('TRX-1685343377012', 1, 0, 0, '2023-05-29 01:56:36', '2023-05-29 01:56:36'),
+('TRX-1685343442036', 1, 0, 0, '2023-05-29 01:57:39', '2023-05-29 01:57:39'),
+('TRX-1686112734820', 1, 0, 0, '2023-06-06 23:39:07', '2023-06-06 23:39:07'),
+('TRX-1686113121627', 1, 0, 0, '2023-06-06 23:45:53', '2023-06-06 23:45:53'),
+('TRX-1686113319951', 1, 0, 0, '2023-06-06 23:49:00', '2023-06-06 23:49:00'),
+('TRX-1686113683604', 1, 14, 0, '2023-06-06 23:55:13', '2023-06-06 23:55:13');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `sale_detail`
+-- Table structure for table `sale_detail`
 --
 
 CREATE TABLE `sale_detail` (
@@ -518,59 +662,36 @@ CREATE TABLE `sale_detail` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `sale_detail`
+-- Dumping data for table `sale_detail`
 --
 
 INSERT INTO `sale_detail` (`sale_id`, `id_obat`, `amount`, `price`, `discount`, `total_price`) VALUES
-('TRX1665476924', 13, 1, 2000, 400, 1600),
-('TRX1665476924', 15, 1, 3000, 0, 3000),
-('TRX1665477044', 15, 1, 3000, 0, 3000),
-('TRX1665477044', 13, 1, 2000, 400, 1600),
-('TRX1665477065', 17, 1, 2000, 0, 2000),
-('TRX1665477065', 15, 1, 3000, 0, 3000),
-('TRX1665477065', 13, 1, 2000, 400, 1600),
-('TRX1665562151', 13, 4, 2000, 1600, 6400),
-('TRX1665562151', 15, 1, 3000, 0, 3000),
-('TRX1665578979', 13, 1, 2000, 400, 1600),
-('TRX1665578979', 15, 1, 3000, 0, 3000),
-('TRX1665579107', 13, 1, 2000, 400, 1600),
-('TRX1665579107', 15, 1, 3000, 0, 3000),
-('TRX1665579107', 17, 1, 2000, 0, 2000),
-('TRX1665579793', 15, 1, 3000, 0, 3000),
-('TRX1665579833', 13, 1, 2000, 400, 1600),
-('TRX1665583697', 15, 1, 3000, 0, 3000),
-('TRX1665583810', 13, 2, 2000, 800, 3200),
-('TRX1665644163', 13, 7, 2000, 2800, 11200),
-('TRX1665644245', 13, 1, 2000, 400, 1600),
-('TRX1665647289', 13, 1, 2000, 400, 1600),
-('TRX1665651071', 15, 1, 3000, 0, 3000),
-('TRX1665651071', 17, 1, 2000, 0, 2000),
-('TRX1665653155', 13, 1, 2000, 400, 1600),
-('TRX1665653155', 15, 1, 3000, 0, 3000),
-('TRX1665653155', 17, 1, 2000, 0, 2000),
-('TRX1665653250', 13, 1, 2000, 400, 1600),
-('TRX1665653250', 15, 1, 3000, 0, 3000),
-('TRX1665653250', 17, 1, 2000, 0, 2000),
-('TRX1665653330', 17, 3, 2000, 0, 6000),
-('TRX1665653407', 13, 1, 2000, 400, 1600),
-('TRX1665653407', 15, 1, 3000, 0, 3000),
-('TRX1665653450', 13, 3, 2000, 1200, 4800),
-('TRX1665653450', 17, 1, 2000, 0, 2000),
-('TRX1665653764', 15, 2, 3000, 0, 6000),
-('TRX1665653969', 13, 1, 2000, 400, 1600),
-('TRX1665653969', 17, 1, 2000, 0, 2000),
-('TRX1665654151', 13, 1, 2000, 400, 1600),
-('TRX1665679567', 17, 1, 2000, 0, 2000),
-('TRX1665679630', 17, 2, 2000, 0, 4000),
-('TRX1665680030', 15, 1, 3000, 0, 3000),
-('TRX1665680184', 15, 1, 3000, 0, 3000);
+('TRX-1683628713872', 13, 1, 2000, 400, 1600),
+('TRX-1683628713872', 17, 1, 2000, 0, 2000),
+('TRX-1683628742233', 57, 1, 4000, 0, 4000),
+('TRX-1683641163492', 57, 1, 4000, 0, 4000),
+('TRX-1683641243470', 57, 4, 4000, 0, 16000),
+('TRX-1683641306215', 57, 1, 4000, 0, 4000),
+('TRX-1684502748567', 13, 1, 2000, 400, 1600),
+('TRX-1684503220278', 74, 2, 2000, 0, 4000),
+('TRX-1684503450289', 74, 1, 2000, 0, 2000),
+('TRX-1685342703633', 13, 1, 2000, 400, 1600),
+('TRX-1685342703633', 17, 1, 2000, 0, 2000),
+('TRX-1685342925435', 57, 5, 4000, 0, 20000),
+('TRX-1685343232981', 57, 5, 4000, 0, 20000),
+('TRX-1685343377012', 17, 8, 2000, 0, 16000),
+('TRX-1685343442036', 15, 9, 3000, 0, 27000),
+('TRX-1686112734820', 13, 1, 2000, 400, 1600),
+('TRX-1686113121627', 13, 10, 2000, 4000, 16000),
+('TRX-1686113319951', 57, 75, 4000, 0, 300000),
+('TRX-1686113683604', 17, 10, 2000, 0, 20000);
 
 --
--- Trigger `sale_detail`
+-- Triggers `sale_detail`
 --
 DELIMITER $$
 CREATE TRIGGER `after add trans` AFTER INSERT ON `sale_detail` FOR EACH ROW BEGIN
-   UPDATE obat SET stok = stok - NEW.amount
+   UPDATE stok SET stok = stok - NEW.amount
  
    WHERE id_obat = NEW.id_obat;
 
@@ -581,7 +702,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `satuan`
+-- Table structure for table `satuan`
 --
 
 CREATE TABLE `satuan` (
@@ -592,12 +713,11 @@ CREATE TABLE `satuan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `satuan`
+-- Dumping data for table `satuan`
 --
 
 INSERT INTO `satuan` (`id`, `satuan`, `created_at`, `updated_at`) VALUES
 (1, 'box', '2022-10-04 15:59:11', '2022-10-04 15:59:11'),
-(2, 'strip', '2022-10-04 15:59:11', '2022-10-04 15:59:11'),
 (3, 'buah', '2022-10-04 15:59:26', '2022-10-04 15:59:26'),
 (4, 'lusin', '2022-10-04 15:59:26', '2022-10-04 15:59:26'),
 (5, 'sachet', '2022-10-04 16:03:41', '2022-10-04 16:03:41'),
@@ -606,7 +726,86 @@ INSERT INTO `satuan` (`id`, `satuan`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `users`
+-- Table structure for table `stok`
+--
+
+CREATE TABLE `stok` (
+  `id_obat` int(11) NOT NULL,
+  `stok` float NOT NULL DEFAULT 0,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `stok`
+--
+
+INSERT INTO `stok` (`id_obat`, `stok`, `created_at`, `updated_at`) VALUES
+(13, 100, '2022-10-16 16:56:49', '2022-10-16 16:56:49'),
+(15, 150, '2022-10-16 16:56:49', '2022-10-16 16:56:49'),
+(17, 150, '2022-10-16 16:56:49', '2022-10-16 16:56:49'),
+(57, 100, '2022-10-19 14:55:16', '2022-10-19 14:55:16');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stok_opname`
+--
+
+CREATE TABLE `stok_opname` (
+  `id_opname` int(11) NOT NULL,
+  `id_obat` int(11) NOT NULL,
+  `jumlah` int(11) NOT NULL,
+  `keterangan` varchar(100) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `stok_opname`
+--
+
+INSERT INTO `stok_opname` (`id_opname`, `id_obat`, `jumlah`, `keterangan`, `created_at`, `updated_at`) VALUES
+(3, 57, 3, 'hilang', '2023-05-28 06:49:48', '2023-05-29 04:12:55'),
+(5, 57, 5, 'kadaluarsa', '2023-05-29 04:18:47', '2023-06-08 00:56:54'),
+(10, 17, 10, 'test', '2023-06-08 01:07:07', '2023-06-08 01:07:07'),
+(11, 13, 45, 'test', '2023-06-08 01:10:01', '2023-06-08 01:10:01');
+
+--
+-- Triggers `stok_opname`
+--
+DELIMITER $$
+CREATE TRIGGER `after add opname` AFTER INSERT ON `stok_opname` FOR EACH ROW BEGIN
+   UPDATE stok SET stok = stok - NEW.jumlah
+ 
+   WHERE id_obat = NEW.id_obat;
+
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `after delete opname` AFTER DELETE ON `stok_opname` FOR EACH ROW BEGIN
+   UPDATE stok SET stok = stok + OLD.jumlah
+ 
+   WHERE id_obat = OLD.id_obat;
+
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `after update` AFTER UPDATE ON `stok_opname` FOR EACH ROW BEGIN
+   UPDATE stok SET stok = (stok + OLD.jumlah) - NEW.jumlah
+ 
+   WHERE id_obat = OLD.id_obat;
+
+END
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -630,47 +829,49 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data untuk tabel `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `email`, `username`, `fullname`, `user_image`, `password_hash`, `reset_hash`, `reset_at`, `reset_expires`, `activate_hash`, `status`, `status_message`, `active`, `force_pass_reset`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'umamjr007@gmail.com', 'umam', 'Khaerul Umam', '1665223488_64babcc268e81fcadabc.jpg', '$2y$10$p2aresbHZX01/afwa0nAZu5hSbrP7M4s/GkDS5fqy2gIGuMUwquK.', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2022-10-01 00:16:16', '2022-10-08 06:09:08', NULL),
-(2, 'khaeumam@mail.com', 'khael', 'Khaerul Umam', '1665475668_51fe9b6b67bea1adf191.jpg', '$2y$10$Y7WpMZH13e1a2SjDv2DfxOBQApbpq.VRS7.dhhxFCQgPTnC5GfTAW', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2022-10-04 23:38:57', '2022-10-11 03:07:48', NULL),
-(12, 'akuganteng@mail.com', 'aku', 'akuuuuu', 'default.png', '$2y$10$sGMr/Tkb1Hj5EKenUgJ.rusOs.KTLsumehfzbRpJlIqqbRCEWs.ru', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2022-10-08 04:01:21', '2022-10-09 09:09:35', NULL),
-(19, 'cobasaya@gmail.com', 'coba', 'coba', 'default.png', '$2y$10$R80YNRk/Hcj0aN/dj6SbQuyCz/3YTQz8/wCcDLpWgbnYxKUGrsM96', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, '2022-10-08 06:21:32', '2022-10-09 13:19:26', NULL);
+(1, 'admin@mail', 'umam', 'khaerul umam', '1685775502_b73b41c4d9e2d34f97e4.jpg', '$2y$10$o.yg11AVfyyAQXeFZyNg5OFglnYFX3xPcWrINAIDzprGKv6vPOC4q', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2022-10-01 00:16:16', '2023-06-07 22:48:12', NULL),
+(21, 'apoteker@mail', 'apoteker', 'apoteker', 'default.png', '$2y$10$MYUQzz0PSy.SP0hu9foCi.EsI1N8RikPZ0e0IN1nCe/cI0qfcu0F.', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2023-06-02 11:09:35', '2023-06-02 11:09:35', NULL),
+(23, 'kasir@mail', 'kasir', 'kasir1', 'default.png', '$2y$10$hLeImUbXXE12ykdyrv86gOKZtfw81hTHSJObzaZZEGDe/VlSLC7oK', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2023-06-02 11:25:23', '2023-06-02 11:25:23', NULL),
+(24, 'kasir2@mail', 'kasir2', 'kasir2', 'default.png', '$2y$10$7DtT0oPcm8BlqeFauv0N/.VS4oWJPasAV6NtYxJjfYfRjcQRUrnTS', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2023-06-02 11:26:09', '2023-06-02 11:28:15', NULL),
+(25, 'apoteker2@mail', 'apoteker2', 'apoteker2', 'default.png', '$2y$10$g/Nuvc1E2RIXvZCF0ZpAPewaR3Wz7GnAkRJICcLGlbrON/wuYWO4a', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2023-06-02 11:27:48', '2023-06-02 11:27:48', NULL),
+(26, 'admin2@mail', 'admin2', 'admin2', 'default.png', '$2y$10$5B43HTvO8t9ujimtQaMSTefgT15hGF4vzZ4f2oQ6IbJ.d1rqMdnHu', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2023-06-02 11:39:17', '2023-06-03 03:30:35', NULL);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `auth_activation_attempts`
+-- Indexes for table `auth_activation_attempts`
 --
 ALTER TABLE `auth_activation_attempts`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `auth_groups`
+-- Indexes for table `auth_groups`
 --
 ALTER TABLE `auth_groups`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `auth_groups_permissions`
+-- Indexes for table `auth_groups_permissions`
 --
 ALTER TABLE `auth_groups_permissions`
   ADD KEY `auth_groups_permissions_permission_id_foreign` (`permission_id`),
   ADD KEY `group_id_permission_id` (`group_id`,`permission_id`);
 
 --
--- Indeks untuk tabel `auth_groups_users`
+-- Indexes for table `auth_groups_users`
 --
 ALTER TABLE `auth_groups_users`
   ADD KEY `auth_groups_users_user_id_foreign` (`user_id`),
   ADD KEY `group_id_user_id` (`group_id`,`user_id`);
 
 --
--- Indeks untuk tabel `auth_logins`
+-- Indexes for table `auth_logins`
 --
 ALTER TABLE `auth_logins`
   ADD PRIMARY KEY (`id`),
@@ -678,19 +879,19 @@ ALTER TABLE `auth_logins`
   ADD KEY `user_id` (`user_id`);
 
 --
--- Indeks untuk tabel `auth_permissions`
+-- Indexes for table `auth_permissions`
 --
 ALTER TABLE `auth_permissions`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `auth_reset_attempts`
+-- Indexes for table `auth_reset_attempts`
 --
 ALTER TABLE `auth_reset_attempts`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `auth_tokens`
+-- Indexes for table `auth_tokens`
 --
 ALTER TABLE `auth_tokens`
   ADD PRIMARY KEY (`id`),
@@ -698,68 +899,80 @@ ALTER TABLE `auth_tokens`
   ADD KEY `selector` (`selector`);
 
 --
--- Indeks untuk tabel `auth_users_permissions`
+-- Indexes for table `auth_users_permissions`
 --
 ALTER TABLE `auth_users_permissions`
   ADD KEY `auth_users_permissions_permission_id_foreign` (`permission_id`),
   ADD KEY `user_id_permission_id` (`user_id`,`permission_id`);
 
 --
--- Indeks untuk tabel `customer`
+-- Indexes for table `buy`
+--
+ALTER TABLE `buy`
+  ADD PRIMARY KEY (`buyid`);
+
+--
+-- Indexes for table `customer`
 --
 ALTER TABLE `customer`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `migrations`
+-- Indexes for table `kategori`
+--
+ALTER TABLE `kategori`
+  ADD PRIMARY KEY (`id_kategori`);
+
+--
+-- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `obat`
+-- Indexes for table `obat`
 --
 ALTER TABLE `obat`
   ADD PRIMARY KEY (`id_obat`);
 
 --
--- Indeks untuk tabel `pegawai`
---
-ALTER TABLE `pegawai`
-  ADD PRIMARY KEY (`id_pegawai`);
-
---
--- Indeks untuk tabel `produsen`
+-- Indexes for table `produsen`
 --
 ALTER TABLE `produsen`
   ADD PRIMARY KEY (`id_produsen`);
 
 --
--- Indeks untuk tabel `profile`
+-- Indexes for table `profile`
 --
 ALTER TABLE `profile`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `sale`
+-- Indexes for table `sale`
 --
 ALTER TABLE `sale`
   ADD PRIMARY KEY (`sale_id`);
 
 --
--- Indeks untuk tabel `sale_detail`
---
-ALTER TABLE `sale_detail`
-  ADD KEY `sale_id` (`sale_id`);
-
---
--- Indeks untuk tabel `satuan`
+-- Indexes for table `satuan`
 --
 ALTER TABLE `satuan`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `users`
+-- Indexes for table `stok`
+--
+ALTER TABLE `stok`
+  ADD KEY `id_obat` (`id_obat`);
+
+--
+-- Indexes for table `stok_opname`
+--
+ALTER TABLE `stok_opname`
+  ADD PRIMARY KEY (`id_opname`);
+
+--
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
@@ -767,123 +980,135 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `username` (`username`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `auth_activation_attempts`
+-- AUTO_INCREMENT for table `auth_activation_attempts`
 --
 ALTER TABLE `auth_activation_attempts`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `auth_groups`
+-- AUTO_INCREMENT for table `auth_groups`
 --
 ALTER TABLE `auth_groups`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT untuk tabel `auth_logins`
+-- AUTO_INCREMENT for table `auth_logins`
 --
 ALTER TABLE `auth_logins`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=171;
 
 --
--- AUTO_INCREMENT untuk tabel `auth_permissions`
+-- AUTO_INCREMENT for table `auth_permissions`
 --
 ALTER TABLE `auth_permissions`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT untuk tabel `auth_reset_attempts`
+-- AUTO_INCREMENT for table `auth_reset_attempts`
 --
 ALTER TABLE `auth_reset_attempts`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `auth_tokens`
+-- AUTO_INCREMENT for table `auth_tokens`
 --
 ALTER TABLE `auth_tokens`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- AUTO_INCREMENT untuk tabel `customer`
+-- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- AUTO_INCREMENT untuk tabel `migrations`
+-- AUTO_INCREMENT for table `kategori`
+--
+ALTER TABLE `kategori`
+  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT untuk tabel `obat`
+-- AUTO_INCREMENT for table `obat`
 --
 ALTER TABLE `obat`
-  MODIFY `id_obat` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id_obat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
--- AUTO_INCREMENT untuk tabel `pegawai`
---
-ALTER TABLE `pegawai`
-  MODIFY `id_pegawai` int(11) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT untuk tabel `produsen`
+-- AUTO_INCREMENT for table `produsen`
 --
 ALTER TABLE `produsen`
-  MODIFY `id_produsen` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_produsen` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT untuk tabel `profile`
+-- AUTO_INCREMENT for table `profile`
 --
 ALTER TABLE `profile`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=198;
 
 --
--- AUTO_INCREMENT untuk tabel `satuan`
+-- AUTO_INCREMENT for table `satuan`
 --
 ALTER TABLE `satuan`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
--- AUTO_INCREMENT untuk tabel `users`
+-- AUTO_INCREMENT for table `stok_opname`
+--
+ALTER TABLE `stok_opname`
+  MODIFY `id_opname` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- Constraints for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `auth_groups_permissions`
+-- Constraints for table `auth_groups_permissions`
 --
 ALTER TABLE `auth_groups_permissions`
   ADD CONSTRAINT `auth_groups_permissions_group_id_foreign` FOREIGN KEY (`group_id`) REFERENCES `auth_groups` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `auth_groups_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `auth_permissions` (`id`) ON DELETE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `auth_groups_users`
+-- Constraints for table `auth_groups_users`
 --
 ALTER TABLE `auth_groups_users`
   ADD CONSTRAINT `auth_groups_users_group_id_foreign` FOREIGN KEY (`group_id`) REFERENCES `auth_groups` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `auth_groups_users_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `auth_tokens`
+-- Constraints for table `auth_tokens`
 --
 ALTER TABLE `auth_tokens`
   ADD CONSTRAINT `auth_tokens_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `auth_users_permissions`
+-- Constraints for table `auth_users_permissions`
 --
 ALTER TABLE `auth_users_permissions`
   ADD CONSTRAINT `auth_users_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `auth_permissions` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `auth_users_permissions_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `stok`
+--
+ALTER TABLE `stok`
+  ADD CONSTRAINT `stok_ibfk_1` FOREIGN KEY (`id_obat`) REFERENCES `obat` (`id_obat`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

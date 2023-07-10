@@ -22,75 +22,187 @@
     <!-- /.content-header -->
     <section class="content">
         <div class="container-fluid">
+            <!-- Petunjuk -->
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header bg-info">
+                            <h3 class="card-title"><i class="fas fa-bullhorn"></i> Petunjuk!</h3>
 
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Data <?= $title; ?></h3>
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                    <div class="col-md-2">
-                        <a href="<?= base_url('obat-create') ?>" class="btn btn-block bg-gradient-primary btn-sm mb-3"><i class="fas fa-plus-circle"></i> Tambah <?= $title; ?></a>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Halaman pengelolahan data <?= $title; ?></h3>
+                            <ul>
+                                <li>add data <?= $title; ?></li>
+                                <li>view detail data <?= $title; ?></li>
+                                <li>update data <?= $title; ?></li>
+                                <li>delete data <?= $title; ?></li>
+                            </ul>
+                        </div>
+                        <!-- /.card-body -->
                     </div>
-                    <table id="example1" class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama Obat</th>
-                                <th>Stok</th>
-                                <th>Produsen</th>
-                                <th>Harga</th>
-                                <th style="width: 25%;">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php $no = 1;
-                            foreach ($data_obat as $obat) : ?>
-                                <tr>
-                                    <td><?= $no++; ?> </td>
-                                    <td><?= $obat['nama_obat']; ?></td>
-                                    <td><?= $obat['jumlah']; ?></td>
-                                    <td><?= $obat['nama']; ?></td>
-                                    <td>Rp. <?= $obat['harga']; ?></td>
-                                    <td>
-                                        <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-sm" onclick="detail(<?= $obat['id_obat'] ?>)"><i class="fas fa-eye"></i> Detail</button>
-                                        <a href="obat-update/<?= $obat['id_obat']; ?>" class="btn btn-warning btn-sm text-white"><i class="fas fa-edit"></i> Edit</a>
-                                        <form action="obat-delete/<?= $obat['id_obat']; ?>" method="post" class="d-inline form-hapus">
-                                            <?= csrf_field() ?>
-                                            <input type="hidden" name="_method" value="DELETE">
-                                            <button class="btn btn-danger btn-sm text-white tombol-hapus"><i class="fas fa-trash"></i> Hapus</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
-                <!-- /.card-body -->
-            </div>
 
-            <!-- Modals detail -->
-            <div class="modal fade" id="modal-sm">
-                <div class="modal-dialog modal-sm">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Detail <?= $title; ?></h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                    <div class="card">
+                        <div class="card-header bg-primary">
+                            <h3 class="card-title">Data <?= $title; ?></h3>
                         </div>
-                        <div class="modal-body" id="data_detail">
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="col-md-2">
+                                <button type="button" class="btn bg-gradient-primary btn-sm mb-3" id="btn-create"><i class="fas fa-plus-circle"></i></button>
+                            </div>
+                            <div class="viewdata">
+                            </div>
                         </div>
-                        <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        </div>
+                        <!-- /.card-body -->
                     </div>
-                    <!-- /.modal-content -->
+
+                    <div id="viewmodal" style="display: none;"></div>
+
+                    <!-- Modals detail -->
+                    <div class="modal fade" id="modal-detail">
+                        <div class="modal-dialog modal-md">
+                            <div class="modal-content">
+                                <div class="modal-header bg-info">
+                                    <h4 class="modal-title">Detail <?= $title; ?></h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body" id="data_detail">
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+                    <!-- /.modal -->
                 </div>
-                <!-- /.modal-dialog -->
-            </div>
-            <!-- /.modal -->
-        </div>
-        <!--/. container-fluid -->
+                <!--/. container-fluid -->
     </section>
+    <?= $this->endSection(); ?>
+
+    <?= $this->section('script'); ?>
+    <script>
+        $(document).ready(function() {
+
+            getData()
+
+            $('#btn-create').click(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: "<?= site_url('obat-create') ?>",
+                    dataType: "json",
+                    success: function(response) {
+                        $('#viewmodal').html(response.data).show();
+                        $('#modal-create').modal('show');
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        Swal.fire({
+                            title: xhr.status,
+                            text: thrownError,
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                });
+
+            });
+
+        });
+
+
+        function edit(id) {
+            $.ajax({
+                type: "get",
+                url: "<?= site_url('obat-update/') ?>" + id,
+                data: {
+                    id: id
+                },
+                dataType: "json",
+                success: function(response) {
+                    if (response.data) {
+                        $('#viewmodal').html(response.data).show();
+                        $('#modal-update').modal('show');
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    Swal.fire({
+                        title: xhr.status,
+                        text: thrownError,
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            });
+        }
+
+        function hapus(id, nama) {
+            swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "Hapus data " + nama,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Hapus!',
+                cancelButtonText: 'Tidak!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "delete",
+                            url: "<?= site_url('obat-delete/') ?>" + id,
+                            dataType: "json",
+                            success: function(response) {
+                                if (response.success) {
+                                    Toast.fire({
+                                        icon: 'success',
+                                        title: response.success
+                                    });
+                                } else {
+                                    Toast.fire({
+                                        icon: 'warning',
+                                        title: response.error
+                                    });
+                                }
+                                getData();
+                            }
+                        });
+
+                    }
+                }
+            })
+        }
+
+
+        function getData() {
+            $.ajax({
+                url: "<?= site_url('obat/viewdata') ?>",
+                dataType: "json",
+                success: function(response) {
+                    $('.viewdata').html(response.data);
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    Swal.fire({
+                        title: xhr.status,
+                        text: thrownError,
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            });
+        }
+    </script>
     <?= $this->endSection(); ?>

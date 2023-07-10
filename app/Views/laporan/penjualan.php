@@ -66,7 +66,7 @@
                                     <td><?= $value['nama_customer']; ?></td>
                                     <td><?= number_to_currency($value['total'], 'IDR', 'id_ID', 2); ?></td>
                                     <td>
-                                        <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-xl" onclick="detail('<?= $value['sale_id'] ?>')"><i class="fas fa-eye"></i> Detail</button>
+                                        <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-lg" onclick="detail('<?= $value['sale_id'] ?>')"><i class="fas fa-eye"></i> Detail</button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -74,8 +74,8 @@
                     </table>
                 </div>
                 <!-- Modals detail -->
-                <div class="modal fade" id="modal-xl">
-                    <div class="modal-dialog modal-xl">
+                <div class="modal fade" id="modal-lg">
+                    <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h4 class="modal-title">Detail <?= $title; ?></h4>
@@ -83,10 +83,8 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body" id="data_detail">
-                            </div>
-                            <div class="modal-footer justify-content-between">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <div id="data_detail">
+
                             </div>
                         </div>
                         <!-- /.modal-content -->
@@ -164,7 +162,7 @@
                 }, "colvis"],
                 language: {
                     buttons: {
-                        colvis: 'Ubah Kolom'
+                        colvis: 'Select'
                     }
                 }
 
