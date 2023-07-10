@@ -7,6 +7,7 @@ use App\Models\ObatModel;
 use App\Models\StokModel;
 use App\Models\BuyModel;
 use App\Models\OpnameModel;
+use Hermawan\DataTables\DataTable;
 
 define('_TITLE', 'Stok Barang');
 class Stok extends BaseController
@@ -41,6 +42,24 @@ class Stok extends BaseController
                 'data' => view('stok/data', $data)
             ];
             return $this->response->setJSON($msg);
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+    }
+
+    public function data()
+    {
+        if ($this->request->isAJAX()) {
+            $builder = $this->_m_obat->getStok();
+
+            return DataTable::of($builder)
+                ->addNumbering()
+                ->add('action', function ($row) {
+                    return
+                        '<button class="btn btn-success btn-sm text-white" onclick="add(' . $row->id_obat . ')"><i class="fas fa-minus"></i></button>';
+                }, 'last')
+                ->hide('id_obat')
+                ->toJson();
         } else {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
@@ -110,40 +129,6 @@ class Stok extends BaseController
         }
     }
 
-    public function stok_masuk()
-    {
-        $data = [
-            'title' => "Stok masuk"
-        ];
-
-        return view('stok/stok_in', $data);
-    }
-
-    public function viewdataMasuk()
-    {
-        if ($this->request->isAJAX()) {
-            $data_stok = $this->_m_buy->getAll();
-            $data = [
-                'datastok' => $data_stok
-            ];
-            $msg = [
-                'data' => view('stok/data_in', $data)
-            ];
-            return $this->response->setJSON($msg);
-        } else {
-            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
-        }
-    }
-
-    public function indexOpname()
-    {
-        $data = [
-            'title' => "Stok Opname"
-        ];
-
-        return view('stok/stok_opname', $data);
-    }
-
     public function viewdataOpname()
     {
         if ($this->request->isAJAX()) {
@@ -152,9 +137,27 @@ class Stok extends BaseController
                 'data_opname' => $data_opname
             ];
             $msg = [
-                'data' => view('stok/data_opname', $data)
+                'data' => view('opname/data', $data)
             ];
             return $this->response->setJSON($msg);
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+    }
+
+    public function dataOpname()
+    {
+        if ($this->request->isAJAX()) {
+            $builder = $this->_m_opname->getAll();
+
+            return DataTable::of($builder)
+                ->add('action', function ($row) {
+                    return
+                        '<button class="btn btn-warning btn-sm text-white" onclick="edit(' . $row->id_opname . ')"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-danger btn-sm text-white" onclick="hapusOpname(' . $row->id_opname . ',\'' . $row->obat . '\',\'' . site_url('opname-delete/') . '\')"><i class="fas fa-trash"></i></button>';
+                }, 'last')
+                ->hide('id_opname')
+                ->toJson();
         } else {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
@@ -239,6 +242,31 @@ class Stok extends BaseController
 
                 return $this->response->setJSON($msg);
             }
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+    }
+
+    public function stok_masuk()
+    {
+        $data = [
+            'title' => "Stok masuk"
+        ];
+
+        return view('stok/stok_in', $data);
+    }
+
+    public function viewdataMasuk()
+    {
+        if ($this->request->isAJAX()) {
+            $data_stok = $this->_m_buy->getAll();
+            $data = [
+                'datastok' => $data_stok
+            ];
+            $msg = [
+                'data' => view('stok/data_in', $data)
+            ];
+            return $this->response->setJSON($msg);
         } else {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }

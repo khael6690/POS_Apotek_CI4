@@ -9,18 +9,7 @@
         </tr>
     </thead>
     <tbody>
-        <?php $no = 1;
-        foreach ($data_obat as $value) : ?>
-            <tr>
-                <td><?= $no++; ?> </td>
-                <td><?= $value['nama_obat']; ?></td>
-                <td><?= $value['nama']; ?></td>
-                <td><?= $value['jumlah']; ?></td>
-                <td>
-                    <button class="btn btn-success btn-sm text-white" onclick="add('<?= $value['id_obat']; ?>')"><i class="fas fa-minus"></i></button>
-                </td>
-            </tr>
-        <?php endforeach; ?>
+        
     </tbody>
 </table>
 
@@ -30,7 +19,18 @@
             "responsive": true,
             "lengthChange": false,
             "autoWidth": false,
-            'info': false
+            'info': false,
+            processing: true,
+            serverSide: true,
+            ajax: '<?= site_url('stok/data') ?>',
+            order: [],
+            columnDefs: [{
+                targets: -1,
+                orderable: false
+            }, {
+                targets: 0,
+                orderable: false
+            }, ]
         })
     });
 </script>

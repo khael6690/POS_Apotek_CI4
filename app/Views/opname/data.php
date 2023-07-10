@@ -3,28 +3,14 @@
         <tr>
             <th>Produk</th>
             <th>Jumlah</th>
+            <th>Keterangan</th>
             <th>Tanggal</th>
             <th>Action</th>
 
         </tr>
     </thead>
     <tbody>
-        <?php
-        foreach ($data_opname as $value) : ?>
-            <tr>
-                <td><?= $value['obat']; ?></td>
-                <td><?= $value['jumlah']; ?></td>
-                <td><?= $value['tgl']; ?></td>
-                <td>
-                    <button class="btn btn-warning btn-sm text-white" onclick="edit('<?= $value['id_opname']; ?>')"><i class="fas fa-edit"></i></button>
-                    <form action="opname-delete/<?= $value['id_opname']; ?>" method="post" class="d-inline form-hapus">
-                        <?= csrf_field() ?>
-                        <input type="hidden" name="_method" value="DELETE">
-                        <button class="btn btn-danger btn-sm text-white"><i class="fas fa-trash"></i></button>
-                    </form>
-                </td>
-            </tr>
-        <?php endforeach; ?>
+
     </tbody>
 </table>
 
@@ -35,18 +21,26 @@
             "responsive": true,
             "lengthChange": false,
             "autoWidth": false,
-            "info": false
-
+            "info": false,
+            processing: true,
+            serverSide: true,
+            ajax: '<?= site_url('stok-opname/data') ?>',
+            order: [],
+            columnDefs: [{
+                targets: -1,
+                orderable: false
+            }, {
+                targets: 0,
+                orderable: false
+            }, ]
         })
 
     });
 
-    // tombol hapus
-    $('.form-hapus').on('submit', function(e) {
-        e.preventDefault();
+    function hapusOpname(id, nama, routes) {
         swal.fire({
             title: 'Apakah anda yakin?',
-            text: "Hapus data",
+            text: "Hapus data " + nama,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -58,7 +52,7 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         type: "delete",
-                        url: $(this).attr('action'),
+                        url: routes + id,
                         dataType: "json",
                         success: function(response) {
                             if (response.success) {
@@ -80,6 +74,6 @@
                 }
             }
         })
-    })
+    }
 </script>
 </p>

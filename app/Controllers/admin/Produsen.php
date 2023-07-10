@@ -4,7 +4,7 @@ namespace App\Controllers\admin;
 
 use App\Controllers\BaseController;
 use App\Models\ProdusenModel;
-use CodeIgniter\HTTP\Request;
+use Hermawan\DataTables\DataTable;
 
 define('_TITLE', 'Produsen');
 
@@ -40,6 +40,26 @@ class Produsen extends BaseController
                 'data' => view('Produsen/data', $data)
             ];
             return $this->response->setJSON($msg);
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+    }
+
+    public function data()
+    {
+        if ($this->request->isAJAX()) {
+            $builder = $this->_m_produsen->select('id_produsen,nama,alamat');
+
+            return DataTable::of($builder)
+                ->addNumbering()
+                ->add('action', function ($row) {
+                    return
+                        '<button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-detail" onclick="detail(' . $row->id_produsen . ')"><i class="fas fa-eye"></i></button>
+                        <button class="btn btn-warning text-white btn-sm" onclick="edit(' . $row->id_produsen . ')"><i class="fas fa-edit"></i></button>
+                        <button type="submit" class="btn btn-danger btn-sm text-white" onclick="hapus(' . $row->id_produsen . ',\'' . $row->nama . '\',\'' . site_url('produsen/') . '\')"><i class="fas fa-trash"></i></button>';
+                }, 'last')
+                ->hide('id_produsen')
+                ->toJson();
         } else {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }

@@ -5,6 +5,7 @@ namespace App\Controllers\admin;
 use App\Controllers\BaseController;
 use App\Models\SatuanModel;
 use CodeIgniter\HTTP\Request;
+use Hermawan\DataTables\DataTable;
 
 define('_TITLE', 'Satuan');
 
@@ -27,16 +28,34 @@ class Satuan extends BaseController
     public function viewdata()
     {
         if ($this->request->isAJAX()) {
-            $data_satuan = $this->_m_satuan->findAll();
+
             $data = [
-                'title' => _TITLE,
-                'data_satuan' => $data_satuan
+                'title' => _TITLE
             ];
 
             $msg = [
                 'data' => view('Satuan/data', $data)
             ];
             return $this->response->setJSON($msg);
+        } else {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+    }
+
+    public function data()
+    {
+        if ($this->request->isAJAX()) {
+            $builder = $this->_m_satuan->select('id,satuan');
+
+            return DataTable::of($builder)
+                ->addNumbering()
+                ->add('action', function ($row) {
+                    return
+                        '<button class="btn btn-warning text-white btn-sm" onclick="edit(' . $row->id . ')"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-danger btn-sm text-white" onclick="hapus(' . $row->id . ',\'' . $row->satuan . '\',\'' . site_url('satuan/') . '\')"><i class="fas fa-trash"></i></button>';
+                }, 'last')
+                ->hide('id')
+                ->toJson();
         } else {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }

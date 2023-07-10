@@ -44,38 +44,42 @@
 <script src="<?= base_url() ?>assets/admin/plugins/chart.js/Chart.min.js"></script>
 <!-- App Script -->
 <script src="<?= base_url() ?>assets/js/script.js"></script>
-
-<?php if (session()->getFlashdata('sukses')) { ?>
-    <script>
-        Toast.fire({
-            icon: 'success',
-            title: '<?= session()->getFlashdata('sukses'); ?>'
-        })
-    </script>
-<?php } ?>
-<?php if (isset($error)) { ?>
-    <script>
-        Toast.fire({
-            icon: 'error',
-            title: '<?= strip_tags($error); ?>'
-        })
-    </script>
-<?php } ?>
-
-<?php if (session()->getFlashdata('warning')) { ?>
-    <script>
-        Toast.fire({
+<script>
+    function hapus(id, nama, routes, reload = getData()) {
+        swal.fire({
+            title: 'Apakah anda yakin?',
+            text: "Hapus data " + nama,
             icon: 'warning',
-            title: '<?= session()->getFlashdata('warning'); ?>'
-        })
-    </script>
-<?php } ?>
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Hapus!',
+            cancelButtonText: 'Tidak!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "delete",
+                        url: routes + id,
+                        dataType: "json",
+                        success: function(response) {
+                            if (response.success) {
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: response.success
+                                });
+                            } else {
+                                Toast.fire({
+                                    icon: 'warning',
+                                    title: response.error
+                                });
+                            }
+                            reload
+                        }
+                    });
 
-<?php if (session()->getFlashdata('danger')) { ?>
-    <script>
-        Toast.fire({
-            icon: 'error',
-            title: '<?= session()->getFlashdata('danger'); ?>'
+                }
+            }
         })
-    </script>
-<?php } ?>
+    }
+</script>

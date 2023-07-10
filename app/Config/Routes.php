@@ -51,16 +51,22 @@ $routes->group('', ['filter' => 'login'], function ($routes) {
 
     //route akses stok
     $routes->get('stok', 'admin\Stok::index');
-    $routes->get('stok-opname', 'admin\Stok::indexOpname');
+    $routes->get('stok/viewdata', 'admin\stok::viewdata');
+    $routes->get('stok/data', 'admin\stok::data');
+
+    //route stok opname
     $routes->get('stok-opname/viewdata', 'admin\Stok::viewdataOpname');
+    $routes->get('stok-opname/data', 'admin\Stok::dataOpname');
     $routes->get('opname-update/(:num)', 'admin\Stok::opnameEdit/$1');
     $routes->post('opname-update/(:num)', 'admin\Stok::opnameUpdate/$1');
     $routes->delete('opname-delete/(:num)', 'admin\Stok::opnameDelete/$1');
-    $routes->get('stok-masuk', 'admin\Stok::stok_masuk');
-    $routes->get('stok-masuk/viewdata', 'admin\Stok::viewdataMasuk');
-    $routes->get('stok/viewdata', 'admin\stok::viewdata');
     $routes->get('opname-create/(:num)', 'admin\stok::addOpname/$1');
     $routes->post('opname-save', 'admin\stok::saveOpname');
+
+    //route stok masuk
+    $routes->get('stok-masuk', 'admin\Stok::stok_masuk');
+    $routes->get('stok-masuk/viewdata', 'admin\Stok::viewdataMasuk');
+
 
     // route management customers
     $routes->get('customers', 'admin\Customers::index');
@@ -115,21 +121,23 @@ $routes->group('', ['filter' => 'permission:management-obat'], function ($routes
     // route akses satuan
     $routes->get('satuan', 'admin\satuan::index');
     $routes->get('satuan/viewdata', 'admin\satuan::viewdata');
+    $routes->get('satuan/data', 'admin\satuan::data');
     $routes->get('satuan-create', 'admin\Satuan::create');
     $routes->post('satuan-create', 'admin\Satuan::save');
     $routes->get('satuan-update/(:num)', 'admin\Satuan::edit/$1');
     $routes->post('satuan-update/(:num)', 'admin\Satuan::update/$1');
-    $routes->delete('satuan-delete/(:num)', 'admin\Satuan::delete/$1');
+    $routes->delete('satuan/(:num)', 'admin\Satuan::delete/$1');
 
     // route akses produsen
     $routes->get('produsen', 'admin\Produsen::index');
     $routes->get('produsen/viewdata', 'admin\Produsen::viewdata');
+    $routes->get('produsen/data', 'admin\Produsen::data');
     $routes->post('produsen-detail', 'admin\Produsen::detail');
     $routes->get('produsen-create', 'admin\Produsen::create');
     $routes->post('produsen-create', 'admin\Produsen::save');
     $routes->get('produsen-update/(:num)', 'admin\Produsen::edit/$1');
     $routes->post('produsen-update/(:num)', 'admin\Produsen::update/$1');
-    $routes->delete('produsen-delete/(:num)', 'admin\Produsen::delete/$1');
+    $routes->delete('produsen/(:num)', 'admin\Produsen::delete/$1');
 });
 
 $routes->group('', ['filter' => 'permission:management-transaksi'], function ($routes) {

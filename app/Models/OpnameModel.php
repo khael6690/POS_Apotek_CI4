@@ -19,9 +19,7 @@ class OpnameModel extends Model
                 ->select('SO.id_opname, O.nama as obat, SO.jumlah, SO.keterangan, date(SO.created_at) tgl')
                 ->join('obat O', 'O.id_obat = SO.id_obat', 'LEFT')
                 ->join('stok S', 'S.id_obat = SO.id_obat', 'LEFT')
-                ->groupBy('SO.id_opname')
-                ->orderBy('tgl', 'DESC')
-                ->get()->getResultArray();
+                ->groupBy('SO.id_opname');
         } else {
             return $this->db->table('stok_opname as SO')
                 ->select('SO.id_opname,SO.id_obat, O.nama as obat, SO.jumlah, SO.keterangan, date(SO.created_at) tgl')

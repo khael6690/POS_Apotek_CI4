@@ -31,11 +31,10 @@ class ObatModel extends Model
 
     public function getStok()
     {
-        $this->select('obat.nama as nama_obat, obat.id_obat, obat.img, obat.satuan, obat.harga, obat.discount, obat.deskripsi, obat.produsen, stok.stok as jumlah, produsen.nama, satuan.satuan as satuan_obat ')
+        return $this->select('obat.id_obat, obat.nama as nama_obat, produsen.nama AS produsen, stok.stok as jumlah')
             ->join('produsen', 'obat.produsen = produsen.id_produsen')
             ->join('stok', 'stok.id_obat = obat.id_obat')
-            ->join('satuan', 'obat.satuan = satuan.id', 'LEFT');
-        $this->where('stok.stok >', 0);
-        return $this->get()->getResultArray();
+            ->join('satuan', 'obat.satuan = satuan.id', 'LEFT')
+            ->where('stok.stok >', 0);
     }
 }
