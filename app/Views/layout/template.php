@@ -20,7 +20,7 @@
   <!-- /.content-wrapper -->
 
   <!-- Main Footer -->
-  <footer class="main-footer">
+  <footer class="main-footer mt-5">
     <strong>Copyright &copy; <?= date('Y'); ?></a>.</strong>
     All rights reserved.
   </footer>

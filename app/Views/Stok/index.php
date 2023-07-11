@@ -145,8 +145,7 @@
 
         function add(id) {
             $.ajax({
-                url: "/opname-create/" + id,
-
+                url: "<?= site_url('opname-create/') ?>" + id,
                 dataType: "json",
                 success: function(response) {
                     $('#viewmodal').html(response.data).show();
@@ -168,10 +167,7 @@
         function edit(id) {
             $.ajax({
                 type: "get",
-                url: "/opname-update/" + id,
-                data: {
-                    id: id
-                },
+                url: "<?= site_url('opname-update/') ?>" + id,
                 dataType: "json",
                 success: function(response) {
                     if (response.data) {

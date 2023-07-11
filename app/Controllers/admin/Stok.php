@@ -253,7 +253,7 @@ class Stok extends BaseController
             'title' => "Stok masuk"
         ];
 
-        return view('stok/stok_in', $data);
+        return view('stok-masuk/index', $data);
     }
 
     public function viewdataMasuk()
@@ -264,7 +264,7 @@ class Stok extends BaseController
                 'datastok' => $data_stok
             ];
             $msg = [
-                'data' => view('stok/data_in', $data)
+                'data' => view('stok-masuk/data', $data)
             ];
             return $this->response->setJSON($msg);
         } else {
