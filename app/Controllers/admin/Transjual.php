@@ -41,7 +41,7 @@ class Transjual extends BaseController
     public function getProduk()
     {
         if ($this->request->isAJAX()) {
-            $produk = $this->_m_obat->getStok();
+            $produk = $this->_m_obat->getProduk()->findAll();
             $json = [
                 'data' => $produk,
                 'status' => true

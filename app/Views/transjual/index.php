@@ -275,7 +275,7 @@
                 const id = $(this).val();
                 $.ajax({
                     type: "post",
-                    url: "<?= base_url('add-cart-sale') ?>/" + id,
+                    url: "<?= base_url('add-cart-sale/') ?>" + id,
                     data: {
                         id: id
                     },

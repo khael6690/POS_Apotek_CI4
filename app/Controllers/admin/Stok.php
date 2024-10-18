@@ -171,7 +171,7 @@ class Stok extends BaseController
                 'data_opname' => $data_opname
             ];
             $msg = [
-                'data' => view('stok/update_opname', $data)
+                'data' => view('opname/update', $data)
             ];
             return $this->response->setJSON($msg);
         } else {

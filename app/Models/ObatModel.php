@@ -37,4 +37,13 @@ class ObatModel extends Model
             ->join('satuan', 'obat.satuan = satuan.id', 'LEFT')
             ->where('stok.stok >', 0);
     }
+
+    public function getProduk()
+    {
+        return $this->select('obat.id_obat, obat.nama as nama_obat, produsen.nama AS produsen, obat.harga, obat.discount, stok.stok as jumlah')
+            ->join('produsen', 'obat.produsen = produsen.id_produsen')
+            ->join('stok', 'stok.id_obat = obat.id_obat')
+            ->join('satuan', 'obat.satuan = satuan.id', 'LEFT')
+            ->where('stok.stok >', 0);
+    }
 }

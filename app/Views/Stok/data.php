@@ -5,11 +5,11 @@
             <th>Nama</th>
             <th>Produsen</th>
             <th>Stok</th>
-            <th style="width: 10%;">Action</th>
+            <th style="width: 10%;">Opname</th>
         </tr>
     </thead>
     <tbody>
-        
+
     </tbody>
 </table>
 
